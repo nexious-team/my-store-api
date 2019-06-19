@@ -1,0 +1,27 @@
+[
+  {
+    "resource": "categories",
+    "model": "category",
+    "uses": ["common"]
+  },
+  {
+    "resource": "products",
+    "model": "product",
+    "uses": ["common"]
+  },
+  {
+    "resource": "staff",
+    "model": "staff",
+    "uses": ["common"]
+  },
+  {
+    "resource": "suppliers",
+    "model": "supplier",
+    "uses": ["common"]
+  },
+  {
+    "resource": "users",
+    "model": "user",
+    "uses": ["common"]
+  }
+]

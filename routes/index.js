@@ -1,9 +1,13 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const cores = require('./index.json');
+const Routers = require('./routers');
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
-
-module.exports = router;
+module.exports = (app) => {
+  cores.forEach(core => {
+    const router = express.Router();
+    core.uses.forEach(use => {
+      router.use(Routers[use](core.model))
+    });
+    app.use('/api/' + core.resource, router)
+  })
+}
