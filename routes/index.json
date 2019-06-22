@@ -22,6 +22,6 @@
   {
     "resource": "users",
     "model": "user",
-    "uses": ["common"]
+    "uses": ["user", "common"]
   }
 ]

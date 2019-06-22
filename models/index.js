@@ -12,5 +12,13 @@ module.exports = {
   product: model("Product", new Schema(product)),
   staff: model("Staff", new Schema(staff)),
   supplier: model("Supplier", new Schema(supplier)),
-  user: model("User", new Schema(user)),
+  user: model("User", create(user)),
+}
+
+function create ({ definition, middlewares, methods, statics }) {
+  let schema = new Schema(definition);
+  if(methods) methods(schema);
+  if(middlewares) middlewares(schema);
+  if(statics) statics(schema)
+  return schema;
 }
