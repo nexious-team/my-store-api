@@ -1,5 +1,7 @@
 const express = require('express');
 const { user: User } = require('../../models');
+const passport = require('../../plugins/passport');
+const { signUser } = require('../../plugins/jwt');
 
 module.exports = () => {
   const router = express.Router();
@@ -12,13 +14,20 @@ module.exports = () => {
   })
 
   router.post('/login', (req, res, next) => {
-    const { email, password } = req.body;
-    User.findOne({email}, (err, doc) => {
-      if(err) next(err);
-      console.log({doc, compare: doc.compare(password)});
-      if(!doc.compare(password)) return res.json("Unpair email/password");
-      res.json(doc);
-    })
+    passport.authenticate('local', function(err, user, info) {
+      if (err) { return next(err); }
+      if (!user) { return res.json(info); }
+      req.login(user, { session: false }, function(err) {
+        if (err) { return next(err); }
+        const token = signUser(user.id);
+        return res.json({user, token});
+      });
+    })(req, res, next);
+  })
+
+  router.get('/profile', passport.authenticate('jwt', { session: false }), (req, res, next) => {
+    if(!req.user) return res.status(401).json("Unauthorized");
+    res.json(req.user);
   })
 
   return router;
