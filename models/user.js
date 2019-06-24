@@ -7,6 +7,11 @@ module.exports.definition = {
   dob: Date,
   email: String,
   password: String,
+  role: {
+    type: String,
+    enum: ['admin', 'user'],
+    default: 'user'
+  },
   address: {
     street: String,
     village: String,
