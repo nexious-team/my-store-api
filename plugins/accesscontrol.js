@@ -22,17 +22,17 @@ let grantsObject = {
     },
     user: {
       'create:any': ['*', '!password'],
-      'read:any': ['*', '!password'],
+      'read:any': ['*'],
       'update:any': ['*', '!password', '!email'],
       'delete:any': ['*', '!password']
     }
   },
   user: {
     user: {
-      'create:own': ['*', '!password'],
-      'read:own': ['*', '!password'],
-      'update:own': ['*', '!password'],
-      'delete:own': ['*', '!password']
+      'create:own': ['*', '!password', '!role'],
+      'read:own': ['*', '!password', '!role'],
+      'update:own': ['*', '!password', '!role'],
+      'delete:own': ['*', '!password', '!role']
     }
   }
 };
