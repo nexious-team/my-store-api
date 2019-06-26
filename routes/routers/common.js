@@ -9,22 +9,22 @@ module.exports = (model) => {
 
   router.route('/')
     .all(auth)
-    .get(canUser('read', model), (req, res, next) => {
+    .get(canUser('readAny', model), (req, res, next) => {
       Models[model].find().lean().exec(common(res, next));
     })
-    .post(canUser('create', model), (req, res, next) => {
+    .post(canUser('createAny', model), (req, res, next) => {
       Models[model].create(req.body, common(res, next))
     })
 
   router.route('/:id')
     .all(auth)
-    .get(canUser('read', model), (req, res, next) => {
+    .get(canUser('readAny', model), (req, res, next) => {
       Models[model].findById(req.params.id, common(res, next))
     })
-    .put(canUser('update', model), (req, res, next) => {
+    .put(canUser('updateAny', model), (req, res, next) => {
       Models[model].findByIdAndUpdate(req.params.id, req.body, { new: true }, common(res, next))
     })
-    .delete(canUser('delete', model), (req, res, next) => {
+    .delete(canUser('deleteAny', model), (req, res, next) => {
       Models[model].findByIdAndRemove(req.params.id, common(res, next))
     })
 
