@@ -1,27 +1,42 @@
 [
   {
-    "resource": "categories",
+    "endpoint": "categories",
     "model": "category",
     "uses": ["common"]
   },
   {
-    "resource": "products",
+    "endpoint": "products",
     "model": "product",
     "uses": ["common"]
   },
   {
-    "resource": "staff",
+    "endpoint": "staff",
     "model": "staff",
     "uses": ["common"]
   },
   {
-    "resource": "suppliers",
+    "endpoint": "suppliers",
     "model": "supplier",
     "uses": ["common"]
   },
   {
-    "resource": "users",
+    "endpoint": "users",
     "model": "user",
     "uses": ["user", "common"]
+  },
+  {
+    "endpoint": "imports",
+    "model": "importOrder",
+    "uses": ["common"]
+  },
+  {
+    "endpoint": "orders",
+    "model": "order",
+    "uses": ["common"]
+  },
+  {
+    "endpoint": "payments",
+    "model": "payment",
+    "uses": ["common"]
   }
 ]

@@ -7,9 +7,9 @@ const canUser = require('../../middlewares/permission');
 module.exports = () => {
   const router = express.Router();
 
-  router.post('/signup', (req, res, next) => {
+  router.post('/signup', async (req, res, next) => {
     User.create(req.body, (err, user) => {
-      if(err) next(err);
+      if(err) return next(err);
       const profile = exclude(user, ['password', 'role']);
       if(user) res.json({ message: "Sign up successfully" , profile});
     })

@@ -4,7 +4,7 @@ let grantsObject = {
   admin: {
     category: {
       'create:any': ['*'],
-      'read:any': ['*', '!info'],
+      'read:any': ['*'],
       'update:any': ['*'],
       'delete:any': ['*']
     },
@@ -22,10 +22,28 @@ let grantsObject = {
     },
     user: {
       'create:any': ['*', '!password'],
-      'read:any': ['*'],
+      'read:any': ['*', '!password'],
       'update:any': ['*', '!password', '!email'],
       'delete:any': ['*', '!password']
-    }
+    },
+    importOrder: {
+      'create:any': ['*'],
+      'read:any': ['*'],
+      'update:any': ['*'],
+      'delete:any': ['*']
+    },
+    order: {
+      'create:any': ['*'],
+      'read:any': ['*'],
+      'update:any': ['*'],
+      'delete:any': ['*']
+    },
+    payment: {
+      'create:any': ['*'],
+      'read:any': ['*'],
+      'update:any': ['*'],
+      'delete:any': ['*']
+    },
   },
   user: {
     user: {

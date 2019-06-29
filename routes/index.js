@@ -8,6 +8,6 @@ module.exports = (app) => {
     core.uses.forEach(use => {
       router.use(Routers[use](core.model))
     });
-    app.use('/api/' + core.resource, router)
+    app.use('/api/' + core.endpoint, router)
   })
 }
