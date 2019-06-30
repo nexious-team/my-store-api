@@ -1,4 +1,8 @@
 module.exports = {
-  name: String,
+  name: {
+    type: String,
+    required: true,
+    unique: true
+  },
   info: String
 }

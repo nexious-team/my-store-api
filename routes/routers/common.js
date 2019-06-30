@@ -1,8 +1,11 @@
 const express = require('express');
-const Models = require('../../models')
+const Models = require('../../models');
 const passport = require('../../plugins/passport');
+
 const auth = passport.authenticate('jwt', { session: false });
 const canUser = require('../../middlewares/permission');
+
+const { common } = require('./helpers');
 
 module.exports = (model) => {
   const router = express.Router();
@@ -29,11 +32,4 @@ module.exports = (model) => {
     })
 
     return router;
-}
-
-// ============================= Functions
-const common = (res, next) => (err, result) => {
-  if(err) return next(err);
-  const data = res.locals.permission.filter(JSON.parse(JSON.stringify(result)));
-  res.json(data);
 }

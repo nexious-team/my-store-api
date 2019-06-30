@@ -14,9 +14,13 @@ const mongoose = require('mongoose');
  */
 const drivers = {
   mlab: "mongodb://admin:admin123@ds235947.mlab.com:35947/store",
-  local: "mongodb://localhost:27017/store"
+  local: "mongodb://localhost:27017/store",
+  options: {
+    useNewUrlParser: true,
+    useCreateIndex: true
+  }
 }
- mongoose.connect( drivers.mlab, { useNewUrlParser: true })
+ mongoose.connect( drivers.mlab, drivers.options)
    .then(
      () => { console.log("Database connected!"); },
      err => { console.log(err); }
