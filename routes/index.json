@@ -1,42 +1,54 @@
 [
   {
-    "endpoint": "categories",
+    "endpoint": "categor(y|ies)",
     "model": "category",
-    "uses": ["common"]
+    "routers": ["common"]
   },
   {
-    "endpoint": "products",
+    "endpoint": "products?",
     "model": "product",
-    "uses": ["common"]
+    "routers": ["populate", "common"],
+    "features": {
+      "references": ["category"]
+    }
   },
   {
     "endpoint": "staff",
     "model": "staff",
-    "uses": ["common"]
+    "routers": ["common"]
   },
   {
-    "endpoint": "suppliers",
+    "endpoint": "suppliers?",
     "model": "supplier",
-    "uses": ["common"]
+    "routers": ["common"]
   },
   {
-    "endpoint": "users",
+    "endpoint": "users?",
     "model": "user",
-    "uses": ["user", "common"]
+    "routers": ["user", "common"]
   },
   {
-    "endpoint": "imports",
+    "endpoint": "imports?",
     "model": "importOrder",
-    "uses": ["common"]
+    "routers": ["populate", "common"],
+    "features": {
+      "references": ["product", "supplier"]
+    }
   },
   {
-    "endpoint": "orders",
+    "endpoint": "orders?",
     "model": "order",
-    "uses": ["common"]
+    "routers": ["populate", "common"],
+    "features": {
+      "references": ["product", "user"]
+    }
   },
   {
-    "endpoint": "payments",
+    "endpoint": "payments?",
     "model": "payment",
-    "uses": ["common"]
+    "routers": ["populate", "common"],
+    "features": {
+      "references": ["order"]
+    }
   }
 ]

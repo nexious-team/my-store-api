@@ -5,8 +5,8 @@ const Routers = require('./routers');
 module.exports = (app) => {
   cores.forEach(core => {
     const router = express.Router();
-    core.uses.forEach(use => {
-      router.use(Routers[use](core.model))
+    core.routers.forEach(r => {
+      router.use(Routers[r](core.model, core.features))
     });
     app.use('/api/' + core.endpoint, router)
   })

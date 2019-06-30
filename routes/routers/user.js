@@ -3,6 +3,7 @@ const { user: User } = require('../../models');
 const passport = require('../../plugins/passport');
 const { signUser } = require('../../plugins/jwt');
 const canUser = require('../../middlewares/permission');
+const { lean, exclude, copy } = require('./helpers');
 
 module.exports = () => {
   const router = express.Router();
@@ -46,26 +47,3 @@ module.exports = () => {
   return router;
 }
 // ================== Functions
-function lean(document) {
-  return JSON.parse(JSON.stringify(document));
-}
-
-function exclude(document, fields) {
-
-  const filtered = Object.keys(document.toObject())
-    .filter(key => !fields.includes(key))
-    .reduce((obj, key) => {
-      obj[key] = document[key];
-      return obj;
-    }, {});
-
-  return filtered;
-}
-
-function copy(target, source) {
-  for(let key in source) {
-    if( typeof target[key] === 'object') copy( target[key], source[key] );
-    else target[key] = source[key];
-    continue;
-  }
-}

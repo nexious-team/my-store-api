@@ -14,7 +14,8 @@ module.exports = {
   info: String,
   category: {
     type: "ObjectId",
-    required: true
+    required: true,
+    ref: "Category"
   },
   createAt: {
     type: Date,

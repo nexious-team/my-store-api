@@ -34,7 +34,7 @@ let grantsObject = {
     },
     order: {
       'create:any': ['*'],
-      'read:any': ['*'],
+      'read:any': ['*', '!user.password'],
       'update:any': ['*'],
       'delete:any': ['*']
     },
