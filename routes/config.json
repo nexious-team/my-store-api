@@ -8,8 +8,10 @@
     "endpoint": "products?",
     "model": "product",
     "routers": ["populate", "common"],
-    "features": {
-      "references": ["category"]
+    "params": {
+      "populate": {
+        "references": ["category"]
+      }
     }
   },
   {
@@ -31,24 +33,30 @@
     "endpoint": "imports?",
     "model": "importOrder",
     "routers": ["populate", "common"],
-    "features": {
-      "references": ["product", "supplier"]
+    "params": {
+      "populate": {
+        "references": ["product", "supplier"]
+      }
     }
   },
   {
     "endpoint": "orders?",
     "model": "order",
     "routers": ["populate", "common"],
-    "features": {
-      "references": ["product", "user"]
+    "params": {
+      "populate": {
+        "references": ["product", "user"]
+      }
     }
   },
   {
     "endpoint": "payments?",
     "model": "payment",
     "routers": ["populate", "common"],
-    "features": {
-      "references": ["order"]
+    "params": {
+      "populate": {
+        "references": ["order"]
+      }
     }
   }
 ]
