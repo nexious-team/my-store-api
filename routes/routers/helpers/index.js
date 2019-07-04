@@ -34,5 +34,6 @@ module.exports = {
   lean,
   exclude,
   copy,
-  common
+  common,
+  queryMapper: require('./queryMapper')
 }

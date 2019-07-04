@@ -5,7 +5,7 @@ const passport = require('../../plugins/passport');
 const auth = passport.authenticate('jwt', { session: false });
 const canUser = require('../../middlewares/permission');
 
-const { common } = require('./helpers');
+const { common, queryMapper } = require('./helpers');
 
 module.exports = (model) => {
   const router = express.Router();
@@ -13,7 +13,9 @@ module.exports = (model) => {
   router.route('/')
     .all(auth)
     .get(canUser('readAny', model), (req, res, next) => {
-      Models[model].find().lean().exec(common(res, next));
+      const { conditions, select, options } = queryMapper(req.query);
+      console.log({conditions, select, options});
+      Models[model].find(conditions, select, options).exec(common(res, next));
     })
     .post(canUser('createAny', model), (req, res, next) => {
       Models[model].create(req.body, common(res, next))
