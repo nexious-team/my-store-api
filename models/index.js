@@ -23,8 +23,8 @@ module.exports = {
 
 function create ({ definition, middlewares, methods, statics }) {
   let schema = new Schema(definition);
-  if(methods) methods(schema);
-  if(middlewares) middlewares(schema);
-  if(statics) statics(schema)
+  if (methods) methods(schema);
+  if (middlewares) middlewares(schema);
+  if (statics) statics(schema)
   return schema;
 }
