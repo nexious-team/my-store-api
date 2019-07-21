@@ -1,7 +1,7 @@
 function common(res, next) {
   return (err, result) => {
     if(err) return next(err);
-    const data = res.locals.permission.filter(lean(result));
+    const data = result ? res.locals.permission.filter(lean(result)): result;
     res.json(data);
   }
 }

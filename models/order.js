@@ -17,6 +17,10 @@ module.exports = {
     type: Number,
     required: true
   },
+  completed: {
+    type: Boolean,
+    default: false
+  },
   date: {
     type: Date,
     default: new Date(),

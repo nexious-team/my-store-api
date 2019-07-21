@@ -14,7 +14,7 @@ module.exports = (model) => {
     .all(auth)
     .get(canUser('readAny', model), (req, res, next) => {
       const { conditions, select, options } = queryMapper(req.query);
-      console.log({conditions, select, options});
+
       Models[model].find(conditions, select, options).exec(common(res, next));
     })
     .post(canUser('createAny', model), (req, res, next) => {

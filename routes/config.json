@@ -32,7 +32,7 @@
   {
     "endpoint": "imports?",
     "model": "importOrder",
-    "routers": ["populate", "common"],
+    "routers": ["populate", "importOrder", "common"],
     "params": {
       "populate": {
         "references": ["product", "supplier"]
@@ -42,7 +42,7 @@
   {
     "endpoint": "orders?",
     "model": "order",
-    "routers": ["populate", "common"],
+    "routers": ["populate", "order", "common"],
     "params": {
       "populate": {
         "references": ["product", "user"]
@@ -52,7 +52,7 @@
   {
     "endpoint": "payments?",
     "model": "payment",
-    "routers": ["populate", "common"],
+    "routers": ["populate","payment", "common"],
     "params": {
       "populate": {
         "references": ["order"]
