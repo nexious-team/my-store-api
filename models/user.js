@@ -1,12 +1,24 @@
 module.exports.definition = {
   name: {
-    first: String,
-    last: String,
+    first: {
+      type: String,
+      required: true
+    },
+    last: {
+      type: String,
+      required: true
+    },
     display: String
   },
   dob: Date,
-  email: String,
-  password: String,
+  email: {
+    type: String,
+    required: true
+  },
+  password: {
+    type: String,
+    required: true
+  },
   role: {
     type: String,
     enum: ['admin', 'user'],

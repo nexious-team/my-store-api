@@ -14,15 +14,20 @@ const mongoose = require('mongoose');
  */
 const drivers = {
   mlab: "mongodb://admin:admin123@ds235947.mlab.com:35947/store",
-  local: "mongodb://localhost:27017/store"
+  local: "mongodb://localhost:27017/store",
+  options: {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useFindAndModify: false
+  }
 }
- mongoose.connect( drivers.mlab, { useNewUrlParser: true })
+ mongoose.connect( drivers.mlab, drivers.options)
    .then(
      () => { console.log("Database connected!"); },
      err => { console.log(err); }
    );
 
-const port = normalizePort(process.env.PORT || '3000');
+const port = normalizePort(process.env.PORT || '5000');
 app.set('port', port);
 
 /**

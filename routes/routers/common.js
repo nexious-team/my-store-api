@@ -1,8 +1,11 @@
 const express = require('express');
-const Models = require('../../models')
+const Models = require('../../models');
 const passport = require('../../plugins/passport');
+
 const auth = passport.authenticate('jwt', { session: false });
 const canUser = require('../../middlewares/permission');
+
+const { common, queryMapper } = require('./helpers');
 
 module.exports = (model) => {
   const router = express.Router();
@@ -10,7 +13,9 @@ module.exports = (model) => {
   router.route('/')
     .all(auth)
     .get(canUser('readAny', model), (req, res, next) => {
-      Models[model].find().lean().exec(common(res, next));
+      const { conditions, select, options } = queryMapper(req.query);
+
+      Models[model].find(conditions, select, options).exec(common(res, next));
     })
     .post(canUser('createAny', model), (req, res, next) => {
       Models[model].create(req.body, common(res, next))
@@ -29,11 +34,4 @@ module.exports = (model) => {
     })
 
     return router;
-}
-
-// ============================= Functions
-const common = (res, next) => (err, result) => {
-  if(err) return next(err);
-  const data = res.locals.permission.filter(JSON.parse(JSON.stringify(result)));
-  res.json(data);
 }
