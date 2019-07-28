@@ -18,11 +18,11 @@ module.exports = (model, { references }) => {
       references.forEach(ref => query = query.populate(ref))
     }
 
-    query.exec(common(res, next));
+    query.exec(common(req, res, next));
   });
 
   router.get('/populates?/:reference', authenticate('readAny'), (req, res, next) => {
-    Models[model].find().populate(req.params["reference"]).exec(common(res, next));
+    Models[model].find().populate(req.params["reference"]).exec(common(req, res, next));
   });
 
   router.get('/:id/populates?', authenticate('readAny'), (req, res, next) => {
@@ -31,12 +31,12 @@ module.exports = (model, { references }) => {
       references.forEach(ref => query = query.populate(ref))
     }
 
-    query.exec(common(res, next));
+    query.exec(common(req, res, next));
   });
 
   router.get('/:id/populates?/:reference', authenticate('readAny'), (req, res, next) => {
     const { id, reference } = req.params;
-    Models[model].findById(id).populate(reference).exec(common(res, next));
+    Models[model].findById(id).populate(reference).exec(common(req, res, next));
   });
 
   return router;

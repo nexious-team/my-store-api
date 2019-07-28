@@ -1,8 +1,11 @@
-function common(res, next) {
+const { record } = require('../../../logistics/call')
+
+function common(req, res, next) {
   return (err, result) => {
     if(err) return next(err);
     const data = result ? res.locals.permission.filter(lean(result)): result;
     res.json(data);
+    record(req, { status: 200 });
   }
 }
 
