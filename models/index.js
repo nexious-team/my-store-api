@@ -10,6 +10,8 @@ const importOrder = require('./import_order');
 const order = require('./order');
 const payment = require('./payment');
 
+const call = require('./call');
+
 module.exports = {
   category: model("Category", new Schema(category)),
   product: model("Product", new Schema(product)),
@@ -19,6 +21,8 @@ module.exports = {
   user: model("User", create(user)),
   order: model("Order", new Schema(order)),
   payment: model("Payment", new Schema(payment)),
+
+  call: model("Call", new Schema(call)),
 }
 
 function create ({ definition, middlewares, methods, statics }) {

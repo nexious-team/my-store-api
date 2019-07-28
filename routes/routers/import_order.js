@@ -6,8 +6,8 @@ const auth = passport.authenticate('jwt', { session: false });
 const canUser = require('../../middlewares/permission');
 
 const { calculateImportAmount } = require('../../logistics/common');
-
 const { decreaseProductQty, increaseProductQty } = require('../../logistics/order');
+const { record } = require('../../logistics/call');
 
 module.exports = (model = 'importOrder') => {
   const router = express.Router();
@@ -21,6 +21,7 @@ module.exports = (model = 'importOrder') => {
         if (err) return next(err);
         res.json(doc);
         increaseProductQty(doc.product, doc.qty, console.log);
+        record(req, { status: 200 });
       })
     })
 
@@ -31,6 +32,7 @@ module.exports = (model = 'importOrder') => {
             if (err) console.error(err);
             res.json(doc);
             decreaseProductQty(doc.product, doc.qty, console.log);
+            record(req, { status: 200 });
         });
       })
   return router;

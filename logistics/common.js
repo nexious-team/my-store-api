@@ -1,8 +1,9 @@
 const Models = require('../models');
 
 const calculateOrderAmount = async ({ product: id, qty }) => {
-  const { price } = await Models['product'].findById(id);
-  return qty * price;
+  const doc = await Models['product'].findById(id);
+  if (!doc) throw new Error("Function calculateOrderAmount can't found product!");
+  return qty * doc.price;
 }
 
 const calculateImportAmount = ({ price, qty }) => (price * qty)
