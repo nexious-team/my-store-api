@@ -17,6 +17,7 @@ module.exports = {
     type: "String",
     required:true
   },
+  body: "Object",
   response: {
     status: "Number",
     error: "Mixed",
