@@ -10,6 +10,12 @@ This is the API for my-store application one of developers-town project base on 
 ```
 ## Routes & Endpoint
 
+### User
+- POST: /api/users/signup     => user registration # { name: { first, last }, email, password, ... }
+- POST: /api/users/login      => user login        # { email, password }
+- GET:  /api/users/profile    => get user's profile
+- PUT:  /api/users/profile    => update user's profile
+- GET:  /api/users/:id/calls  => get api request history
 ### CRUD
 - GET:    /api/:model       => all documents
 - GET:    /api/:model/:id   => get an document by id
@@ -36,6 +42,29 @@ This is the API for my-store application one of developers-town project base on 
 
 - [Swagger](https://app.swaggerhub.com/apis-docs/developers-town/my-store/1.0.0)
 - [GitBook](https://my-store-developers-town.gitbook.io/my-store-back/)
+
+## Get start
+
+### Add new model
+Give a definition schema in a new file at /models, then create mongoose model in /models/index.js
+
+### Use routers
+Mount routers for new resource (model) by add an json object at /routes/config.json
+```json
+  {
+    "endpoint": "users?",
+    "model": "user",
+    "routers": ["user", "common"]
+  }
+```
+ * Mountable routers stay at /routes/routers
+ 
+### Create new routers
+Or create an new router to mount on a specific resource (model): 
+- Create a new file at /routes/routers/ 
+- instance an router from express.Router()
+- implement desire routes within the router instance, then export the router
+- mount to resoures in /routes/config.json
 
 ## References
 
