@@ -20,7 +20,8 @@ module.exports = {
   body: "Object",
   response: {
     status: "Number",
-    error: "Mixed",
+    error: "String",
+    message: "String",
     payload: "Mixed"
   },
   createAt: {

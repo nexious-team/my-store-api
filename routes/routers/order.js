@@ -5,9 +5,9 @@ const passport = require('../../plugins/passport');
 const auth = passport.authenticate('jwt', { session: false });
 const canUser = require('../../middlewares/permission');
 
-const { calculateOrderAmount } = require('../../logistics/common');
-const { decreaseProductQty, increaseProductQty } = require('../../logistics/order');
-const { record } = require('../../logistics/call');
+const { calculateOrderAmount } = require('../../workers/common');
+const { decreaseProductQty, increaseProductQty } = require('../../workers/order');
+const { record } = require('../../workers/call');
 
 module.exports = (model = 'order') => {
   const router = express.Router();

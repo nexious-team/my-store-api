@@ -1,11 +1,14 @@
-const { record } = require('../../../logistics/call')
+const { record } = require('../../../workers/call')
+const { sentry } = require('../../../workers/recycle')
 
 function common(req, res, next) {
   return (err, result) => {
     if(err) return next(err);
     const data = result ? res.locals.permission.filter(lean(result)): result;
     res.json(data);
-    record(req, { status: 200 });
+    const response = result ?  { status: 200 } : { payload: null };
+    record(req, response);
+    if (req.method === 'DELETE' && result) sentry.collect(req, result);
   }
 }
 
