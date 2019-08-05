@@ -5,8 +5,8 @@ const passport = require('../../plugins/passport');
 const auth = passport.authenticate('jwt', { session: false });
 const canUser = require('../../middlewares/permission');
 
-const { setOrderComplete } = require('../../logistics/payment');
-const { record } = require('../../logistics/call');
+const { setOrderComplete } = require('../../workers/payment');
+const { record } = require('../../workers/call');
 
 module.exports = (model = 'payment') => {
   const router = express.Router();

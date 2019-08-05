@@ -50,6 +50,12 @@ let grantsObject = {
       'update:any': ['*'],
       'delete:any': ['*']
     },
+    recycle: {
+      'create:any': ['*'],
+      'read:any': ['*', '!caller.password'],
+      'update:any': ['*'],
+      'delete:any': ['*']
+    },
   },
   user: {
     user: {

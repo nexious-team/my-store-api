@@ -8,7 +8,7 @@ This is the API for my-store application one of developers-town project base on 
 # npm install
 # npm start
 ```
-## Routes & Endpoint
+## Endpoints
 
 ### User
 - POST: /api/users/signup     => user registration # { name: { first, last }, email, password, ... }
@@ -16,6 +16,11 @@ This is the API for my-store application one of developers-town project base on 
 - GET:  /api/users/profile    => get user's profile
 - PUT:  /api/users/profile    => update user's profile
 - GET:  /api/users/:id/calls  => get api request history
+
+### Recycle
+- POST: /api/recycle/restore/:id => Restore deleted document by recycle id
+- POST: /api/recycle/restore/:model/:id => Restore deleted document by modelName and document id
+
 ### CRUD
 - GET:    /api/:model       => all documents
 - GET:    /api/:model/:id   => get an document by id
@@ -43,7 +48,7 @@ This is the API for my-store application one of developers-town project base on 
 - [Swagger](https://app.swaggerhub.com/apis-docs/developers-town/my-store/1.0.0)
 - [GitBook](https://my-store-developers-town.gitbook.io/my-store-back/)
 
-## Get start
+## Getting started
 
 ### Add new model
 Give a definition schema in a new file at /models, then create mongoose model in /models/index.js
