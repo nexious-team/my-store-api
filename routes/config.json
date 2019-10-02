@@ -58,5 +58,25 @@
         "references": ["order"]
       }
     }
+  },
+  {
+    "endpoint": "calls?",
+    "model": "call",
+    "routers": ["populate", "common"],
+    "params": {
+      "populate": {
+        "references": ["caller"]
+      }
+    }
+  },
+  {
+    "endpoint": "recycles?",
+    "model": "recycle",
+    "routers": ["recycle", "populate", "common"],
+    "params": {
+      "populate": {
+        "references": ["caller"]
+      }
+    }
   }
 ]

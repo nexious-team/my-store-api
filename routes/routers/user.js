@@ -1,9 +1,13 @@
 const express = require('express');
-const { user: User } = require('../../models');
+const {
+  user: User,
+  call: Call } = require('../../models');
 const passport = require('../../plugins/passport');
 const { signUser } = require('../../plugins/jwt');
 const canUser = require('../../middlewares/permission');
-const { lean, exclude, copy } = require('./helpers');
+const { common, lean, exclude, copy } = require('./helpers');
+
+const auth = passport.authenticate('jwt', { session: false });
 
 module.exports = () => {
   const router = express.Router();
@@ -30,7 +34,7 @@ module.exports = () => {
   })
 
   router.route('/profile')
-    .all(passport.authenticate('jwt', { session: false }))
+    .all(auth)
     .get(canUser('readOwn','user'), (req, res, next) => {
       if(!req.user) return res.status(401).json("Unauthorized");
       const profile = res.locals.permission.filter(lean(req.user));
@@ -42,6 +46,12 @@ module.exports = () => {
       const profile = await user.save();
       const data = res.locals.permission.filter(lean(profile));
       res.json(data);
+    })
+
+  router.route('/:id/calls?')
+    .all(auth)
+    .get(canUser('readOwn', 'call'), (req, res, next) => {
+      Call.find({caller: req.user.id}, common(req, res, next));
     })
 
   return router;
