@@ -1,4 +1,8 @@
 module.exports = {
+  _image: {
+    type: "ObjectId",
+    ref: "Image"
+  },
   name: {
     type: String,
     required: true,
@@ -11,5 +15,5 @@ module.exports = {
   },
   update_date: {
     type: Date
-  },
+  }
 }

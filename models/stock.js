@@ -1,24 +1,15 @@
 module.exports = {
-  _user: {
+  _product: {
     type: "ObjectId",
-    ref: "User",
-    required: true
+    ref: "Product"
   },
-  _shipment: {
+  _product_unit: {
     type: "ObjectId",
-    ref: "Shipment"
+    ref: "ProductUnit"
   },
-  _payment: {
-    type: "ObjectId",
-    ref: "Payment"
-  },
-  amount: {
+  quantity: {
     type: Number,
     required: true
-  },
-  paid: {
-    type: Boolean,
-    default: false
   },
   info: String,
   create_date: {
@@ -28,4 +19,5 @@ module.exports = {
   update_date: {
     type: Date
   },
+
 }

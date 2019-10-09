@@ -1,11 +1,19 @@
 module.exports = {
-  products: [{
+  _image: {
     type: "ObjectId",
-    ref: "Product"
-  }],
+    ref: "Image"
+  },
   name: {
     type: String,
     required: true
+  },
+  email: {
+    type: String,
+  },
+  contact: {
+    type: [String],
+    required: true,
+    default: undefined
   },
   address: {
     house: String,
@@ -14,11 +22,13 @@ module.exports = {
     district: String,
     province: String,
   },
-  contacts: {
-    type: [String],
-    required: true,
-    default: undefined
+  info: String,
+  create_date: {
+    type: Date,
+    default: new Date()
   },
-  email: String,
-  info: String
+  update_date: {
+    type: Date
+  },
+
 }

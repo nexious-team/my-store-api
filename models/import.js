@@ -1,8 +1,12 @@
 module.exports = {
-  name: {
-    type: String,
-    required: true,
-    unique: true
+  _supplier: {
+    type: "ObjectId",
+    ref: "Supplier",
+    required: true
+  },
+  amount: {
+    type: Number,
+    required: true
   },
   info: String,
   create_date: {

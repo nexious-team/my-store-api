@@ -1,16 +1,20 @@
 module.exports.definition = {
-  name: {
-    first: {
-      type: String,
-      required: true
-    },
-    last: {
-      type: String,
-      required: true
-    },
-    display: String
+  role: {
+    type: String,
+    enum: ['admin', 'user'],
+    default: 'user'
   },
-  dob: Date,
+  first_name: {
+    type: String,
+    required: true
+  },
+  last_name: {
+    type: String,
+    required: true
+  },
+  username: {
+    type: String
+  },
   email: {
     type: String,
     required: true
@@ -19,18 +23,22 @@ module.exports.definition = {
     type: String,
     required: true
   },
-  role: {
-    type: String,
-    enum: ['admin', 'user'],
-    default: 'user'
+  birth_date: Date,
+  contact: {
+    type:  [String],
+    default: undefined
   },
   address: {
-    street: String,
-    village: String,
-    district: String,
-    province: String
+    type: String,
   },
-  info: String
+  info: String,
+  create_date: {
+    type: Date,
+    default: new Date(),
+  },
+  update_date: {
+    type: Date
+  },
 }
 
 const bcrypt = require('bcryptjs');

@@ -2,33 +2,39 @@ const AccessControl = require('accesscontrol');
 
 let grantsObject = {
   admin: {
+    brand: {
+      'create:any': ['*'],
+      'read:any': ['*'],
+      'update:any': ['*'],
+      'delete:any': ['*']
+    },
     category: {
       'create:any': ['*'],
       'read:any': ['*'],
       'update:any': ['*'],
       'delete:any': ['*']
     },
-    product: {
+    image: {
       'create:any': ['*'],
       'read:any': ['*'],
       'update:any': ['*'],
       'delete:any': ['*']
     },
-    supplier: {
+    import_detail: {
       'create:any': ['*'],
       'read:any': ['*'],
       'update:any': ['*'],
       'delete:any': ['*']
     },
-    user: {
-      'create:any': ['*', '!password'],
-      'read:any': ['*', '!password'],
-      'update:any': ['*', '!password', '!email'],
-      'delete:any': ['*', '!password']
-    },
-    importOrder: {
+    import: {
       'create:any': ['*'],
       'read:any': ['*'],
+      'update:any': ['*'],
+      'delete:any': ['*']
+    },
+    order_detail: {
+      'create:any': ['*'],
+      'read:any': ['*', '!user.password'],
       'update:any': ['*'],
       'delete:any': ['*']
     },
@@ -43,6 +49,54 @@ let grantsObject = {
       'read:any': ['*'],
       'update:any': ['*'],
       'delete:any': ['*']
+    },
+    product_unit: {
+      'create:any': ['*'],
+      'read:any': ['*'],
+      'update:any': ['*'],
+      'delete:any': ['*']
+    },
+    product: {
+      'create:any': ['*'],
+      'read:any': ['*'],
+      'update:any': ['*'],
+      'delete:any': ['*']
+    },
+    shipment: {
+      'create:any': ['*'],
+      'read:any': ['*'],
+      'update:any': ['*'],
+      'delete:any': ['*']
+    },
+    staff: {
+      'create:any': ['*'],
+      'read:any': ['*'],
+      'update:any': ['*'],
+      'delete:any': ['*']
+    },
+    stock: {
+      'create:any': ['*'],
+      'read:any': ['*'],
+      'update:any': ['*'],
+      'delete:any': ['*']
+    },
+    supplier: {
+      'create:any': ['*'],
+      'read:any': ['*'],
+      'update:any': ['*'],
+      'delete:any': ['*']
+    },
+    unit: {
+      'create:any': ['*'],
+      'read:any': ['*'],
+      'update:any': ['*'],
+      'delete:any': ['*']
+    },
+    user: {
+      'create:any': ['*', '!password'],
+      'read:any': ['*', '!password'],
+      'update:any': ['*', '!password', '!email'],
+      'delete:any': ['*', '!password']
     },
     call: {
       'create:any': ['*'],

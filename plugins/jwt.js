@@ -4,6 +4,10 @@ const keys = {
   user: {
     secret: 'store-user-secret',
     exp: '24h'
+  },
+  staff: {
+    secret: 'store-staff-secret',
+    exp: '24h'
   }
 }
 
@@ -12,6 +16,6 @@ const verify = (token, key) => jwt.verify(token, key);
 
 module.exports = {
   keys,
-  signUser: (id) => sign({ id }, keys.user.secret, keys.user.exp),
-  verifyUser: (token) => verify(token, keys.user.secret)
+  generateToken: (id, issue) => sign({ id }, keys[issue].secret, keys.user.exp),
+  decodeToken: (token, issue) => verify(token, keys[issue].secret)
 }

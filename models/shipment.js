@@ -1,19 +1,16 @@
 module.exports = {
-  _caller: {
+  _order: {
     type: "ObjectId",
-    refPath: "callerRef",
+    ref: "Order",
+    required: true
   },
-  callerRef: {
+  phone: {
     type: String,
-    default: "User",
+    required: true
   },
-  model: {
+  address: {
     type: String,
-    required: true,
-  },
-  document: {
-    type: Object,
-    required: true,
+    required: true 
   },
   info: String,
 	create_date: {
@@ -23,5 +20,4 @@ module.exports = {
 	update_date: {
 		type: Date
 	},
-
 }

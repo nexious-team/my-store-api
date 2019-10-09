@@ -1,9 +1,10 @@
 {
-  "name": "my-store-back",
+  "name": "my-store-api",
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon ./bin/www"
+    "start": "nodemon ./bin/www",
+    "dev": "DEBUG=my-store:* npm start --scripts-prepend-node-path"
   },
   "dependencies": {
     "accesscontrol": "^2.2.1",

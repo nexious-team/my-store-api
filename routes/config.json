@@ -1,41 +1,50 @@
 [
   {
+    "endpoint": "brands?",
+    "model": "brand",
+    "routers": ["populate", "common"],
+    "params": {
+      "populate": {
+        "references": ["_image"]
+      }
+    }
+  },
+  {
     "endpoint": "categor(y|ies)",
     "model": "category",
     "routers": ["common"]
   },
   {
-    "endpoint": "products?",
-    "model": "product",
+    "endpoint": "images?",
+    "model": "image",
+    "routers": ["common"]
+  },  {
+    "endpoint": "import-details?",
+    "model": "import_detail",
     "routers": ["populate", "common"],
     "params": {
       "populate": {
-        "references": ["category"]
+        "references": ["_import", "_product", "_product_unit"]
       }
     }
   },
   {
-    "endpoint": "staff",
-    "model": "staff",
-    "routers": ["common"]
-  },
-  {
-    "endpoint": "suppliers?",
-    "model": "supplier",
-    "routers": ["common"]
-  },
-  {
-    "endpoint": "users?",
-    "model": "user",
-    "routers": ["user", "common"]
-  },
-  {
     "endpoint": "imports?",
-    "model": "importOrder",
-    "routers": ["populate", "importOrder", "common"],
+    "model": "import",
+    "routers": ["populate", "import", "common"],
     "params": {
       "populate": {
-        "references": ["product", "supplier"]
+        "references": ["_supplier"]
+      }
+    }
+  },
+  {
+    "endpoint": "order-details?",
+    "model": "order_detail",
+    "routers": ["populate", "common"],
+    "params": {
+      "populate": {
+        "references": ["_order", "_product", "_product_unit"]
       }
     }
   },
@@ -45,7 +54,7 @@
     "routers": ["populate", "order", "common"],
     "params": {
       "populate": {
-        "references": ["product", "user"]
+        "references": ["_user", "_shipment", "_payment"]
       }
     }
   },
@@ -55,9 +64,69 @@
     "routers": ["populate","payment", "common"],
     "params": {
       "populate": {
-        "references": ["order"]
+        "references": ["_user"]
       }
     }
+  },
+  {
+    "endpoint": "product-units?",
+    "model": "product_unit",
+    "routers":["populate", "common"],
+    "params": {
+      "populate": {
+        "references": ["_product", "_unit"]
+      }
+    }
+  },
+  {
+    "endpoint": "products?",
+    "model": "product",
+    "routers": ["populate", "common"],
+    "params": {
+      "populate": {
+        "references": ["_categories", "_brand", "_images"]
+      }
+    }
+  },
+  {
+    "endpoint": "shipments?",
+    "model": "shipment",
+    "routers": ["populate", "common"],
+    "params": {
+      "populate": {
+        "references": ["_order"]
+      }
+    }
+  },
+  {
+    "endpoint": "staff",
+    "model": "staff",
+    "routers": ["common"]
+  },
+  {
+    "endpoint": "stocks?",
+    "model": "stock",
+    "routers": ["populate", "common"],
+    "params": {
+      "populate": {
+        "references": ["_product"]
+      }
+    }
+  },
+  {
+    "endpoint": "suppliers?",
+    "model": "supplier",
+    "routers": ["common"]
+  },
+  {
+    "endpoint": "units?",
+    "model": "unit",
+    "routers": ["common"]
+  },
+  {
+    "endpoint": "users?",
+    "model": "user",
+    "routers": ["user", "common"]
   },
   {
     "endpoint": "calls?",
@@ -65,7 +134,7 @@
     "routers": ["populate", "common"],
     "params": {
       "populate": {
-        "references": ["caller"]
+        "references": ["_caller"]
       }
     }
   },
@@ -75,7 +144,7 @@
     "routers": ["recycle", "populate", "common"],
     "params": {
       "populate": {
-        "references": ["caller"]
+        "references": ["_caller"]
       }
     }
   }

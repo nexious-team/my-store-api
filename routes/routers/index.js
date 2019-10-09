@@ -4,6 +4,6 @@ module.exports = {
   user: require('./user'),
   order: require('./order'),
   payment: require('./payment'),
-  importOrder: require('./import_order'),
-  recycle: require('./recycle'),
+  import: require('./import'),
+  recycle: require('./recycle')
 }

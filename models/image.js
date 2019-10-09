@@ -1,8 +1,7 @@
 module.exports = {
-  name: {
+  path: {
     type: String,
-    required: true,
-    unique: true
+    required: true
   },
   info: String,
   create_date: {

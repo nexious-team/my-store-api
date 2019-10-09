@@ -9,7 +9,7 @@ const { calculateImportAmount } = require('../../workers/common');
 const { decreaseProductQty, increaseProductQty } = require('../../workers/order');
 const { record } = require('../../workers/call');
 
-module.exports = (model = 'importOrder') => {
+module.exports = (model = 'import') => {
   const router = express.Router();
 
   router.route('/')

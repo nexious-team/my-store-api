@@ -1,31 +1,35 @@
 module.exports = {
-  caller: {
+  _caller: {
     type: "ObjectId",
-    refPath: "refModel"
+    refPath: "caller_ref"
   },
-  refModel: {
-    type: "String",
+  caller_ref: {
+    type: String,
     required: true,
     enum: ["User", "Staff"],
     default: "User"
   },
   method: {
-    type: "String",
+    type: String,
     required: true
   },
-  originalUrl: {
-    type: "String",
+  original_url: {
+    type: String,
     required:true
   },
   body: "Object",
   response: {
-    status: "Number",
-    error: "String",
-    message: "String",
+    status: Number,
+    error: String,
+    message: String,
     payload: "Mixed"
   },
-  createAt: {
-    type: "Date",
+  info: String,
+  create_date: {
+    type: Date,
     default: new Date()
+  },
+  update_date: {
+    type: Date
   }
 }

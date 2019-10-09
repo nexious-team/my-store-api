@@ -1,14 +1,18 @@
 module.exports = {
-  order: {
+  _user: {
     type: "ObjectId",
-    ref: "Order",
+    ref: "User",
     required: true
   },
   method: String,
-  date: {
-    type: Date,
-    default: new Date()
-  },
   credential: Object,
-  info: String,
+	info: String,
+	create_date: {
+		type: Date,
+		default: new Date(),
+	},
+	update_date: {
+		type: Date
+	},
+
 }

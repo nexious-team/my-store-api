@@ -3,7 +3,7 @@ const {
   user: User,
   call: Call } = require('../../models');
 const passport = require('../../plugins/passport');
-const { signUser } = require('../../plugins/jwt');
+const { generateToken } = require('../../plugins/jwt');
 const canUser = require('../../middlewares/permission');
 const { common, lean, exclude, copy } = require('./helpers');
 
@@ -26,7 +26,7 @@ module.exports = () => {
       if (!user) { return res.status(400).json(info); }
       req.login(user, { session: false }, function(err) {
         if (err) { return next(err); }
-        const token = signUser(user._id);
+        const token = generateToken(user._id, 'user');
         const profile = exclude(user, ['password', 'role']);
         return res.json({message: "Login successfully", token, profile});
       });
