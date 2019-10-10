@@ -19,6 +19,7 @@ const unit = require('./unit');
 const user = require('./user');
 
 const call = require('./call');
+const permission = require('./permission');
 const recycle = require('./recycle');
 
 module.exports = {
@@ -40,6 +41,7 @@ module.exports = {
   user: model("User", create(user)),
 
   call: model("Call", new Schema(call)),
+  permission: model("Permission", new Schema(permission)),
   recycle: model("Recycle", new Schema(recycle)),
 }
 
