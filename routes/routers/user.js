@@ -5,7 +5,7 @@ const {
 const passport = require('../../plugins/passport');
 const { generateToken } = require('../../plugins/jwt');
 const canUser = require('../../middlewares/permission');
-const { common, lean, exclude, copy } = require('./helpers');
+const { common, lean, exclude, copy, logger } = require('./helpers');
 
 const auth = passport.authenticate('jwt', { session: false });
 
@@ -14,7 +14,10 @@ module.exports = () => {
 
   router.post('/signup', async (req, res, next) => {
     User.create(req.body, (err, user) => {
-      if(err) return next(err);
+      if (err) {
+        logger.log('error', `POST '${req.originalUrl}' \n => Error Said: ${err}`);
+        return next(err);
+      }
       const profile = exclude(user, ['password', 'role']);
       if(user) res.json({ message: "Sign up successfully" , profile});
     })
