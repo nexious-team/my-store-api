@@ -28,7 +28,7 @@ function exclude(document, fields) {
   return filtered;
 }
 
-function copy(target, source) {
+function copy(source, target) {
   for(let key in source) {
     if( typeof target[key] === 'object') copy( target[key], source[key] );
     else target[key] = source[key];

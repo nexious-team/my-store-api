@@ -20,6 +20,7 @@ module.exports = {
       'product_unit',
       'product',
       'recycle',
+      'role',
       'shipment',
       'staff',
       'stock',
