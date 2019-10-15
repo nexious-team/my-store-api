@@ -1,7 +1,7 @@
 module.exports.definition = {
   role: {
     type: String,
-    enum: ['admin', 'user'],
+    enum: ['user'],
     default: 'user'
   },
   first_name: {
@@ -41,26 +41,18 @@ module.exports.definition = {
   },
 }
 
-const bcrypt = require('bcryptjs');
-
 module.exports.middlewares = (schema) => {
   schema.pre('save', function (next) {
     this.password = this.hash(this.password);
     next();
   })
 }
+const { hash, compare } = require('./helpers/password');
 
 module.exports.methods = (schema) => {
-  schema.methods.hash = function (password) {
-    const salt = bcrypt.genSaltSync(10);
-    const hash = bcrypt.hashSync(password, salt);
-    return hash;
-  }
+  schema.methods.hash = hash;
 
-  schema.methods.compare = function (password) {
-    const match = bcrypt.compareSync(password, this.password);
-    return match;
-  }
+  schema.methods.compare = compare;
 }
 
 module.exports.statics = (schema) => {

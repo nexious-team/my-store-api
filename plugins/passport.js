@@ -2,23 +2,41 @@ const passport = require('passport')
   , { Strategy: LocalStrategy } = require('passport-local')
   , { Strategy: JwtStrategy, ExtractJwt } = require('passport-jwt');
 
-const { user: User } = require('../models');
+const { user: User, staff: Staff, role: Role } = require('../models');
 const { keys } = require('./jwt');
 
-passport.use(new LocalStrategy({
+passport.use('user', new LocalStrategy(
+  {
     usernameField: 'email'
   },
   function (email, password, done) {
     User.findOne({ email }, function (err, user) {
-     if (err) { return done(err); }
-     if (!user) {
-       return done(null, false, { message: 'Incorrect email.' });
-     }
-     if (!user.compare(password)) {
-       return done(null, false, { message: 'Incorrect password.' });
-     }
-     return done(null, user);
-   });
+      if (err) { return done(err); }
+      if (!user) {
+        return done(null, false, { message: 'Incorrect email.' });
+      }
+      if (!user.compare(password)) {
+        return done(null, false, { message: 'Incorrect password.' });
+      }
+      return done(null, user);
+    });
+  }
+))
+passport.use('staff', new LocalStrategy(
+  {
+    usernameField: 'email'
+  },
+  function (email, password, done) {
+    Staff.findOne({ email }, function (err, user) {
+      if (err) { return done(err); }
+      if (!user) {
+        return done(null, false, { message: 'Incorrect email.' });
+      }
+      if (!user.compare(password)) {
+        return done(null, false, { message: 'Incorrect password.' });
+      }
+      return done(null, user);
+    });
   }
 ))
 const options = {
@@ -26,13 +44,15 @@ const options = {
   secretOrKey: keys.user.secret
 }
 
-passport.use( new JwtStrategy( options, function (decoded, done) {
-  User.findById( decoded.id, function (err, user) {
-    if (err) return done(err, false);
-    if (!user) return done(null, false);
+passport.use('jwt', new JwtStrategy(options, function (decoded, done) {
+  Role.findById(decoded.id)
+    .populate('_identity')
+    .exec(function (err, role) {
+      if (err) return done(err, false);
+      if (!role) return done(null, false);
 
-    return done(null, user);
-   });
+      return done(null, role);
+    });
 }))
 
 module.exports = passport;

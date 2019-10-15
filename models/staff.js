@@ -1,7 +1,9 @@
-module.exports = {
+module.exports.definition = {
   role: {
     type: String,
-    required: true 
+    required: true,
+    default: 'staff',
+    enum: ['staff', 'admin']
   },
   first_name: {
     type: String,
@@ -25,7 +27,6 @@ module.exports = {
   },
   birth_date: {
     type: Date,
-    required: true
   },
   contact: {
     type:  [String],
@@ -42,5 +43,19 @@ module.exports = {
 	update_date: {
 		type: Date
 	},
+}
 
+module.exports.middlewares = (schema) => {
+  schema.pre('save', function (next) {
+    this.password = this.hash(this.password);
+    next();
+  })
+}
+
+const { hash, compare } = require('./helpers/password');
+
+module.exports.methods = (schema) => {
+  schema.methods.hash = hash;
+
+  schema.methods.compare = compare;
 }

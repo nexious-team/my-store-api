@@ -21,6 +21,7 @@ const user = require('./user');
 const call = require('./call');
 const permission = require('./permission');
 const recycle = require('./recycle');
+const role = require('./role');
 
 module.exports = {
   brand: model("Brand", new Schema(brand)),
@@ -34,7 +35,7 @@ module.exports = {
   product_unit: model("ProductUnit", new Schema(productUnit)),
   product: model("Product", new Schema(product)),
   shipment: model("Shipment", new Schema(shipment)),
-  staff: model("Staff", new Schema(staff)),
+  staff: model("Staff", create(staff)),
   stock: model("Stock", new Schema(stock)),
   supplier: model("Supplier", new Schema(supplier)),
   unit: model("Unit", new Schema(unit)),
@@ -43,6 +44,7 @@ module.exports = {
   call: model("Call", new Schema(call)),
   permission: model("Permission", new Schema(permission)),
   recycle: model("Recycle", new Schema(recycle)),
+  role: model("Role", new Schema(role))
 }
 
 function create ({ definition, middlewares, methods, statics }) {

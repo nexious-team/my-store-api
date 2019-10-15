@@ -4,10 +4,6 @@ const keys = {
   user: {
     secret: 'store-user-secret',
     exp: '24h'
-  },
-  staff: {
-    secret: 'store-staff-secret',
-    exp: '24h'
   }
 }
 
