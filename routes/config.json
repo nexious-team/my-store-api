@@ -101,7 +101,7 @@
   {
     "endpoint": "staff",
     "model": "staff",
-    "routers": ["common"]
+    "routers": ["user", "common"]
   },
   {
     "endpoint": "stocks?",
@@ -150,6 +150,16 @@
     "params": {
       "populate": {
         "references": ["_caller"]
+      }
+    }
+  },
+  {
+    "endpoint": "roles?",
+    "model": "role",
+    "routers": ["populate", "common"],
+    "params": {
+      "populate": {
+        "references": ["_identity"]
       }
     }
   }
