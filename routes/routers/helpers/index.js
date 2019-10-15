@@ -1,5 +1,6 @@
 const { record } = require('../../../workers/call')
 const { sentry } = require('../../../workers/recycle')
+const { logger } = require('./logger');
 
 function common(req, res, next) {
   return (err, result) => {
@@ -41,5 +42,6 @@ module.exports = {
   exclude,
   copy,
   common,
+  logger,
   queryMapper: require('./queryMapper')
 }
