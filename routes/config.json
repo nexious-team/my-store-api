@@ -129,6 +129,11 @@
     "routers": ["user", "common"]
   },
   {
+    "endpoint": "permissions?",
+    "model": "permission",
+    "routers": ["common"]
+  },
+  {
     "endpoint": "calls?",
     "model": "call",
     "routers": ["populate", "common"],
