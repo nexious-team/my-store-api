@@ -8,6 +8,7 @@ const canUser = require('../../middlewares/permission');
 const { calculateOrderAmount } = require('../../workers/common');
 const { decreaseProductQty, increaseProductQty } = require('../../workers/order');
 const { record } = require('../../workers/call');
+const { filter, response } = require('./helpers');
 
 module.exports = (model = 'order') => {
   const router = express.Router();
@@ -20,7 +21,10 @@ module.exports = (model = 'order') => {
 
         Models[model].create(req.body, (err, doc) => {
           if (err) return next(err);
-          res.json(doc);
+          const { permission } = res.locals;
+
+          res.json(response[200](null, filter(permission, doc)));
+
           decreaseProductQty(doc.product, doc.qty, console.log);
           record(req, { status: 200 });
         })
@@ -32,12 +36,19 @@ module.exports = (model = 'order') => {
   router.route('/:id')
     .all(auth)
     .delete(canUser('deleteAny', model), (req, res, next) => {
-      Models[model].findByIdAndRemove(req.params.id, (err, doc) => {
-        if (err) return next(err);
-        res.json(doc);
-        increaseProductQty(doc.product, doc.qty, console.log);
-        record(req, { status: 200 });
-      })
+      try {
+        Models[model].findByIdAndRemove(req.params.id, (err, doc) => {
+          if (err) return next(err);
+          const { permission } = res.locals;
+
+          res.json(response[200](null, filter(permission, doc)));
+
+          increaseProductQty(doc.product, doc.qty, console.log);
+          record(req, { status: 200 });
+        })
+      } catch (e) {
+        next(e);
+      }
     })
 
   return router;
