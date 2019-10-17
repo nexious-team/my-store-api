@@ -1,12 +1,13 @@
 const express = require('express');
 const Models = require('../../models');
 const passport = require('../../plugins/passport');
-const mongoose = require('mongoose')
 const auth = passport.authenticate('jwt', { session: false });
 const canUser = require('../../middlewares/permission');
 
 const { record } = require('../../workers/call')
 const { sentry } = require('../../workers/recycle')
+
+const { filter, response } = require('./helpers')
 
 module.exports = (model = 'recycle') => {
   const router = express.Router();
@@ -16,11 +17,12 @@ module.exports = (model = 'recycle') => {
     Models[model].findById(req.params.id, (err, trash) => {
       if (err) return next(err);
       if (!trash) return next(new Error("Not Found"));
+      const { permission } = res.locals;
 
       sentry.restore(trash, doc => {
-        const response = { message: `Restore trash ${doc.id} successfully`}
-        res.json(response);
-        record(req, { status: 200, ...response});
+        const message = `Restore trash ${doc.id} successfully`;
+        res.json(response[200](message, filter(permission, doc)));
+        record(req, { status: 200, message});
       })
     })
   })
@@ -32,11 +34,12 @@ module.exports = (model = 'recycle') => {
     }, (err, trash) => {
       if (err) return next(err);
       if (!trash) return next(new Error("Not Found"));
+      const { permission } = res.locals;
 
       sentry.restore(trash, doc => {
-        const response = { message: `Restore ${trash.model} with id ${trash._id} successfully`}
-        res.json(response);
-        record(req, { status: 200, ...response});
+        const message = `Restore ${trash.model} with id ${trash._id} successfully`;
+        res.json(response[200](message, filter(permission, doc)));
+        record(req, { status: 200, message });
       });
     })
   })
