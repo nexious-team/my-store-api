@@ -41,7 +41,7 @@
   {
     "endpoint": "order-details?",
     "model": "order_detail",
-    "routers": ["populate", "common"],
+    "routers": ["order_detail", "populate", "common"],
     "params": {
       "populate": {
         "references": ["_order", "_product", "_product_unit"]
@@ -109,7 +109,7 @@
     "routers": ["populate", "common"],
     "params": {
       "populate": {
-        "references": ["_product"]
+        "references": ["_product", "_product_unit"]
       }
     }
   },

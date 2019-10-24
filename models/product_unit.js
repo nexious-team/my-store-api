@@ -2,12 +2,18 @@ module.exports = {
 	_unit: {
 		type: "ObjectId",
 		required: true,
+		ref: "Unit"
 	},
 	_product: {
 		type: "ObjectId",
-		required: true
+		required: true,
+		ref: "Product"
 	},
 	quantity: {
+		type: Number,
+		required: true
+	},
+	max_order: { 
 		type: Number,
 		required: true
 	},
@@ -23,5 +29,4 @@ module.exports = {
 	update_date: {
 		type: Date
 	},
-
 }
