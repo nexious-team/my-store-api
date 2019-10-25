@@ -18,7 +18,6 @@ module.exports = (model = 'order') => {
     .post(canUser('createAny', model), async (req, res, next) => {
       try {
         req.body._user = req.user._identity._id;
-        // req.body.amount = await calculateOrderAmount(req.body);
 
         Models[model].create(req.body, (err, doc) => {
           if (err) return next(err);
@@ -26,7 +25,6 @@ module.exports = (model = 'order') => {
 
           res.json(response[200](null, filter(permission, doc)));
 
-          // decreaseProductQty(doc.product, doc.qty, console.log);
           record(req, { status: 200 });
         })
       } catch (e) {

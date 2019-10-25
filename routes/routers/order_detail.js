@@ -5,8 +5,8 @@ const passport = require('../../plugins/passport');
 const auth = passport.authenticate('jwt', { session: false });
 const canUser = require('../../middlewares/permission');
 
-const { calculateOrderAmount } = require('../../workers/common');
-const { decreaseProductQty, increaseProductQty } = require('../../workers/order');
+const { checkStockAndCalculateAmount } = require('../../workers/common');
+const { decreaseProductStock, increaseProductQty } = require('../../workers/order');
 const { record } = require('../../workers/call');
 const { filter, response } = require('./helpers');
 
@@ -17,20 +17,17 @@ module.exports = (model = 'order_detail') => {
     .all(auth)
     .post(canUser('createAny', model), async (req, res, next) => {
       try {
-        console.log(req.body);
         
-        [req.body.price, req.body.amount] = await calculateOrderAmount(req.body);
+        [req.body.price, req.body.amount] = await checkStockAndCalculateAmount(req.body);
 
-        res.json(req.body);
-        // Models[model].create(req.body, (err, doc) => {
-        //   if (err) return next(err);
-        //   const { permission } = res.locals;
+        const doc = await Models[model].create(req.body);
+        const { permission } = res.locals;
 
-        //   res.json(response[200](null, filter(permission, doc)));
+        await decreaseProductStock(doc);
+        record(req, { status: 200 });
+        
+        res.json(response[200](null, filter(permission, doc)));
 
-        //   decreaseProductQty(doc._product, doc.quantity, console.log);
-        //   record(req, { status: 200 });
-        // })
       } catch (e) {
         next(e);
       }

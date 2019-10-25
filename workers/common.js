@@ -1,9 +1,10 @@
 const Models = require('../models');
 const error = {
-  outOfStock: "Function calculateOrderAmount: Product stock is not enough to make order",
-  overMaxOrderProductUnit: "Function calulateOrderAmount: Order quantity is bigger than max order on the product unit, you should make order with bigger product unit to get better price or the product run out of stock." 
+  outOfStock: "checkStockAndCalculateAmount: Product stock is not enough to make order",
+  overMaxOrderProductUnit: "checkStockAndCalculateAmount: Order quantity is bigger than max order on the product unit, you should make order with bigger product unit to get better price or the product run out of stock." 
 }
-const calculateOrderAmount = async ({ _product: _id, quantity, _product_unit }) => {
+const checkStockAndCalculateAmount = async ({ _product: _id, quantity, _product_unit }) => {
+  console.log('checkStockAndCalculateAmount: starting ...')
   const product = {};
   product.item = await Models['product'].findById(_id).lean();
   product.stock = await Models['stock'].findOne({_product: _id}).lean();
@@ -27,7 +28,8 @@ const calculateOrderAmount = async ({ _product: _id, quantity, _product_unit }) 
     const stockQuantityInEachUnit = stockUnit.quantity * product.stock.quantity;
     
     if (stockQuantityInEachUnit < orderQuantityInEachUnit) throw new Error(error.outOfStock)
-    
+
+    console.log('checkStockAndCalculateAmount: return ' + [orderUnit.price, quantity * orderUnit.price])    
     return [orderUnit.price, quantity * orderUnit.price];
   }
 }
@@ -35,6 +37,6 @@ const calculateOrderAmount = async ({ _product: _id, quantity, _product_unit }) 
 const calculateImportAmount = ({ price, quantity }) => (price * quantity)
 
 module.exports = {
-  calculateOrderAmount,
+  checkStockAndCalculateAmount,
   calculateImportAmount
 }
