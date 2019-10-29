@@ -3,7 +3,7 @@ const { Schema, model } = mongoose;
 
 const brand = require('./brand');
 const category = require('./category');
-const image = require('./image')
+const image = require('./image');
 const importDetail = require('./import_detail');
 const importDefinition = require('./import');
 const orderDetail = require('./order_detail');

@@ -2,7 +2,7 @@ module.exports = (query) => {
   const { select, page, limit, sort, ...filter } = query;
 
   const conditions = mapConditions(filter);
-  const options = mapConditions(page, limit, sort);
+  const options = mapOptions(page, limit, sort);
 
   return {
     conditions,
@@ -28,7 +28,7 @@ const mapConditions = (filter) => {
   return conditions;
 }
 
-const mapOptions = (page = 1, limit = 0, sort = {}) => {
+const mapOptions = (page = 1, limit = 50, sort = {}) => {
   const options = { page, limit, sort};
 
   return options;
