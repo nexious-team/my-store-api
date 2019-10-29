@@ -45,7 +45,7 @@ const options = {
 }
 
 passport.use('jwt', new JwtStrategy(options, function (decoded, done) {
-  Role.findById(decoded.id)
+  Role.findById(decoded._id)
     .populate('_identity')
     .exec(function (err, role) {
       if (err) return done(err, false);
