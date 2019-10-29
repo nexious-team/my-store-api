@@ -5,8 +5,6 @@ const passport = require('../../plugins/passport');
 const auth = passport.authenticate('jwt', { session: false });
 const canUser = require('../../middlewares/permission');
 
-const { calculateOrderAmount } = require('../../workers/common');
-const { decreaseProductQty, increaseProductQty } = require('../../workers/order');
 const { record } = require('../../workers/call');
 const { filter, response } = require('./helpers');
 
@@ -23,7 +21,7 @@ module.exports = (model = 'order') => {
           if (err) return next(err);
           const { permission } = res.locals;
 
-          res.json(response[200](null, filter(permission, doc)));
+          res.json(response[200](undefined, filter(permission, doc)));
 
           record(req, { status: 200 });
         })
@@ -31,23 +29,15 @@ module.exports = (model = 'order') => {
         next(e);
       }
     })
-
-  router.route('/:id')
+  
+  router.route('/:id/order-details')
     .all(auth)
-    .delete(canUser('deleteAny', model), (req, res, next) => {
-      try {
-        Models[model].findByIdAndRemove(req.params.id, (err, doc) => {
-          if (err) return next(err);
-          const { permission } = res.locals;
+    .get(canUser('readOwn', 'order_detail'), async (req, res) => {
+      const docs = await Models['order_detail'].find({_order: req.params.id}).populate('_product');
+      const { permission } = res.locals;
 
-          res.json(response[200](null, filter(permission, doc)));
-
-          increaseProductQty(doc.product, doc.qty, console.log);
-          record(req, { status: 200 });
-        })
-      } catch (e) {
-        next(e);
-      }
+      res.json(response[200](undefined, filter(permission, docs)));
+      record(req, { status: 200 });
     })
 
   return router;

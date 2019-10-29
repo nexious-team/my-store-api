@@ -6,7 +6,7 @@ const auth = passport.authenticate('jwt', { session: false });
 const canUser = require('../../middlewares/permission');
 
 const { checkStockAndCalculateAmount } = require('../../workers/common');
-const { decreaseProductStock, increaseProductQty } = require('../../workers/order');
+const { decreaseProductStock, increaseProductStock } = require('../../workers/order');
 const { record } = require('../../workers/call');
 const { filter, response } = require('./helpers');
 
@@ -28,6 +28,22 @@ module.exports = (model = 'order_detail') => {
         
         res.json(response[200](null, filter(permission, doc)));
 
+      } catch (e) {
+        next(e);
+      }
+    })
+  
+  router.route('/:id')
+    .all(auth)
+    .delete(canUser('deleteAny', model), async (req, res, next) => {
+      try {
+        const doc = await Models[model].findByIdAndRemove(req.params.id);
+        const { permission } = res.locals;
+
+        res.json(response[200](null, filter(permission, doc)));
+
+        await increaseProductStock(doc);
+        record(req, { status: 200 });
       } catch (e) {
         next(e);
       }
