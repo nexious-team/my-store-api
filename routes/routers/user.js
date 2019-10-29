@@ -38,21 +38,15 @@ module.exports = (model) => {
       if (err) { return next(err); }
       req.login(user, { session: false }, function(err) {
         if (err) { return next(err); }
-        console.log(user, info);
         if (!user) return res.status(400).json(response[200](info.message));
 
         Models['role'].findOne({ _identity: user._id }, (err, role) => {
           if (err) { return next(err); }
 
-          const token = generateToken(role._id, 'user');
+          const token = generateToken({_id: role._id, username: user.username}, 'user');
           const message = 'Login succeed!';
 
-          const permission = ac.can(user.role).readOwn(model);
-          if (!permission.granted) {
-            return res.json(response[200](message, { token }));
-          } else {
-            return res.json(response[200](message, {...filter(permission, user), token}));
-          }
+          return res.json(response[200](message, { token }));
         })
       });
     })(req, res, next);
@@ -60,14 +54,14 @@ module.exports = (model) => {
 
   router.route('/profile')
     .all(auth)
-    .get(canUser('readOwn','user'), async (req, res, next) => {
+    .get(canUser('readOwn', model), async (req, res, next) => {
       const doc = await Models[model].findById(req.user._identity._id);
       if (!doc) return res.status(404).json({ error: "Not found!"});
       const { permission } = res.locals;
 
       res.json(response[200](null, filter(permission, doc)));
     })
-    .put(canUser('updateOwn', 'user'), async (req, res, next) => {
+    .put(canUser('updateOwn', model), async (req, res, next) => {
       const user = await Models[model].findById(req.user._identity._id);
       if (!user) return res.status(404).json({ error: "Not found!"})
       const { permission } = res.locals;

@@ -1,7 +1,8 @@
 module.exports = {
   _product: {
     type: "ObjectId",
-    ref: "Product"
+    ref: "Product",
+    unique: true
   },
   _product_unit: {
     type: "ObjectId",

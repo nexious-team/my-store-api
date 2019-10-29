@@ -1,27 +1,64 @@
 const Models = require('../models');
 
-// Create an order
-function decreaseProductQty( id, qty, callback ) {
-  Models['product'].findById( id, ( err, doc ) => {
-    if (err) return callback(err);
-    if (doc.qty < qty)
-      return callback(new Error("Can't decrease roduct quantity since it is less than order quantity!"));
+/**
+ * 
+ * @param {*} param0 order_detail document
+ * @param {*} callback 
+ */
 
-    doc.qty = doc.qty - qty;
-    doc.save(callback);
-  })
+async function decreaseProductStock({_product, quantity, _product_unit}) {
+  console.log('decreaseProductStock: starting ...');
+  
+  const stock = await Models['stock'].findOne({_product });
+  const units = await Models['product_unit'].find({_product});
+
+  if (stock._product_unit === _product_unit) {
+    stock.quantity = stock.quantity - quantity;
+    const result = await stock.save();
+    return [null, result];
+  }
+  
+  const orderUnit = units.find(unit => unit._id.equals(_product_unit));
+  const stockUnit = units.find(unit => unit._id.equals(stock._product_unit));
+
+  const stockInEachUnit = (stock.quantity * stockUnit.quantity) - (quantity * orderUnit.quantity);
+  stock.quantity = stockInEachUnit / stockUnit.quantity;
+  const result = await stock.save();
+
+  console.log('decreaseProductStock: return ' + [null, result]);
+  return [null, result];
 }
 
-// Create an import order || user cancel an order
-function increaseProductQty( id, qty, callback) {
-  Models['product'].findById(id, (err, doc) => {
-    if(err) return callback(err);
-    doc.qty = doc.qty + qty;
-    doc.save(callback);
-  })
+/**
+ * Create an import order || user cancel an order
+ * @param {*} param0 order detail document
+ * @param {*} callback 
+ */
+
+async function increaseProductStock({_product, quantity, _product_unit}, callback) {
+  console.log('increaseProductStock: starting ...');
+  const stock = await Models['stock'].findOne({_product});
+  const units = await Models['product_unit'].find({_product});
+
+  if (stock._product_unit === _product_unit) {
+    stock.quantity = stock.quantity + quantity;
+    const result = await stock.save();
+    return [null, result];
+  }
+  
+  const orderUnit = units.find(unit => unit._id.equals(_product_unit));
+  const stockUnit = units.find(unit => unit._id.equals(stock._product_unit));
+
+  const stockInEachUnit = (stock.quantity * stockUnit.quantity) + (quantity * orderUnit.quantity);
+  stock.quantity = stockInEachUnit / stockUnit.quantity;
+  const result = await stock.save();
+
+  console.log('increaseProductStock: return ' + [null, result]);
+  return [null, result];
+
 }
 
 module.exports = {
-  decreaseProductQty,
-  increaseProductQty
+  decreaseProductStock,
+  increaseProductStock
 }
