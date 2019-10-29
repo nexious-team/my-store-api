@@ -38,21 +38,15 @@ module.exports = (model) => {
       if (err) { return next(err); }
       req.login(user, { session: false }, function(err) {
         if (err) { return next(err); }
-        console.log(user, info);
         if (!user) return res.status(400).json(response[200](info.message));
 
         Models['role'].findOne({ _identity: user._id }, (err, role) => {
           if (err) { return next(err); }
 
-          const token = generateToken(role._id, 'user');
+          const token = generateToken({_id: role._id, username: user.username}, 'user');
           const message = 'Login succeed!';
 
-          const permission = ac.can(user.role).readOwn(model);
-          if (!permission.granted) {
-            return res.json(response[200](message, { token }));
-          } else {
-            return res.json(response[200](message, {...filter(permission, user), token}));
-          }
+          return res.json(response[200](message, { token }));
         })
       });
     })(req, res, next);

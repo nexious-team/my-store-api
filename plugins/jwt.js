@@ -12,6 +12,6 @@ const verify = (token, key) => jwt.verify(token, key);
 
 module.exports = {
   keys,
-  generateToken: (id, issue) => sign({ id }, keys[issue].secret, keys.user.exp),
+  generateToken: (payload, issue) => sign(payload, keys[issue].secret, keys.user.exp),
   decodeToken: (token, issue) => verify(token, keys[issue].secret)
 }
