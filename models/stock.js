@@ -1,24 +1,24 @@
 module.exports = {
   _product: {
-    type: "ObjectId",
-    ref: "Product",
+    type: 'ObjectId',
+    ref: 'Product',
     unique: true
   },
   _product_unit: {
-    type: "ObjectId",
-    ref: "ProductUnit"
+    type: 'ObjectId',
+    ref: 'ProductUnit'
   },
   quantity: {
-    type: Number,
+    type: 'Number',
     required: true
   },
-  info: String,
+  info: 'String',
   create_date: {
-    type: Date,
+    type: 'Date',
     default: new Date(),
   },
   update_date: {
-    type: Date
+    type: 'Date'
   },
 
 }

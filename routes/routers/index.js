@@ -6,5 +6,6 @@ module.exports = {
   order_detail: require('./order_detail'),
   payment: require('./payment'),
   import: require('./import'),
-  recycle: require('./recycle')
+  recycle: require('./recycle'),
+  util: require('./util')
 }

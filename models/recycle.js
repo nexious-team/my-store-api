@@ -1,27 +1,27 @@
 module.exports = {
   _caller: {
-    type: "ObjectId",
-    refPath: "callerRef",
+    type: 'ObjectId',
+    refPath: 'callerRef',
   },
   callerRef: {
-    type: String,
-    default: "User",
+    type: 'String',
+    default: 'User',
   },
   model: {
-    type: String,
+    type: 'String',
     required: true,
   },
   document: {
-    type: Object,
+    type: 'Object',
     required: true,
   },
-  info: String,
+  info: 'String',
 	create_date: {
-		type: Date,
+		type: 'Date',
 		default: new Date(),
 	},
 	update_date: {
-		type: Date
+		type: 'Date'
 	},
 
 }
