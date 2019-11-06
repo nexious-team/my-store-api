@@ -23,6 +23,10 @@ module.exports.definition = {
     type: String,
     required: true
   },
+  verified: {
+    type: Boolean,
+    default: false
+  },
   birth_date: Date,
   contact: {
     type:  [String],
@@ -43,7 +47,8 @@ module.exports.definition = {
 
 module.exports.middlewares = (schema) => {
   schema.pre('save', function (next) {
-    this.password = this.hash(this.password);
+    if(this.isModified('password'))
+      this.password = this.hash(this.password);
     next();
   })
 }
