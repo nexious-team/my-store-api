@@ -28,8 +28,10 @@ const mapConditions = (filter) => {
   return conditions;
 }
 
-const mapOptions = (page = 1, limit = 50, sort = {}) => {
-  const options = { page, limit, sort};
+const mapOptions = (page = 1, limit = 25, sort = {}) => {
+  limit = isNaN(limit) ? 25 : parseInt(limit);
+  page = isNaN(page) || page === '0'? 1 : parseInt(page);
+  let skip = (page - 1) * limit;
 
-  return options;
+  return { skip, limit, sort };
 }
