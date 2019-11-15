@@ -45,7 +45,7 @@ This is the API for my-store application one of developers-town project base on 
 
 ## Documentation
 
-- [Swagger](https://app.swaggerhub.com/apis-docs/developers-town/my-store/1.0.0)
+- [Swagger](https://app.swaggerhub.com/apis-docs/nexious/my-store/1.0.0)
 - [GitBook](https://my-store-developers-town.gitbook.io/my-store-back/)
 
 ## Getting started
