@@ -1,0 +1,35 @@
+html
+  head
+    title Pug
+    style.
+       @import url('https://fonts.googleapis.com/css?family=Josefin+Sans&display=swap');
+      body {
+        font-family: 'Josefin Sans', sans-serif;;
+        text-align: center;
+        margin: 12px 24px;
+      }
+      .button {
+        padding-top: 20px;
+        padding-bottom: 20px;
+      }
+      a {
+        color: black;
+        text-decoration: none;
+        border: 0 solid #e2e8f0;
+        text-transform: none;
+        line-height: inherit;
+        font-weight: bold;
+        width: 100%;
+        padding: 15px 20%;
+        background-color: #48bb78;
+        border-radius: 3px;
+      }
+  body
+    div
+      h3 Nexious
+      p Please confirm that you will use this email to register with our application.
+      .button
+        a(href=`'https://nexious-store-api.herokuapp.com/api/${model}/verify-email?token=${token}`) Verify
+    footer
+      p &copy;2019 Nexious. All rights reserved.
+      p Nexious, What You Envision, Come To Existence

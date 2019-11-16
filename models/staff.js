@@ -1,49 +1,49 @@
 module.exports.definition = {
   role: {
-    type: String,
+    type: 'String',
     required: true,
     default: 'staff',
     enum: ['staff', 'admin']
   },
   first_name: {
-    type: String,
+    type: 'String',
     required: true
   },
   last_name: {
-    type: String,
+    type: 'String',
     required: true
   },
   username: {
-    type: String,
+    type: 'String',
     required: true,
     unique: true,
   },
   email: {
-    type: String,
+    type: 'String',
     required: true,
     unique: true,
   },
   password: {
-    type: String,
+    type: 'String',
     required: true
   },
   birth_date: {
-    type: Date,
+    type: 'Date',
   },
   contact: {
-    type:  [String],
+    type:  ['String'],
     default: undefined
   },
   address: {
-    type: String,
+    type: 'String',
   },
-  info: String,
+  info: 'String',
 	create_date: {
-		type: Date,
+		type: 'Date',
 		default: new Date(),
 	},
 	update_date: {
-		type: Date
+		type: 'Date'
 	},
 }
 

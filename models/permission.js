@@ -1,10 +1,10 @@
 module.exports = {
   role: {
-    type: String,
+    type: 'String',
     required : true
   },
   resource: {
-    type: String,
+    type: 'String',
     required: true,
     enum: [
       'brand',
@@ -30,7 +30,7 @@ module.exports = {
     ]
   },
   action: {
-    type: String,
+    type: 'String',
     required: true,
     enum: [
       'create:own',
@@ -44,16 +44,16 @@ module.exports = {
     ]
   }, 
   attributes: {
-    type: String,
+    type: 'String',
     required: true,
     default: '*'
   },
-  info: String,
+  info: 'String',
 	create_date: {
-		type: Date,
+		type: 'Date',
 		default: new Date(),
 	},
 	update_date: {
-		type: Date
+		type: 'Date'
 	},
 }

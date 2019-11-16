@@ -2,7 +2,7 @@
   {
     "endpoint": "brands?",
     "model": "brand",
-    "routers": ["populate", "common"],
+    "routers": ["util", "populate", "common"],
     "params": {
       "populate": {
         "references": ["_image"]
@@ -12,16 +12,16 @@
   {
     "endpoint": "categor(y|ies)",
     "model": "category",
-    "routers": ["common"]
+    "routers": ["util", "common"]
   },
   {
     "endpoint": "images?",
     "model": "image",
-    "routers": ["common"]
+    "routers": ["util", "common"]
   },  {
     "endpoint": "import-details?",
     "model": "import_detail",
-    "routers": ["populate", "common"],
+    "routers": ["util", "populate", "common"],
     "params": {
       "populate": {
         "references": ["_import", "_product", "_product_unit"]
@@ -31,7 +31,7 @@
   {
     "endpoint": "imports?",
     "model": "import",
-    "routers": ["populate", "import", "common"],
+    "routers": ["util", "populate", "import", "common"],
     "params": {
       "populate": {
         "references": ["_supplier"]
@@ -41,7 +41,7 @@
   {
     "endpoint": "order-details?",
     "model": "order_detail",
-    "routers": ["order_detail", "populate", "common"],
+    "routers": ["util", "order_detail", "populate", "common"],
     "params": {
       "populate": {
         "references": ["_order", "_product", "_product_unit"]
@@ -51,7 +51,7 @@
   {
     "endpoint": "orders?",
     "model": "order",
-    "routers": ["populate", "order", "common"],
+    "routers": ["util", "populate", "order", "common"],
     "params": {
       "populate": {
         "references": ["_user", "_shipment", "_payment"]
@@ -61,7 +61,7 @@
   {
     "endpoint": "payments?",
     "model": "payment",
-    "routers": ["populate","payment", "common"],
+    "routers": ["util", "populate","payment", "common"],
     "params": {
       "populate": {
         "references": ["_user"]
@@ -71,7 +71,7 @@
   {
     "endpoint": "product-units?",
     "model": "product_unit",
-    "routers":["populate", "common"],
+    "routers":["util", "populate", "common"],
     "params": {
       "populate": {
         "references": ["_product", "_unit"]
@@ -81,7 +81,7 @@
   {
     "endpoint": "products?",
     "model": "product",
-    "routers": ["populate", "common"],
+    "routers": ["util", "populate", "common"],
     "params": {
       "populate": {
         "references": ["_categories", "_brand", "_images"]
@@ -91,7 +91,7 @@
   {
     "endpoint": "shipments?",
     "model": "shipment",
-    "routers": ["populate", "common"],
+    "routers": ["util", "populate", "common"],
     "params": {
       "populate": {
         "references": ["_order"]
@@ -101,12 +101,12 @@
   {
     "endpoint": "staff",
     "model": "staff",
-    "routers": ["user", "common"]
+    "routers": ["util", "user", "common"]
   },
   {
     "endpoint": "stocks?",
     "model": "stock",
-    "routers": ["populate", "common"],
+    "routers": ["util", "populate", "common"],
     "params": {
       "populate": {
         "references": ["_product", "_product_unit"]
@@ -116,27 +116,27 @@
   {
     "endpoint": "suppliers?",
     "model": "supplier",
-    "routers": ["common"]
+    "routers": ["util", "common"]
   },
   {
     "endpoint": "units?",
     "model": "unit",
-    "routers": ["common"]
+    "routers": ["util", "common"]
   },
   {
     "endpoint": "users?",
     "model": "user",
-    "routers": ["user", "common"]
+    "routers": ["util", "user", "common"]
   },
   {
     "endpoint": "permissions?",
     "model": "permission",
-    "routers": ["common"]
+    "routers": ["util", "common"]
   },
   {
     "endpoint": "calls?",
     "model": "call",
-    "routers": ["populate", "common"],
+    "routers": ["util", "populate", "common"],
     "params": {
       "populate": {
         "references": ["_caller"]
@@ -146,7 +146,7 @@
   {
     "endpoint": "recycles?",
     "model": "recycle",
-    "routers": ["recycle", "populate", "common"],
+    "routers": ["util", "recycle", "populate", "common"],
     "params": {
       "populate": {
         "references": ["_caller"]
@@ -156,7 +156,7 @@
   {
     "endpoint": "roles?",
     "model": "role",
-    "routers": ["populate", "common"],
+    "routers": ["util", "populate", "common"],
     "params": {
       "populate": {
         "references": ["_identity"]

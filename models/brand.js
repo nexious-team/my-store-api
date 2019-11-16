@@ -1,19 +1,19 @@
 module.exports = {
   _image: {
-    type: "ObjectId",
-    ref: "Image"
+    type: 'ObjectId',
+    ref: 'Image'
   },
   name: {
-    type: String,
+    type: 'String',
     required: true,
     unique: true
   },
-  info: String,
+  info: 'String',
   create_date: {
-    type: Date,
+    type: 'Date',
     default: new Date()
   },
   update_date: {
-    type: Date
+    type: 'Date'
   }
 }

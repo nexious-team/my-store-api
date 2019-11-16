@@ -1,14 +1,14 @@
 module.exports = {
   path: {
-    type: String,
+    type: 'String',
     required: true
   },
-  info: String,
+  info: 'String',
   create_date: {
-    type: Date,
+    type: 'Date',
     default: new Date()
   },
   update_date: {
-    type: Date
+    type: 'Date'
   },
 }

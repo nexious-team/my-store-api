@@ -1,5 +1,5 @@
 module.exports = {
-  [200]: (message = "Success", payload) => {
+  [200]: (message = "Success", payload = true) => {
     return {
       message,
       payload
