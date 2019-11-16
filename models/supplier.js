@@ -1,34 +1,30 @@
 module.exports = {
   _image: {
-    type: "ObjectId",
+    type: 'ObjectId',
     ref: "Image"
   },
   name: {
-    type: String,
+    type: 'String',
     required: true
   },
   email: {
-    type: String,
+    type: 'String',
   },
   contact: {
-    type: [String],
+    type: ['String'],
     required: true,
     default: undefined
   },
   address: {
-    house: String,
-    street: String,
-    commune: String,
-    district: String,
-    province: String,
+    type: 'String'
   },
-  info: String,
+  info: 'String',
   create_date: {
-    type: Date,
+    type: 'Date',
     default: new Date()
   },
   update_date: {
-    type: Date
+    type: 'Date'
   },
 
 }
