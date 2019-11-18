@@ -1,3 +1,5 @@
+const validators = require('./helpers/validators');
+
 module.exports.definition = {
   role: {
     type: 'String',
@@ -22,6 +24,7 @@ module.exports.definition = {
     type: 'String',
     required: true,
     unique: true,
+    validate: validators['email']
   },
   password: {
     type: 'String',
@@ -30,10 +33,11 @@ module.exports.definition = {
   birth_date: {
     type: 'Date',
   },
-  contact: {
-    type:  ['String'],
-    default: undefined
-  },
+  contact: [{
+    type:  String,
+    default: undefined,
+    validate: validators['phone_number']
+  }],
   address: {
     type: 'String',
   },

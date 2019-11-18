@@ -74,15 +74,19 @@ module.exports = (model) => {
 
       res.json(response[200](undefined, filter(permission, doc)));
     })
-    .put(canUser('updateOwn', model), async (req, res) => {
-      const user = await Models[model].findById(req.user._identity._id);
-      if (!user) return res.status(404).json({ error: "Not found!"})
-      const { permission } = res.locals;
-      
-      user.set(permission.filter(req.body));
-      const profile = await user.save();
-      res.json(response[200](undefined, filter(permission, profile)));
-    })
+    .put(canUser('updateOwn', model), async (req, res, next) => {
+      try {
+        const user = await Models[model].findById(req.user._identity._id);
+        if (!user) return res.status(404).json({ error: "Not found!"})
+        const { permission } = res.locals;
+        
+        user.set(permission.filter(req.body));
+        const profile = await user.save();
+        res.json(response[200](null, filter(permission, profile)));
+      } catch (err) {
+        next(err);
+      }
+  })
 
   router.route('/calls?')
     .all(auth)

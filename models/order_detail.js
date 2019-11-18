@@ -16,14 +16,17 @@ module.exports = {
 	},
 	quantity: {
 		type: 'Number',
-		required: true
+		required: true,
+    min: 0
 	},
 	price: {
 		type: 'Number',
-		required: true
+		required: true,
+    min: 0
 	},
 	amount: {
-		type: 'Number'
+		type: 'Number',
+    min: 0
 	},
 	info: 'String',
 	create_date: {
