@@ -1,10 +1,10 @@
-# my-store-back
-This is the API for my-store application one of developers-town project base on online marketing. We use
+# my-store-api
+This is the API for my-store application, one of developers-town project base on online marketing.
 
 ## Installation 
 ```
-# git clone https://github.com/developers-town/my-store-back.git
-# cd my-store-back
+# git clone https://github.com/nexious-team/my-store-api.git
+# cd my-store-api
 # npm install
 # npm start
 ```
@@ -46,8 +46,6 @@ This is the API for my-store application one of developers-town project base on 
 - Select fields   => GET: /api/:model ? select[field1Name]=1 & select[field2Name]=1...
 - Pagination      => GET: /api/:model ? page=1 & limit=20
 - Sort            => GET: /api/:model ? sort=fieldName & sort=-fieldName
-
-> Space here only for readable purpose!!!
 
 ## Features
 
