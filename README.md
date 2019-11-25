@@ -1,40 +1,51 @@
-# my-store-back
-This is the API for my-store application one of developers-town project base on online marketing. We use
+# my-store-api
+This is the API for my-store application, one of developers-town project base on online marketing.
 
 ## Installation 
 ```
-# git clone https://github.com/developers-town/my-store-back.git
-# cd my-store-back
+# git clone https://github.com/nexious-team/my-store-api.git
+# cd my-store-api
 # npm install
 # npm start
 ```
 ## Endpoints
 
-### User
-- POST: /api/users/signup     => user registration # { name: { first, last }, email, password, ... }
-- POST: /api/users/login      => user login        # { email, password }
-- GET:  /api/users/profile    => get user's profile
-- PUT:  /api/users/profile    => update user's profile
-- GET:  /api/users/:id/calls  => get api request history
+### User or Staff
+- POST: /api/:user/signup         => user registration # { name: { first, last }, email, password, ... }
+- GET:  /api/:user/verify-email   => user verify email # ?token
+- POST: /api/:user/login          => user login        # { email, password }
+- GET:  /api/:user/profile        => get user's profile
+- PUT:  /api/:user/profile        => update user's profile
+- GET:  /api/:user/calls          => get api request history
+- POST: /api/:user/reset-password => user reset password # { email }
+- PUT: /api/:user/reset-password  => user reset password # { password }
 
 ### Recycle
-- POST: /api/recycle/restore/:id => Restore deleted document by recycle id
+- POST: /api/recycle/restore/:id        => Restore deleted document by recycle id
 - POST: /api/recycle/restore/:model/:id => Restore deleted document by modelName and document id
 
 ### CRUD
-- GET:    /api/:model       => all documents
-- GET:    /api/:model/:id   => get an document by id
-- POST:   /api/:model       => create an document
+- GET:    /api/:model       => get all documents
+- GET:    /api/:model/:id   => get a document by id
+- POST:   /api/:model       => create a document
 - PUT:    /api/:model/:id   => update an document by id
 - DELETE: /api/:model/:id   => delete an document by id
 
+### Util
+- GET: /api/:model/count  => number of documents in the collection
+- GET: /api/:model/schema => schema of model
+
+### Populate
+- GET: /api/:model/populate       => get all documents with embed reference fields
+- GET: /api/:model/:id/populate   => get one document with embed reference fields
+- GET: /api/:model/populate/:reference     => get all documents with embed specific reference field
+- GET: /api/:model/:id/populate/:reference => get one document with embed specific reference field
+
 ### Query with GET: /api/:model
 - Filter by field => GET: /api/:model ? field1Name=field1Value & field2Name=field2Value...
-- Select fields => GET: /api/:model ? select[field1Name]=1 & select[field2Name]=1...
-- Pagination => GET: /api/:model ? page=1 & limit=20
-- Sort => GET: /api/:model ? sort=fieldName & sort=-fieldName
-
-> Space here only for readable purpose!!!
+- Select fields   => GET: /api/:model ? select[field1Name]=1 & select[field2Name]=1...
+- Pagination      => GET: /api/:model ? page=1 & limit=20
+- Sort            => GET: /api/:model ? sort=fieldName & sort=-fieldName
 
 ## Features
 
