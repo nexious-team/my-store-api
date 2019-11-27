@@ -27,7 +27,7 @@ module.exports = (model) => {
       
       userWorker.createRole(user._id, user.role, model);
 
-      let message = 'Signup succeed!';
+      let message = 'Signup succeed! Please verify the email to activate your account.';
 
       const permission = ac.can(user.role).readOwn(model);
       if (!permission.granted) {
@@ -86,7 +86,7 @@ module.exports = (model) => {
       res.json(response[200](undefined, filter(permission, profile)));
     })
   
-    const middlewares = [auth, canUser('updateOwn', model), upload.single('avatar')];
+  const middlewares = [auth, canUser('updateOwn', model), upload.single('avatar')];
   router.route('/avatar')
     .post( middlewares, async (req, res, next) => {
       try {
