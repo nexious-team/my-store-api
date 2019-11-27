@@ -37,6 +37,10 @@ module.exports.definition = {
   address: {
     type: 'String',
   },
+  _avatar: {
+    type: 'ObjectId',
+    ref: 'Image'
+  },
   info: 'String',
 	create_date: {
 		type: 'Date',

@@ -17,7 +17,7 @@
   {
     "endpoint": "images?",
     "model": "image",
-    "routers": ["util", "common"]
+    "routers": ["image", "util", "common"]
   },  {
     "endpoint": "import-details?",
     "model": "import_detail",

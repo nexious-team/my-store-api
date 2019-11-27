@@ -1,13 +1,15 @@
 const express = require('express');
 const Models = require('../../models');
 const passport = require('../../plugins/passport');
-const { generateToken, decodeToken } = require('../../plugins/jwt');
 const canUser = require('../../middlewares/permission');
-const { common, logger, filter, response } = require('./helpers');
 const userWorker = require('../../workers/user');
-const ac = require('../../plugins//accesscontrol');
+const ac = require('../../plugins/accesscontrol');
 const mailer = require('../../plugins/nodemailer');
+const { generateToken, decodeToken } = require('../../plugins/jwt');
+const { common, logger, filter, response } = require('./helpers');
+const { record } = require('../../workers/call');
 
+const upload = require('../../plugins/multer');
 const auth = passport.authenticate('jwt', { session: false });
 
 module.exports = (model) => {
@@ -68,7 +70,7 @@ module.exports = (model) => {
   router.route('/profile')
     .all(auth)
     .get(canUser('readOwn', model), async (req, res) => {
-      const doc = await Models[model].findById(req.user._identity._id);
+      const doc = await Models[model].findById(req.user._identity._id).populate('_avatar');
       if (!doc) return res.status(404).json({ error: "Not found!"});
       const { permission } = res.locals;
 
@@ -76,12 +78,35 @@ module.exports = (model) => {
     })
     .put(canUser('updateOwn', model), async (req, res) => {
       const user = await Models[model].findById(req.user._identity._id);
-      if (!user) return res.status(404).json({ error: "Not found!"})
+      if (!user) return res.status(404).json({ error: "Not found!"});
       const { permission } = res.locals;
       
       user.set(permission.filter(req.body));
       const profile = await user.save();
       res.json(response[200](undefined, filter(permission, profile)));
+    })
+  
+    const middlewares = [auth, canUser('updateOwn', model), upload.single('avatar')];
+  router.route('/avatar')
+    .post( middlewares, async (req, res, next) => {
+      try {
+        const path = "/images/" + req.file.filename;
+        const image = await Models['image'].create({ path });
+  
+        const user = await Models[model].findById(req.user._identity._id);
+        if (!user) return res.status(404).json({ error: "Not found!"});
+  
+        user._avatar = image._id;
+        await user.save();
+  
+        res.json(response[200]("Avatar uploaded!", image));
+  
+        record(req, { status: 200 });
+      } catch (err) {
+        logger.error(err);
+        
+        next(err);
+      }
     })
 
   router.route('/calls?')
@@ -89,7 +114,7 @@ module.exports = (model) => {
     .get(canUser('readOwn', 'call'), (req, res, next) => {
       Models['call'].find({_caller: req.user._id}, common(req, res, next));
     });
-  
+
   router.route('/reset-password')
     .post(async (req, res) => {
       const { email } = req.body;
