@@ -2,15 +2,18 @@ const { record } = require('../../../workers/call')
 const { sentry } = require('../../../workers/recycle')
 const { logger } = require('./logger');
 const response = require('./response');
+const query = require('./query');
 
 function common(req, res, next) {
   return (err, result) => {
     if(err) return next(err);
+    if(!result) return res.status(404).json(response[404](undefined, result));
+
     const { permission } = res.locals;
 
     const data = result ? filter(permission, result) : result;
 
-    res.json(response[200]("Success", data));
+    res.json(response[200](undefined, data));
 
     const json = result ?  { status: 200 } : { payload: null };
     record(req, json);
@@ -52,6 +55,6 @@ module.exports = {
   filter,
   lean,
   logger,
-  queryMapper: require('./queryMapper'),
+  query,
   response
 }

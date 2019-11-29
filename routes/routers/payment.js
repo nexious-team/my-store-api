@@ -19,7 +19,7 @@ module.exports = (model = 'payment') => {
         if (err) return next(err);
         const { permission } = res.locals;
 
-        res.json(response[200](null, filter(permission, doc)));
+        res.json(response[200](undefined, filter(permission, doc)));
 
         setOrderComplete(doc.order, true, console.log);
         record(req, { status: 200 });
@@ -30,13 +30,15 @@ module.exports = (model = 'payment') => {
     .all(auth)
     .delete(canUser('deleteAny', model), (req, res, next) => {
       Models[model].findByIdAndRemove(req.params.id, (err, doc) => {
-          if (err) next(err);
-          const { permission } = res.locals;
+        if (err) next(err);
+        if (!doc) return res.status(404).json(response[404](undefined, doc));
 
-          res.json(response[200](null, filter(permission, doc)));
+        const { permission } = res.locals;
 
-          setOrderComplete(doc.order, false, console.log);
-          record(req, { status: 200 });
+        res.json(response[200](undefined, filter(permission, doc)));
+
+        setOrderComplete(doc.order, false, console.log);
+        record(req, { status: 200 });
       });
     })
   return router;

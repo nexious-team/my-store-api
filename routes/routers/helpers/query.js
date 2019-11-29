@@ -1,4 +1,4 @@
-module.exports = (query) => {
+module.exports.map = (query) => {
   const { select, page, limit, sort, ...filter } = query;
 
   const conditions = mapConditions(filter);
