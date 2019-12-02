@@ -1,9 +1,9 @@
 module.exports = {
   _caller: {
     type: 'ObjectId',
-    refPath: 'callerRef',
+    refPath: 'caller_ref',
   },
-  callerRef: {
+  caller_ref: {
     type: 'String',
     default: 'User',
   },
