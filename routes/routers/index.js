@@ -8,5 +8,6 @@ module.exports = {
   import: require('./import'),
   recycle: require('./recycle'),
   util: require('./util'),
-  image: require('./image')
+  image: require('./image'),
+  oauth: require('./oauth')
 }

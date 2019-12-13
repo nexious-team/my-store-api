@@ -26,6 +26,7 @@ module.exports = {
       'stock',
       'supplier',
       'unit',
+      'user_oauth',
       'user'
     ]
   },

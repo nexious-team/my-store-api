@@ -3,19 +3,19 @@
 /**
  * Module dependencies.
  */
+require('dotenv').config()
 
 const app = require('../app');
 const debug = require('debug')('my-store-back:server');
 const http = require('http');
 const mongoose = require('mongoose');
-
 /**
  * Get port from environment and store in Express.
  */
 const drivers = {
-  mlab: "mongodb://admin:admin123@ds235947.mlab.com:35947/store",
-  atlas: "mongodb+srv://admin:admin123@cluster0-hualb.mongodb.net/store?retryWrites=true&w=majority",
-  local: "mongodb://localhost:27017/store",
+  mlab: process.env.DB_MLAB,
+  atlas: process.env.DB_ATLAS,
+  local: process.env.DB_LOCAL,
   options: {
     useNewUrlParser: true,
     useCreateIndex: true,
