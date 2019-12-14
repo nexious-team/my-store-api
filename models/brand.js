@@ -1,4 +1,4 @@
-module.exports = {
+module.exports.definition = {
   _image: {
     type: 'ObjectId',
     ref: 'Image'
@@ -17,3 +17,25 @@ module.exports = {
     type: 'Date'
   }
 }
+
+module.exports.middlewares = (schema) => {
+  schema.pre('remove', function (next) {
+    if (!this.force) {
+      this.model('Product').findOne({ _brand: this.id }, function (err, doc) {
+        if (err)
+          next(err);
+        if (doc)
+          next(new Error('Brand already assign to one or more'));
+        next();
+      });
+    } else {
+      this.model('Product').deleteMany({ _brand: this.id }, function (err) {
+        if (err)
+          next(err);
+        next();
+      });
+    }
+  });
+}
+
+

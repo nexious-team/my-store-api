@@ -24,8 +24,8 @@ const recycle = require('./recycle');
 const role = require('./role');
 
 module.exports = {
-  brand: model("Brand", new Schema(brand)),
-  category: model("Category", new Schema(category)),
+  brand: model("Brand", create(brand)),
+  category: model("Category", create(category)),
   image: model('Image', new Schema(image)),
   import_detail: model("ImportDetail", new Schema(importDetail)),
   import: model("Import", new Schema(importDefinition)),

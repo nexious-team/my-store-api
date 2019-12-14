@@ -5,7 +5,7 @@ module.exports = {
     ref: 'Category'
   },
   _brand: {
-    type:'ObjectId',
+    type: 'ObjectId',
     ref: 'Brand'
   },
   _images: {
@@ -24,5 +24,4 @@ module.exports = {
   update_date: {
     type: 'Date'
   },
- 
-}
+};

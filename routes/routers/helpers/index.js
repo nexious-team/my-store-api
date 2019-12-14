@@ -4,17 +4,32 @@ const { logger } = require('./logger');
 const response = require('./response');
 
 function common(req, res, next) {
-  return (err, result) => {
-    if(err) return next(err);
-    const { permission } = res.locals;
+  return async (err, result) => {
+    if (err) {
+      logger.error(`${req.method} '${req.baseUrl}' \n=> Error said: ${err}`);
+      return next(err);
+    }
 
+    const { permission } = res.locals;
     const data = result ? filter(permission, result) : result;
 
+    if (req.method === 'DELETE' && result) {
+      result.force = req.query.force === 'true';
+
+      try {
+        await result.remove();
+      } catch (err) {
+        res.status(500).send(err.message);
+        return;
+      }
+
+      sentry.collect(req, result);
+    }
+
+    const json = result ? { status: 200 } : { payload: null };
     res.json(response[200]("Success", data));
 
-    const json = result ?  { status: 200 } : { payload: null };
     record(req, json);
-    if (req.method === 'DELETE' && result) sentry.collect(req, result);
   }
 }
 
@@ -38,8 +53,8 @@ function exclude(document, fields) {
 }
 
 function copy(source, target) {
-  for(let key in source) {
-    if( typeof target[key] === 'object') copy( target[key], source[key] );
+  for (let key in source) {
+    if (typeof target[key] === 'object') copy(target[key], source[key]);
     else target[key] = source[key];
     continue;
   }

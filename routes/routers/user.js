@@ -16,7 +16,7 @@ module.exports = (model) => {
   router.post('/signup', async (req, res, next) => {
     Models[model].create(req.body, (err, user) => {
       if (err) {
-        logger.log('error', `POST '${req.originalUrl}' \n => Error Said: ${err}`);
+        logger.error(`POST '${req.originalUrl}' \n=> Error said: ${err}`);
         return next(err);
       }
 

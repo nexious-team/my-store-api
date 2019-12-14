@@ -30,8 +30,8 @@ module.exports = (model) => {
       Models[model].findByIdAndUpdate(req.params.id, req.body, { new: true }, common(req, res, next))
     })
     .delete(canUser('deleteAny', model), (req, res, next) => {
-      Models[model].findByIdAndRemove(req.params.id, common(req, res, next))
+      Models[model].findById(req.params.id, common(req, res, next));
     })
 
-    return router;
+  return router;
 }
