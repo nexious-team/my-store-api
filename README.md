@@ -91,7 +91,7 @@ Or create an new router to mount on a specific resource (model):
 
 ## References
 
-- [Express](https://www.express.com/)
+- [Express](https://expressjs.com/)
 - [Mongoose](https://mongoosejs.com/)
 - [Passport](http://www.passportjs.org/)
 - [JWT](https://jwt.io/)
