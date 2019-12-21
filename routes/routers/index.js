@@ -7,5 +7,6 @@ module.exports = {
   payment: require('./payment'),
   import: require('./import'),
   recycle: require('./recycle'),
-  util: require('./util')
+  util: require('./util'),
+  image: require('./image')
 }

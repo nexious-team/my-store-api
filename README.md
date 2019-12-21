@@ -11,11 +11,12 @@ This is the API for my-store application, one of developers-town project base on
 ## Endpoints
 
 ### User or Staff
-- POST: /api/:user/signup         => user registration # { name: { first, last }, email, password, ... }
+- POST: /api/:user/signup         => user registration # { first_name, last_name, username, email, password, ... }
 - GET:  /api/:user/verify-email   => user verify email # ?token
 - POST: /api/:user/login          => user login        # { email, password }
 - GET:  /api/:user/profile        => get user's profile
 - PUT:  /api/:user/profile        => update user's profile
+- POST:  /api/:user/avatar        => upload avatar # { avatar: (file) }
 - GET:  /api/:user/calls          => get api request history
 - POST: /api/:user/reset-password => user reset password # { email }
 - PUT: /api/:user/reset-password  => user reset password # { password }
@@ -40,6 +41,9 @@ This is the API for my-store application, one of developers-town project base on
 - GET: /api/:model/:id/populate   => get one document with embed reference fields
 - GET: /api/:model/populate/:reference     => get all documents with embed specific reference field
 - GET: /api/:model/:id/populate/:reference => get one document with embed specific reference field
+
+### Image
+- POST: /api/images?/upload => upload image # { image: (file) }
 
 ### Query with GET: /api/:model
 - Filter by field => GET: /api/:model ? field1Name=field1Value & field2Name=field2Value...

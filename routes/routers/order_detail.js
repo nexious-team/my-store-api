@@ -26,7 +26,7 @@ module.exports = (model = 'order_detail') => {
         await decreaseProductStock(doc);
         record(req, { status: 200 });
         
-        res.json(response[200](null, filter(permission, doc)));
+        res.json(response[200](undefined, filter(permission, doc)));
 
       } catch (e) {
         next(e);
@@ -38,9 +38,11 @@ module.exports = (model = 'order_detail') => {
     .delete(canUser('deleteAny', model), async (req, res, next) => {
       try {
         const doc = await Models[model].findByIdAndRemove(req.params.id);
+        if(!doc) return res.status(404).json(response[404](undefined, doc));
+
         const { permission } = res.locals;
 
-        res.json(response[200](null, filter(permission, doc)));
+        res.json(response[200](undefined, filter(permission, doc)));
 
         await increaseProductStock(doc);
         record(req, { status: 200 });

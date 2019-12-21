@@ -16,7 +16,8 @@ module.exports = (model = 'recycle') => {
   router.post('/restore/:id', middlewares, (req, res, next) => {
     Models[model].findById(req.params.id, (err, trash) => {
       if (err) return next(err);
-      if (!trash) return next(new Error("Not Found"));
+      if (!trash) return res.status(404).json(response[404](undefined, trash));
+
       const { permission } = res.locals;
 
       sentry.restore(trash, doc => {
@@ -33,7 +34,8 @@ module.exports = (model = 'recycle') => {
       'document._id': req.params.id,
     }, (err, trash) => {
       if (err) return next(err);
-      if (!trash) return next(new Error("Not Found"));
+      if (!trash) return res.status(404).json(response[404](undefined, trash));
+
       const { permission } = res.locals;
 
       sentry.restore(trash, doc => {
