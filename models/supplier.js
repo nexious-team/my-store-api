@@ -1,3 +1,5 @@
+const validators = require('./helpers/validators');
+
 module.exports = {
   _image: {
     type: 'ObjectId',
@@ -9,12 +11,14 @@ module.exports = {
   },
   email: {
     type: 'String',
+    validate: validators['email']
   },
-  contact: {
-    type: ['String'],
+  contact: [{
+    type: 'String',
     required: true,
-    default: undefined
-  },
+    default: undefined,
+    validate: validators['phone_number']
+  }],
   address: {
     type: 'String'
   },

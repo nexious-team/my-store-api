@@ -94,7 +94,7 @@ module.exports = (model) => {
       try {
         const user = await Models[model].findById(req.user._identity._id);
         if (!user) return res.status(404).json(response[404](undefined, user));
-
+        
         const { permission } = res.locals;
         
         user.set(permission.filter(req.body));

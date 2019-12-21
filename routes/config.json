@@ -84,7 +84,17 @@
     "routers": ["util", "populate", "common"],
     "params": {
       "populate": {
-        "references": ["_categories", "_brand", "_images"]
+        "references": [
+          {
+            "path": "_categories", 
+            "model": "Category" 
+          }, 
+          "_brand", 
+          {
+            "path": "_images", 
+            "model": "Image"
+          }
+        ]
       }
     }
   },
@@ -109,7 +119,16 @@
     "routers": ["util", "populate", "common"],
     "params": {
       "populate": {
-        "references": ["_product", "_product_unit"]
+        "references": [
+          {
+            "path": "_product", 
+            "populate": { "path": "_brand _categories" }
+          }, 
+          {
+            "path": "_product_unit", 
+            "populate": { "path": "_unit" }
+          }
+        ]
       }
     }
   },
