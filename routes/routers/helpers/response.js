@@ -20,9 +20,10 @@ module.exports = {
       error
     }
   },
-  [404]: (error = "Not found") => {
+  [404]: (error = "Not found", payload = null) => {
     return {
-      error
+      error,
+      payload
     }
   }
 }
