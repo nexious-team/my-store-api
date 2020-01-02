@@ -1,9 +1,9 @@
 module.exports = {
   _identity: {
     type: 'String',
-    refPath: 'refModel'
+    refPath: 'ref_model'
   },
-  refModel: {
+  ref_model: {
     type: 'String',
     default: 'User',
     enum: ['User', 'Staff']

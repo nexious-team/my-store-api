@@ -14,7 +14,8 @@ module.exports = {
   },
   amount: {
     type: 'Number',
-    required: false
+    required: false,
+    min: 0
   },
   paid: {
     type: 'Boolean',

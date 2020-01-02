@@ -1,5 +1,6 @@
 const { hash, compare } = require('./helpers/password');
 const { findOneOrCreate } = require('./helpers/find');
+const validators = require('./helpers/validators');
 
 module.exports.definition = {
   role: {
@@ -23,6 +24,8 @@ module.exports.definition = {
   email: {
     type: 'String',
     required: false,
+    unique: true,
+    validate: validators['email']
   },
   password: {
     type: 'String',
@@ -37,10 +40,11 @@ module.exports.definition = {
     ref: "UserOauth"
   },
   birth_date: 'Date',
-  contact: {
-    type:  ['String'],
-    default: undefined
-  },
+  contact: [{
+    type:  'String',
+    default: undefined,
+    validate: validators['phone_number']
+  }],
   address: {
     type: 'String',
   },
