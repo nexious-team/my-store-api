@@ -21,8 +21,15 @@ This is the API for my-store application, one of developers-town project base on
 - POST: /api/:user/reset-password => user reset password # { email }
 - PUT: /api/:user/reset-password  => user reset password # { password }
 
+### User Single Sign-On Authentication
+- GET: /api/users/auth                   => verify user with API after sso authentication # ?token
+- GET: /api/user/auth/facebook           => redirect to Facebook login page
+- GET: /api/user/auth/facebook/callback  => authenticated result from Facebook
+- GET: /api/user/auth/google             => redirect to Google login page
+- GET: /api/user/auth/google/callback    => authenticated result from Google
+
 ### Recycle
-- POST: /api/recycle/restore/:id        => Restore deleted document by recycle id
+- POST: /api/recycle/restore/:id        => Restore deleted document by recycle id 
 - POST: /api/recycle/restore/:model/:id => Restore deleted document by modelName and document id
 
 ### CRUD
@@ -88,9 +95,10 @@ Or create an new router to mount on a specific resource (model):
 
 ## References
 
-- Express
-- Mongoose
-- Passport
-- JWT
-- Accesscontrol
-- More+
+- [Express](https://expressjs.com/)
+- [Mongoose](https://mongoosejs.com/)
+- [Passport](http://www.passportjs.org/)
+- [JWT](https://jwt.io/)
+- [Accesscontrol](https://onury.io/accesscontrol/?api=ac)
+- [Nodemailer](https://nodemailer.com/about/)
+- [More+](/package.json)
