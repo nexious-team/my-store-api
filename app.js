@@ -7,13 +7,19 @@ const logger = require('morgan');
 const routes = require('./routes');
 const passport = require('./plugins/passport');
 const helpers = require('./routes/routers/helpers')
+const Sentry = require('@sentry/node');
 
 const app = express();
+
+Sentry.init({ dsn: 'https://02cf351a4b8447038b02d345ea867521@sentry.io/1863276' });
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
+app.use(Sentry.Handlers.requestHandler({
+  user: ['_id', 'email']
+}));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -28,6 +34,7 @@ app.use(function(req, res, next) {
   next(createError(404));
 });
 
+app.use(Sentry.Handlers.errorHandler());
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
