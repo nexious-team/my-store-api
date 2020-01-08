@@ -4,6 +4,14 @@ const { logger } = require('./logger');
 const response = require('./response');
 const queryMapper = require('./queryMapper');
 
+function lean(document) {
+  return JSON.parse(JSON.stringify(document));
+}
+
+function filter(permission, data) {
+  return permission.filter(lean(data));
+}
+
 function common(req, res, next) {
   return (err, result) => {
     if (err) {
@@ -20,14 +28,6 @@ function common(req, res, next) {
       if (req.method === 'DELETE' && result) sentry.collect(req, result);
     }
   };
-}
-
-function filter(permission, data) {
-  return permission.filter(lean(data));
-}
-
-function lean(document) {
-  return JSON.parse(JSON.stringify(document));
 }
 
 function exclude(document, fields) {

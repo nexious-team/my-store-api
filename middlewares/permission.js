@@ -6,7 +6,7 @@ module.exports = (action, resource) => (req, res, next) => {
     if (!permission.granted) return res.status(403).send('Forbidden');
 
     res.locals.permission = permission;
-    next();
+    return next();
   }
 
   return res.status(403).end();

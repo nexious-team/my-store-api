@@ -13,11 +13,12 @@ const grantObject = {
 };
 
 const ac = new AccessControl();
-module.exports = new AccessControl();
 
 (async () => {
   const docs = await Permission.find().lean();
 
-  ac.setGrants(docs[0] ? docs : grantObject);
+  ac.setGrants(docs.length ? docs : grantObject);
   ac.lock();
 })();
+
+module.exports = ac;
