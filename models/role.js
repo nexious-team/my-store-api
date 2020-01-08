@@ -1,23 +1,23 @@
 module.exports = {
   _identity: {
     type: 'String',
-    refPath: 'refModel'
+    refPath: 'refModel',
   },
   refModel: {
     type: 'String',
     default: 'User',
-    enum: ['User', 'Staff']
+    enum: ['User', 'Staff'],
   },
   role: {
     type: 'String',
-    required: true
+    required: true,
   },
   info: 'String',
   create_date: {
-		type: 'Date',
-		default: new Date(),
-	},
-	update_date: {
-		type: 'Date'
-	},
-}
+    type: 'Date',
+    default: new Date(),
+  },
+  update_date: {
+    type: 'Date',
+  },
+};

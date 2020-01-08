@@ -2,36 +2,36 @@ module.exports = {
   _import: {
     type: 'ObjectId',
     required: true,
-    ref: 'Import'
+    ref: 'Import',
   },
   _product: {
     type: 'ObjectId',
     required: true,
-    ref: 'Product'
+    ref: 'Product',
   },
   _product_unit: {
     type: 'ObjectId',
     required: true,
-    ref: 'ProductUnit'
+    ref: 'ProductUnit',
   },
   quantity: {
     type: 'Number',
-    required: true
+    required: true,
   },
   price: {
     type: 'Number',
-    required: true
+    required: true,
   },
   amount: {
     type: 'Number',
-    required: true
+    required: true,
   },
   info: 'String',
   create_date: {
     type: 'Date',
-    default: new Date()
+    default: new Date(),
   },
   update_date: {
-    type: 'Date'
+    type: 'Date',
   },
-}
+};

@@ -1,35 +1,35 @@
 module.exports = {
   _caller: {
     type: 'ObjectId',
-    refPath: 'caller_ref'
+    refPath: 'caller_ref',
   },
   caller_ref: {
     type: 'String',
     required: true,
     enum: ['User', 'Staff'],
-    default: 'User'
+    default: 'User',
   },
   method: {
     type: 'String',
-    required: true
+    required: true,
   },
   original_url: {
     type: 'String',
-    required:true
+    required: true,
   },
   body: 'Object',
   response: {
     status: 'Number',
     error: 'String',
     message: 'String',
-    payload: 'Mixed'
+    payload: 'Mixed',
   },
   info: 'String',
   create_date: {
     type: 'Date',
-    default: new Date()
+    default: new Date(),
   },
   update_date: {
-    type: 'Date'
-  }
-}
+    type: 'Date',
+  },
+};

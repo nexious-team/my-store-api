@@ -18,20 +18,20 @@ module.exports = (model) => {
       Models[model].find(conditions, select, options).exec(common(req, res, next));
     })
     .post(canUser('createAny', model), (req, res, next) => {
-      Models[model].create(req.body, common(req, res, next))
-    })
+      Models[model].create(req.body, common(req, res, next));
+    });
 
   router.route('/:id')
     .all(auth)
     .get(canUser('readAny', model), (req, res, next) => {
-      Models[model].findById(req.params.id, common(req, res, next))
+      Models[model].findById(req.params.id, common(req, res, next));
     })
     .put(canUser('updateAny', model), (req, res, next) => {
-      Models[model].findByIdAndUpdate(req.params.id, req.body, { new: true }, common(req, res, next))
+      Models[model].findByIdAndUpdate(req.params.id, req.body, { new: true }, common(req, res, next));
     })
     .delete(canUser('deleteAny', model), (req, res, next) => {
-      Models[model].findByIdAndRemove(req.params.id, common(req, res, next))
-    })
+      Models[model].findByIdAndRemove(req.params.id, common(req, res, next));
+    });
 
-    return router;
-}
+  return router;
+};

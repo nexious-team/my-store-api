@@ -2,15 +2,15 @@ module.exports.definition = {
   role: {
     type: 'String',
     enum: ['user'],
-    default: 'user'
+    default: 'user',
   },
   first_name: {
     type: 'String',
-    required: true
+    required: true,
   },
   last_name: {
     type: 'String',
-    required: true
+    required: true,
   },
   username: {
     type: 'String',
@@ -24,16 +24,16 @@ module.exports.definition = {
   },
   password: {
     type: 'String',
-    required: true
+    required: true,
   },
   verified: {
     type: 'Boolean',
-    default: false
+    default: false,
   },
   birth_date: 'Date',
   contact: {
-    type:  ['String'],
-    default: undefined
+    type: ['String'],
+    default: undefined,
   },
   address: {
     type: 'String',
@@ -44,27 +44,28 @@ module.exports.definition = {
     default: new Date(),
   },
   update_date: {
-    type: 'Date'
+    type: 'Date',
   },
-}
+};
 
 module.exports.middlewares = (schema) => {
   schema.pre('save', function (next) {
-    if(this.isModified('password'))
-      this.password = this.hash(this.password);
+    if (this.isModified('password')) { this.password = this.hash(this.password); }
     next();
-  })
-}
+  });
+};
 const { hash, compare } = require('./helpers/password');
 
 module.exports.methods = (schema) => {
   schema.methods.hash = hash;
 
   schema.methods.compare = compare;
-}
+};
 
 module.exports.statics = (schema) => {
   schema.statics.findByEmail = function (email) {
-    return this.find({email});
-  }
-}
+    return this.find({
+      email,
+    });
+  };
+};
