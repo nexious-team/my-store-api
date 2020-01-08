@@ -4,7 +4,7 @@ const marked = require('marked');
 const path = require('path');
 const cores = require('./config.json');
 const Routers = require('./routers');
-const { logger } = require('./routers/helpers')
+const { logger } = require('./routers/helpers');
 
 module.exports = (app) => {
   /* GET home page will render README.md */
@@ -20,14 +20,14 @@ module.exports = (app) => {
     });
   });
 
-  cores.forEach(core => {
+  cores.forEach((core) => {
     const router = express.Router();
 
-    core.routers.forEach(name => {
+    core.routers.forEach((name) => {
       const params = core.params ? core.params[name] : undefined;
       router.use(Routers[name](core.model, params));
     });
 
-    app.use('/api/' + core.endpoint, router)
-  })
-}
+    app.use(`/api/${core.endpoint}`, router);
+  });
+};

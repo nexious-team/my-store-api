@@ -26,8 +26,8 @@ module.exports = (model = 'import') => {
 
         increaseProductQty(doc.product, doc.qty, console.log);
         record(req, { status: 200 });
-      })
-    })
+      });
+    });
 
   router.route('/:id')
     .all(auth)
@@ -36,11 +36,11 @@ module.exports = (model = 'import') => {
         if (err) return next(err);
         const { permission } = res.locals;
 
-        res.json(response[200]( null, filter(permission, doc)));
+        res.json(response[200](null, filter(permission, doc)));
 
         decreaseProductQty(doc.product, doc.qty, console.log);
         record(req, { status: 200 });
       });
-    })
+    });
   return router;
-}
+};

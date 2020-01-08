@@ -2,27 +2,27 @@ module.exports = {
   _categories: {
     type: ['ObjectId'],
     required: true,
-    ref: 'Category'
+    ref: 'Category',
   },
   _brand: {
-    type:'ObjectId',
-    ref: 'Brand'
+    type: 'ObjectId',
+    ref: 'Brand',
   },
   _images: {
     type: ['ObjectId'],
-    ref: 'Image'
+    ref: 'Image',
   },
   name: {
     type: 'String',
-    required: true
+    required: true,
   },
   info: 'String',
   create_date: {
     type: 'Date',
-    default: new Date()
+    default: new Date(),
   },
   update_date: {
-    type: 'Date'
+    type: 'Date',
   },
- 
-}
+
+};

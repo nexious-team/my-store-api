@@ -2,22 +2,22 @@ module.exports = {
   _order: {
     type: 'ObjectId',
     ref: 'Order',
-    required: true
+    required: true,
   },
   phone: {
     type: 'String',
-    required: true
+    required: true,
   },
   address: {
     type: 'String',
-    required: true 
+    required: true,
   },
   info: 'String',
-	create_date: {
-		type: 'Date',
-		default: new Date(),
-	},
-	update_date: {
-		type: 'Date'
-	},
-}
+  create_date: {
+    type: 'Date',
+    default: new Date(),
+  },
+  update_date: {
+    type: 'Date',
+  },
+};

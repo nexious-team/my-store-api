@@ -18,8 +18,8 @@ module.exports = (model) => {
 
   router.get('/schema', auth, canUser('readAny', model), (req, res) => {
     const schema = Models[model].schema.obj;
-    
+
     res.json(response[200](undefined, schema));
-  })
+  });
   return router;
-}
+};

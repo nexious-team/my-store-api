@@ -1,7 +1,7 @@
 module.exports = {
   name: {
     type: 'String',
-    required: true 
+    required: true,
   },
   info: 'String',
   create_date: {
@@ -9,6 +9,6 @@ module.exports = {
     default: new Date(),
   },
   update_date: {
-    type: 'Date'
+    type: 'Date',
   },
-}
+};

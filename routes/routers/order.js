@@ -18,27 +18,30 @@ module.exports = (model = 'order') => {
         req.body._user = req.user._identity._id;
 
         Models[model].create(req.body, (err, doc) => {
-          if (err) return next(err);
-          const { permission } = res.locals;
+          if (err) {
+            next(err);
+          } else {
+            const { permission } = res.locals;
 
-          res.json(response[200](undefined, filter(permission, doc)));
+            res.json(response[200](undefined, filter(permission, doc)));
 
-          record(req, { status: 200 });
-        })
+            record(req, { status: 200 });
+          }
+        });
       } catch (e) {
         next(e);
       }
-    })
-  
+    });
+
   router.route('/:id/order-details')
     .all(auth)
     .get(canUser('readOwn', 'order_detail'), async (req, res) => {
-      const docs = await Models['order_detail'].find({_order: req.params.id}).populate('_product');
+      const docs = await Models.order_detail.find({ _order: req.params.id }).populate('_product');
       const { permission } = res.locals;
 
       res.json(response[200](undefined, filter(permission, docs)));
       record(req, { status: 200 });
-    })
+    });
 
   return router;
-}
+};
