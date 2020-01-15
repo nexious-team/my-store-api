@@ -16,21 +16,24 @@ module.exports = (model = 'payment') => {
     .all(auth)
     .post(canUser('createAny', model), (req, res, next) => {
       Models[model].create(req.body, (err, doc) => {
-        if (err) return next(err);
-        const { permission } = res.locals;
+        if (err) {
+          next(err);
+        } else {
+          const { permission } = res.locals;
 
-        res.json(response[200](undefined, filter(permission, doc)));
+          res.json(response[200](undefined, filter(permission, doc)));
 
-        setOrderComplete(doc.order, true, console.log);
-        record(req, { status: 200 });
-      })
-    })
+          setOrderComplete(doc.order, true, console.log);
+          record(req, { status: 200 });
+        }
+      });
+    });
 
   router.route('/:id')
     .all(auth)
     .delete(canUser('deleteAny', model), (req, res, next) => {
       Models[model].findByIdAndRemove(req.params.id, (err, doc) => {
-        if (err) next(err);
+        if (err) return next(err);
         if (!doc) return res.status(404).json(response[404](undefined, doc));
 
         const { permission } = res.locals;
@@ -39,7 +42,8 @@ module.exports = (model = 'payment') => {
 
         setOrderComplete(doc.order, false, console.log);
         record(req, { status: 200 });
+        return true;
       });
-    })
+    });
   return router;
-}
+};

@@ -14,21 +14,21 @@ module.exports = (model, { references }) => {
 
   router.get('/populates?', authenticate('readAny'), (req, res, next) => {
     let query = Models[model].find();
-    if(Array.isArray(references) && references.length > 0) {
-      references.forEach(ref => query = query.populate(ref))
+    if (Array.isArray(references) && references.length > 0) {
+      references.forEach((ref) => { query = query.populate(ref); });
     }
 
     query.exec(common(req, res, next));
   });
 
   router.get('/populates?/:reference', authenticate('readAny'), (req, res, next) => {
-    Models[model].find().populate(req.params["reference"]).exec(common(req, res, next));
+    Models[model].find().populate(req.params.reference).exec(common(req, res, next));
   });
 
   router.get('/:id/populates?', authenticate('readAny'), (req, res, next) => {
     let query = Models[model].findById(req.params.id);
-    if(references && references.length > 0) {
-      references.forEach(ref => query = query.populate(ref))
+    if (references && references.length > 0) {
+      references.forEach((ref) => { query = query.populate(ref); });
     }
 
     query.exec(common(req, res, next));
@@ -40,4 +40,4 @@ module.exports = (model, { references }) => {
   });
 
   return router;
-}
+};

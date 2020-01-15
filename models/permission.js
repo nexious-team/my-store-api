@@ -1,7 +1,7 @@
 module.exports = {
   role: {
     type: 'String',
-    required : true
+    required: true,
   },
   resource: {
     type: 'String',
@@ -26,8 +26,8 @@ module.exports = {
       'stock',
       'supplier',
       'unit',
-      'user'
-    ]
+      'user',
+    ],
   },
   action: {
     type: 'String',
@@ -41,19 +41,19 @@ module.exports = {
       'read:any',
       'update:any',
       'delete:any',
-    ]
-  }, 
+    ],
+  },
   attributes: {
     type: 'String',
     required: true,
-    default: '*'
+    default: '*',
   },
   info: 'String',
-	create_date: {
-		type: 'Date',
-		default: new Date(),
-	},
-	update_date: {
-		type: 'Date'
-	},
-}
+  create_date: {
+    type: 'Date',
+    default: new Date(),
+  },
+  update_date: {
+    type: 'Date',
+  },
+};

@@ -4,30 +4,30 @@
  * Module dependencies.
  */
 
-const app = require('../app');
 const debug = require('debug')('my-store-back:server');
 const http = require('http');
 const mongoose = require('mongoose');
+const app = require('../app');
 
 /**
  * Get port from environment and store in Express.
  */
 const drivers = {
-  mlab: "mongodb://admin:admin123@ds235947.mlab.com:35947/store",
-  atlas: "mongodb+srv://admin:admin123@cluster0-hualb.mongodb.net/store?retryWrites=true&w=majority",
-  local: "mongodb://localhost:27017/store",
+  mlab: 'mongodb://admin:admin123@ds235947.mlab.com:35947/store',
+  atlas: 'mongodb+srv://admin:admin123@cluster0-hualb.mongodb.net/store?retryWrites=true&w=majority',
+  local: 'mongodb://localhost:27017/store',
   options: {
     useNewUrlParser: true,
     useCreateIndex: true,
-    useFindAndModify: false
-  }
-}
+    useFindAndModify: false,
+  },
+};
 
-mongoose.set("useUnifiedTopology", true);
+mongoose.set('useUnifiedTopology', true);
 mongoose.connect(drivers.atlas, drivers.options)
   .then(
-    () => { console.log("Database connected!"); },
-    err => { console.log(err); }
+    () => { console.log('Database connected!'); },
+    (err) => { console.log(err); },
   );
 
 const port = normalizePort(process.env.PORT || '5000');
@@ -77,17 +77,17 @@ function onError(error) {
   }
 
   const bind = typeof port === 'string'
-    ? 'Pipe ' + port
-    : 'Port ' + port;
+    ? `Pipe ${port}`
+    : `Port ${port}`;
 
   // handle specific listen errors with friendly messages
   switch (error.code) {
     case 'EACCES':
-      console.error(bind + ' requires elevated privileges');
+      console.error(`${bind} requires elevated privileges`);
       process.exit(1);
       break;
     case 'EADDRINUSE':
-      console.error(bind + ' is already in use');
+      console.error(`${bind} is already in use`);
       process.exit(1);
       break;
     default:
@@ -102,8 +102,8 @@ function onError(error) {
 function onListening() {
   const addr = server.address();
   const bind = typeof addr === 'string'
-    ? 'pipe ' + addr
-    : 'port ' + addr.port;
-  debug('Listening on ' + bind);
-  console.log('Listening on ' + bind);
+    ? `pipe ${addr}`
+    : `port ${addr.port}`;
+  debug(`Listening on ${bind}`);
+  console.log(`Listening on ${bind}`);
 }

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+
 const { Schema, model } = mongoose;
 
 const brand = require('./brand');
@@ -9,7 +10,7 @@ const importDefinition = require('./import');
 const orderDetail = require('./order_detail');
 const order = require('./order');
 const payment = require('./payment');
-const productUnit =require('./product_unit');
+const productUnit = require('./product_unit');
 const product = require('./product');
 const shipment = require('./shipment');
 const staff = require('./staff');
@@ -24,33 +25,33 @@ const recycle = require('./recycle');
 const role = require('./role');
 
 module.exports = {
-  brand: model("Brand", new Schema(brand)),
-  category: model("Category", new Schema(category)),
+  brand: model('Brand', new Schema(brand)),
+  category: model('Category', new Schema(category)),
   image: model('Image', new Schema(image)),
-  import_detail: model("ImportDetail", new Schema(importDetail)),
-  import: model("Import", new Schema(importDefinition)),
-  order_detail: model("OrderDetail", new Schema(orderDetail)),
-  order: model("Order", new Schema(order)),
-  payment: model("Payment", new Schema(payment)),
-  product_unit: model("ProductUnit", new Schema(productUnit)),
-  product: model("Product", new Schema(product)),
-  shipment: model("Shipment", new Schema(shipment)),
-  staff: model("Staff", create(staff)),
-  stock: model("Stock", new Schema(stock)),
-  supplier: model("Supplier", new Schema(supplier)),
-  unit: model("Unit", new Schema(unit)),
-  user: model("User", create(user)),
+  import_detail: model('ImportDetail', new Schema(importDetail)),
+  import: model('Import', new Schema(importDefinition)),
+  order_detail: model('OrderDetail', new Schema(orderDetail)),
+  order: model('Order', new Schema(order)),
+  payment: model('Payment', new Schema(payment)),
+  product_unit: model('ProductUnit', new Schema(productUnit)),
+  product: model('Product', new Schema(product)),
+  shipment: model('Shipment', new Schema(shipment)),
+  staff: model('Staff', create(staff)),
+  stock: model('Stock', new Schema(stock)),
+  supplier: model('Supplier', new Schema(supplier)),
+  unit: model('Unit', new Schema(unit)),
+  user: model('User', create(user)),
 
-  call: model("Call", new Schema(call)),
-  permission: model("Permission", new Schema(permission)),
-  recycle: model("Recycle", new Schema(recycle)),
-  role: model("Role", new Schema(role))
-}
+  call: model('Call', new Schema(call)),
+  permission: model('Permission', new Schema(permission)),
+  recycle: model('Recycle', new Schema(recycle)),
+  role: model('Role', new Schema(role)),
+};
 
-function create ({ definition, middlewares, methods, statics }) {
-  let schema = new Schema(definition);
+function create({ definition, middlewares, methods, statics }) {
+  const schema = new Schema(definition);
   if (methods) methods(schema);
   if (middlewares) middlewares(schema);
-  if (statics) statics(schema)
+  if (statics) statics(schema);
   return schema;
 }

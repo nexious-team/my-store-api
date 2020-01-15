@@ -1,13 +1,14 @@
 const express = require('express');
 const Models = require('../../models');
 const passport = require('../../plugins/passport');
+
 const auth = passport.authenticate('jwt', { session: false });
 const canUser = require('../../middlewares/permission');
 
-const { record } = require('../../workers/call')
-const { sentry } = require('../../workers/recycle')
+const { record } = require('../../workers/call');
+const { sentry } = require('../../workers/recycle');
 
-const { filter, response } = require('./helpers')
+const { filter, response } = require('./helpers');
 
 module.exports = (model = 'recycle') => {
   const router = express.Router();
@@ -15,36 +16,42 @@ module.exports = (model = 'recycle') => {
 
   router.post('/restore/:id', middlewares, (req, res, next) => {
     Models[model].findById(req.params.id, (err, trash) => {
-      if (err) return next(err);
-      if (!trash) return res.status(404).json(response[404](undefined, trash));
+      if (err) {
+        next(err);
+      } else if (!trash) {
+        next(new Error('Not Found'));
+      } else {
+        const { permission } = res.locals;
 
-      const { permission } = res.locals;
-
-      sentry.restore(trash, doc => {
-        const message = `Restore trash ${doc.id} successfully`;
-        res.json(response[200](message, filter(permission, doc)));
-        record(req, { status: 200, message});
-      })
-    })
-  })
+        sentry.restore(trash, (doc) => {
+          const message = `Restore trash ${doc.id} successfully`;
+          res.json(response[200](message, filter(permission, doc)));
+          record(req, { status: 200, message });
+        });
+      }
+    });
+  });
 
   router.post('/restore/:model/:id', middlewares, (req, res, next) => {
     Models[model].findOne({
       model: req.params.model,
       'document._id': req.params.id,
     }, (err, trash) => {
-      if (err) return next(err);
-      if (!trash) return res.status(404).json(response[404](undefined, trash));
+      if (err) {
+        next(err);
+      } else if (!trash) {
+        next(new Error('Not Found'));
+      } else {
+        const { permission } = res.locals;
 
-      const { permission } = res.locals;
-
-      sentry.restore(trash, doc => {
-        const message = `Restore ${trash.model} with id ${trash._id} successfully`;
-        res.json(response[200](message, filter(permission, doc)));
-        record(req, { status: 200, message });
-      });
-    })
-  })
+        sentry.restore(trash, (doc) => {
+          const message = `Restore ${trash.model} with id ${trash._id} successfully`;
+          res.json(response[200](message, filter(permission, doc)));
+          record(req, { status: 200, message });
+        });
+      }
+    });
+  });
 
   return router;
-}
+};
