@@ -22,18 +22,12 @@ module.exports = {
   price: {
     type: 'Number',
     required: true,
-<<<<<<< HEAD
     min: 0,
-=======
->>>>>>> master
   },
   amount: {
     type: 'Number',
     required: true,
-<<<<<<< HEAD
     min: 0,
-=======
->>>>>>> master
   },
   info: 'String',
   create_date: {
