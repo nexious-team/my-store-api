@@ -67,6 +67,8 @@ module.exports = (model) => {
             Models.role.findOne({ _identity: user._id }, (err, role) => {
               if (err) {
                 next(err);
+              } else if (!role) {
+                res.status(404).json(response[404]('Role not found'));
               } else {
                 const token = generateToken({ _id: role._id, username: user.username }, 'user');
 
