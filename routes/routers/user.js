@@ -58,23 +58,29 @@ module.exports = (model) => {
 
   router.post('/login', (req, res, next) => {
     passport.authenticate(model, (errAuth, user, info) => {
-      if (errAuth) return next(errAuth);
+      if (errAuth) {
+        next(errAuth);
+      } else {
+        req.login(user, { session: false }, (errLogin) => {
+          if (errLogin) {
+            next(errLogin);
+          } else {
+            if (!user) res.status(400).json(response[400](info.message));
 
-      req.login(user, { session: false }, (errLogin) => {
-        if (errLogin) return next(errLogin);
-        if (!user) return res.status(400).json(response[400](info.message));
+            Models.role.findOne({ _identity: user._id }, (err, role) => {
+              if (err) {
+                next(err);
+              } else if (!role) {
+                res.status(404).json(response[404]('Role not found'));
+              } else {
+                const token = generateToken({ _id: role._id, username: user.username }, 'user');
 
-        Models.role.findOne({ _identity: user._id }, (err, role) => {
-          if (err) return next(err);
-          if (!role) return res.status(404).json(response[404](undefined, role));
-
-          const token = generateToken({ _id: role._id, username: user.username }, 'user');
-
-          return res.json(response[200]('Login succeed!', { token }));
+                res.json(response[200]('Login succeed!', { token }));
+              }
+            });
+          }
         });
-        return true;
-      });
-      return true;
+      }
     })(req, res, next);
   });
 
