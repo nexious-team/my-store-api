@@ -2,17 +2,17 @@ module.exports = {
   _user: {
     type: 'ObjectId',
     ref: 'User',
-    required: true
+    required: true,
   },
   method: 'String',
   credential: 'Object',
-	info: 'String',
-	create_date: {
-		type: 'Date',
-		default: new Date(),
-	},
-	update_date: {
-		type: 'Date'
-	},
+  info: 'String',
+  create_date: {
+    type: 'Date',
+    default: new Date(),
+  },
+  update_date: {
+    type: 'Date',
+  },
 
-}
+};

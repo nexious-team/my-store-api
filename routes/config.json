@@ -31,7 +31,7 @@
   {
     "endpoint": "imports?",
     "model": "import",
-    "routers": ["util", "populate", "import", "common"],
+    "routers": ["util", "populate", "importOrder", "common"],
     "params": {
       "populate": {
         "references": ["_supplier"]
@@ -41,7 +41,7 @@
   {
     "endpoint": "order-details?",
     "model": "order_detail",
-    "routers": ["util", "order_detail", "populate", "common"],
+    "routers": ["util", "orderDetail", "populate", "common"],
     "params": {
       "populate": {
         "references": ["_order", "_product", "_product_unit"]

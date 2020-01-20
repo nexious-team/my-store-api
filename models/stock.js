@@ -2,16 +2,16 @@ module.exports = {
   _product: {
     type: 'ObjectId',
     ref: 'Product',
-    unique: true
+    unique: true,
   },
   _product_unit: {
     type: 'ObjectId',
-    ref: 'ProductUnit'
+    ref: 'ProductUnit',
   },
   quantity: {
     type: 'Number',
     required: true,
-    min: 0
+    min: 0,
   },
   info: 'String',
   create_date: {
@@ -19,7 +19,7 @@ module.exports = {
     default: new Date(),
   },
   update_date: {
-    type: 'Date'
+    type: 'Date',
   },
 
-}
+};
