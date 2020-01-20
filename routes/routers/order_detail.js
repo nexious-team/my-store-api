@@ -17,7 +17,6 @@ module.exports = (model = 'order_detail') => {
     .all(auth)
     .post(canUser('createAny', model), async (req, res, next) => {
       try {
-        
         [req.body.price, req.body.amount] = await checkStockAndCalculateAmount(req.body);
 
         const doc = await Models[model].create(req.body);
@@ -25,20 +24,19 @@ module.exports = (model = 'order_detail') => {
 
         await decreaseProductStock(doc);
         record(req, { status: 200 });
-        
-        res.json(response[200](undefined, filter(permission, doc)));
 
+        res.json(response[200](undefined, filter(permission, doc)));
       } catch (e) {
         next(e);
       }
-    })
-  
+    });
+
   router.route('/:id')
     .all(auth)
     .delete(canUser('deleteAny', model), async (req, res, next) => {
       try {
         const doc = await Models[model].findByIdAndRemove(req.params.id);
-        if(!doc) return res.status(404).json(response[404](undefined, doc));
+        if (!doc) return res.status(404).json(response[404](undefined, doc));
 
         const { permission } = res.locals;
 
@@ -46,10 +44,12 @@ module.exports = (model = 'order_detail') => {
 
         await increaseProductStock(doc);
         record(req, { status: 200 });
+
+        return true;
       } catch (e) {
-        next(e);
+        return next(e);
       }
-    })
+    });
 
   return router;
-}
+};

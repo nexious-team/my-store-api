@@ -1,13 +1,25 @@
+const common = require('./common');
+const populate = require('./populate');
+const user = require('./user');
+const order = require('./order');
+const orderDetail = require('./order_detail');
+const payment = require('./payment');
+const importOrder = require('./import');
+const recycle = require('./recycle');
+const util = require('./util');
+const image = require('./image');
+const oauth = require('./oauth');
+
 module.exports = {
-  common: require('./common'),
-  populate: require('./populate'),
-  user: require('./user'),
-  order: require('./order'),
-  order_detail: require('./order_detail'),
-  payment: require('./payment'),
-  import: require('./import'),
-  recycle: require('./recycle'),
-  util: require('./util'),
-  image: require('./image'),
-  oauth: require('./oauth')
-}
+  common,
+  populate,
+  user,
+  order,
+  orderDetail,
+  payment,
+  importOrder,
+  recycle,
+  util,
+  image,
+  oauth,
+};

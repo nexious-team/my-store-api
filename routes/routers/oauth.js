@@ -16,7 +16,7 @@ module.exports = (model = 'user') => {
       const user = await Models[model].findById(_id);
       if (!user) return res.status(404).json(response[404](undefined, user));
 
-      res.json(response[200](undefined, user));
+      return res.json(response[200](undefined, user));
     } catch (err) {
       next(err);
     }
@@ -25,28 +25,28 @@ module.exports = (model = 'user') => {
   router.get('/auth/facebook', passport.authenticate('facebook'));
 
   router.get('/auth/facebook/callback', (req, res, next) => {
-    passport.authenticate('facebook', function(err, user, info) {
+    passport.authenticate('facebook', (err, user, info) => {
       if (err) return next(err);
       if (!user) return res.status(400).json(response[400](info.message));
 
-      const token = generateToken({_id: user._id}, 'user_oauth');
+      const token = generateToken({ _id: user._id }, 'user_oauth');
 
-      res.redirect(`${process.env.APP_HOST}/api/users/auth?token=${token}`);
+      return res.redirect(`${process.env.APP_HOST}/api/users/auth?token=${token}`);
     })(req, res, next);
   });
 
   router.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
   router.get('/auth/google/callback', (req, res, next) => {
-    passport.authenticate('google', function(err, user, info) {
+    passport.authenticate('google', (err, user, info) => {
       if (err) return next(err);
       if (!user) return res.status(400).json(response[400](info.message));
 
-      const token = generateToken({_id: user._id}, 'user_oauth');
+      const token = generateToken({ _id: user._id }, 'user_oauth');
 
-      res.redirect(`${process.env.APP_HOST}/api/users/auth?token=${token}`);
+      return res.redirect(`${process.env.APP_HOST}/api/users/auth?token=${token}`);
     })(req, res, next);
   });
 
   return router;
-}
+};

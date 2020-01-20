@@ -6,15 +6,15 @@ module.exports.definition = {
   role: {
     type: 'String',
     enum: ['user'],
-    default: 'user'
+    default: 'user',
   },
   first_name: {
     type: 'String',
-    required: true
+    required: true,
   },
   last_name: {
     type: 'String',
-    required: true
+    required: true,
   },
   username: {
     type: 'String',
@@ -25,32 +25,32 @@ module.exports.definition = {
     type: 'String',
     required: false,
     unique: true,
-    validate: validators['email']
+    validate: validators.email,
   },
   password: {
     type: 'String',
-    required: false
+    required: false,
   },
   verified: {
     type: 'Boolean',
-    default: false
+    default: false,
   },
   _oauth: {
-    type: "ObjectId",
-    ref: "UserOauth"
+    type: 'ObjectId',
+    ref: 'UserOauth',
   },
   birth_date: 'Date',
   contact: [{
-    type:  'String',
+    type: 'String',
     default: undefined,
-    validate: validators['phone_number']
+    validate: validators.phone_number,
   }],
   address: {
     type: 'String',
   },
   _avatar: {
     type: 'ObjectId',
-    ref: 'Image'
+    ref: 'Image',
   },
   info: 'String',
   create_date: {
@@ -58,22 +58,21 @@ module.exports.definition = {
     default: new Date(),
   },
   update_date: {
-    type: 'Date'
+    type: 'Date',
   },
-}
+};
 
 module.exports.decorate = (schema) => {
   schema.index({ email: 1, _oauth: 1 }, { unique: true });
 
   schema.pre('save', function (next) {
-    if(this.isModified('password'))
-      this.password = this.hash(this.password);
+    if (this.isModified('password')) { this.password = this.hash(this.password); }
     next();
-  })
+  });
 
   schema.methods.hash = hash;
 
   schema.methods.compare = compare;
-  
+
   schema.statics.findOneOrCreate = findOneOrCreate('_oauth');
-}
+};

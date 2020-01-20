@@ -2,19 +2,19 @@ module.exports = {
   _supplier: {
     type: 'ObjectId',
     ref: 'Supplier',
-    required: true
+    required: true,
   },
   amount: {
     type: 'Number',
     required: true,
-    min: 0
+    min: 0,
   },
   info: 'String',
   create_date: {
     type: 'Date',
-    default: new Date()
+    default: new Date(),
   },
   update_date: {
-    type: 'Date'
+    type: 'Date',
   },
-}
+};
