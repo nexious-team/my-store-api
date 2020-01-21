@@ -1,6 +1,6 @@
 const express = require('express');
 const Models = require('../../models');
-const passport = require('../../plugins/passport').default;
+const passport = require('../../plugins/passport');
 
 const auth = passport.authenticate('jwt', { session: false });
 const canUser = require('../../middlewares/permission');

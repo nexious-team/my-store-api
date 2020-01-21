@@ -1,16 +1,3 @@
-module.exports.map = (query) => {
-  const { select, page, limit, sort, ...filter } = query;
-
-  const conditions = mapConditions(filter);
-  const options = mapOptions(page, limit, sort);
-
-  return {
-    conditions,
-    select,
-    options,
-  };
-};
-
 const mapConditions = (filter) => {
   const conditions = {};
   for (const key in filter) {
@@ -25,9 +12,22 @@ const mapConditions = (filter) => {
 };
 
 const mapOptions = (page = 1, limit = 25, sort = {}) => {
-  limit = isNaN(limit) ? 25 : parseInt(limit);
-  page = isNaN(page) || page === '0' ? 1 : parseInt(page);
+  limit = isNaN(limit) ? 25 : parseInt(limit, 10);
+  page = isNaN(page) || page === '0' ? 1 : parseInt(page, 10);
   const skip = (page - 1) * limit;
 
   return { skip, limit, sort };
+};
+
+module.exports.map = (query) => {
+  const { select, page, limit, sort, ...filter } = query;
+
+  const conditions = mapConditions(filter);
+  const options = mapOptions(page, limit, sort);
+
+  return {
+    conditions,
+    select,
+    options,
+  };
 };

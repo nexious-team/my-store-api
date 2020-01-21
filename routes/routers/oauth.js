@@ -10,7 +10,7 @@ module.exports = (model = 'user') => {
   router.get('/auth', async (req, res, next) => {
     try {
       const { token } = req.query;
-      if (!token) return res.status(400).json(response[400]("Invalid token!", token));
+      if (!token) return res.status(400).json(response[400]('Invalid token!', token));
 
       const { _id } = decodeToken(token, 'user_oauth');
       const user = await Models[model].findById(_id);
@@ -18,7 +18,7 @@ module.exports = (model = 'user') => {
 
       return res.json(response[200](undefined, user));
     } catch (err) {
-      next(err);
+      return next(err);
     }
   });
 

@@ -10,7 +10,7 @@ const { response } = require('./helpers');
 module.exports = (model) => {
   const router = express.Router();
 
-  router.get('/count', auth, canUser('readAny', model), async (req, res) => {
+  router.get('/count', auth, canUser('readAny', model), async (req, res, next) => {
     try {
       const number = await Models[model].count();
 
