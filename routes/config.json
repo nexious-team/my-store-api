@@ -143,9 +143,14 @@
     "routers": ["util", "common"]
   },
   {
+    "endpoint": "user-oauth?",
+    "model": "user_oauth",
+    "routers": ["util", "common"]
+  },
+  {
     "endpoint": "users?",
     "model": "user",
-    "routers": ["util", "user", "common"]
+    "routers": ["user", "oauth", "util", "common"]
   },
   {
     "endpoint": "permissions?",

@@ -5,6 +5,10 @@ const keys = {
     secret: 'store-user-secret',
     exp: '24h',
   },
+  user_oauth: {
+    secret: 'store-oauth-secret',
+    exp: '24h'
+  },
   verify_email: {
     secret: 'store-verify-email',
     exp: '5m',

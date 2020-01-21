@@ -8,6 +8,7 @@ const importOrder = require('./import');
 const recycle = require('./recycle');
 const util = require('./util');
 const image = require('./image');
+const oauth = require('./oauth');
 
 module.exports = {
   common,
@@ -20,4 +21,5 @@ module.exports = {
   recycle,
   util,
   image,
+  oauth,
 };

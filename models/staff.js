@@ -1,3 +1,4 @@
+const { hash, compare } = require('./helpers/password');
 const validators = require('./helpers/validators');
 
 module.exports.definition = {
@@ -55,16 +56,12 @@ module.exports.definition = {
   },
 };
 
-module.exports.middlewares = (schema) => {
+module.exports.decorate = (schema) => {
   schema.pre('save', function (next) {
     this.password = this.hash(this.password);
     next();
   });
-};
 
-const { hash, compare } = require('./helpers/password');
-
-module.exports.methods = (schema) => {
   schema.methods.hash = hash;
 
   schema.methods.compare = compare;

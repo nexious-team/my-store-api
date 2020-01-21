@@ -4,10 +4,10 @@ const path = require('path');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const Sentry = require('@sentry/node');
 const routes = require('./routes');
 const passport = require('./plugins/passport');
-const helpers = require('./routes/routers/helpers')
-const Sentry = require('@sentry/node');
+const helpers = require('./routes/routers/helpers');
 
 const app = express();
 
@@ -18,7 +18,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
 app.use(Sentry.Handlers.requestHandler({
-  user: ['_id', 'email']
+  user: ['_id', 'email'],
 }));
 app.use(logger('dev'));
 app.use(express.json());
