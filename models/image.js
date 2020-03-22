@@ -14,7 +14,7 @@ module.exports = {
   url: {
     type: 'String',
     required: true,
-    // validate: validators.url,
+    validate: validators.url,
   },
   filename: {
     type: 'String',
