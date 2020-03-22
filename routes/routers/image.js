@@ -13,8 +13,9 @@ module.exports = (model) => {
   const middlewares = [auth, canUser('createAny', model), upload.single('image')];
   router.post('/upload', middlewares, async (req, res, next) => {
     try {
+      const filename = req.file.originalname;
       const url = `${req.protocol}://${req.headers.host}/images/${req.file.filename}`;
-      const image = await Models[model].create({ url });
+      const image = await Models[model].create({ url, filename });
 
       res.json(image);
 
