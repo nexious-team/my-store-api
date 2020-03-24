@@ -1,6 +1,7 @@
 node_modules
 logs
 package-lock.json
+public/images/*
 .env
 temp.*
 yarn-error.log

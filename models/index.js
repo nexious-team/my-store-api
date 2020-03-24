@@ -17,12 +17,21 @@ const staff = require('./staff');
 const stock = require('./stock');
 const supplier = require('./supplier');
 const unit = require('./unit');
+const userOauth = require('./user_oauth');
 const user = require('./user');
 
 const call = require('./call');
 const permission = require('./permission');
 const recycle = require('./recycle');
 const role = require('./role');
+
+function create({ definition, decorate }) {
+  const schema = new Schema(definition);
+
+  if (decorate) decorate(schema);
+
+  return schema;
+}
 
 module.exports = {
   brand: model('Brand', new Schema(brand)),
@@ -40,6 +49,7 @@ module.exports = {
   stock: model('Stock', new Schema(stock)),
   supplier: model('Supplier', new Schema(supplier)),
   unit: model('Unit', new Schema(unit)),
+  user_oauth: model('UserOauth', create(userOauth)),
   user: model('User', create(user)),
 
   call: model('Call', new Schema(call)),
@@ -47,11 +57,3 @@ module.exports = {
   recycle: model('Recycle', new Schema(recycle)),
   role: model('Role', new Schema(role)),
 };
-
-function create({ definition, middlewares, methods, statics }) {
-  const schema = new Schema(definition);
-  if (methods) methods(schema);
-  if (middlewares) middlewares(schema);
-  if (statics) statics(schema);
-  return schema;
-}

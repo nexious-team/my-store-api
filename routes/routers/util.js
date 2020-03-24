@@ -10,10 +10,14 @@ const { response } = require('./helpers');
 module.exports = (model) => {
   const router = express.Router();
 
-  router.get('/count', auth, canUser('readAny', model), async (req, res) => {
-    const number = await Models[model].count();
+  router.get('/count', auth, canUser('readAny', model), async (req, res, next) => {
+    try {
+      const number = await Models[model].count();
 
-    res.json(response[200](undefined, number));
+      res.json(response[200](undefined, number));
+    } catch (err) {
+      next(err);
+    }
   });
 
   router.get('/schema', auth, canUser('readAny', model), (req, res) => {

@@ -1,3 +1,7 @@
+const { hash, compare } = require('./helpers/password');
+const { findOneOrCreate } = require('./helpers/find');
+const validators = require('./helpers/validators');
+
 module.exports.definition = {
   role: {
     type: 'String',
@@ -14,29 +18,39 @@ module.exports.definition = {
   },
   username: {
     type: 'String',
-    required: true,
+    required: false,
     unique: true,
   },
   email: {
     type: 'String',
-    required: true,
+    required: false,
     unique: true,
+    validate: validators.email,
   },
   password: {
     type: 'String',
-    required: true,
+    required: false,
   },
   verified: {
     type: 'Boolean',
     default: false,
   },
-  birth_date: 'Date',
-  contact: {
-    type: ['String'],
-    default: undefined,
+  _oauth: {
+    type: 'ObjectId',
+    ref: 'UserOauth',
   },
+  birth_date: 'Date',
+  contact: [{
+    type: 'String',
+    default: undefined,
+    validate: validators.phone_number,
+  }],
   address: {
     type: 'String',
+  },
+  _avatar: {
+    type: 'ObjectId',
+    ref: 'Image',
   },
   info: 'String',
   create_date: {
@@ -48,24 +62,17 @@ module.exports.definition = {
   },
 };
 
-module.exports.middlewares = (schema) => {
+module.exports.decorate = (schema) => {
+  schema.index({ email: 1, _oauth: 1 }, { unique: true });
+
   schema.pre('save', function (next) {
     if (this.isModified('password')) { this.password = this.hash(this.password); }
     next();
   });
-};
-const { hash, compare } = require('./helpers/password');
 
-module.exports.methods = (schema) => {
   schema.methods.hash = hash;
 
   schema.methods.compare = compare;
-};
 
-module.exports.statics = (schema) => {
-  schema.statics.findByEmail = function (email) {
-    return this.find({
-      email,
-    });
-  };
+  schema.statics.findOneOrCreate = findOneOrCreate('_oauth');
 };
