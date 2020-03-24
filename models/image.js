@@ -1,7 +1,20 @@
+const validators = require('./helpers/validators');
+
 module.exports = {
-  path: {
+  _owner: {
+    type: 'ObjectId',
+    required: false,
+    refPath: 'owner_ref',
+  },
+  owner_ref: {
+    type: 'String',
+    enum: ['User', 'Staff', 'Brand', 'Product', 'Supplier'],
+    default: 'Product',
+  },
+  url: {
     type: 'String',
     required: true,
+    validate: validators.url,
   },
   info: 'String',
   create_date: {

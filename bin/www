@@ -3,6 +3,7 @@
 /**
  * Module dependencies.
  */
+require('dotenv').config()
 
 const debug = require('debug')('my-store-back:server');
 const http = require('http');
@@ -12,19 +13,14 @@ const app = require('../app');
 /**
  * Get port from environment and store in Express.
  */
-const drivers = {
-  mlab: 'mongodb://admin:admin123@ds235947.mlab.com:35947/store',
-  atlas: 'mongodb+srv://admin:admin123@cluster0-hualb.mongodb.net/store?retryWrites=true&w=majority',
-  local: 'mongodb://localhost:27017/store',
-  options: {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useFindAndModify: false,
-  },
+const options = {
+  useNewUrlParser: true,
+  useCreateIndex: true,
+  useFindAndModify: false,
 };
 
 mongoose.set('useUnifiedTopology', true);
-mongoose.connect(drivers.atlas, drivers.options)
+mongoose.connect(process.env.DB_HOST, options)
   .then(
     () => { console.log('Database connected!'); },
     (err) => { console.log(err); },

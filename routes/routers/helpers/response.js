@@ -12,7 +12,8 @@ module.exports = {
   403: (error = 'Forbidden') => ({
     error,
   }),
-  404: (error = 'Not found') => ({
+  404: (error = 'Not found', payload = null) => ({
     error,
+    payload,
   }),
 };
