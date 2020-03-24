@@ -64,9 +64,9 @@ module.exports = (model) => {
         req.login(user, { session: false }, (errLogin) => {
           if (errLogin) {
             next(errLogin);
+          } else if (!user) {
+            res.status(400).json(response[400](info.message));
           } else {
-            if (!user) res.status(400).json(response[400](info.message));
-
             Models.role.findOne({ _identity: user._id }, (err, role) => {
               if (err) {
                 next(err);

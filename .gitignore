@@ -3,5 +3,5 @@ logs
 package-lock.json
 public/images/*
 .env
-yarn-error.log
 temp.*
+yarn-error.log
