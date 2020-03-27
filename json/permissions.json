@@ -1,0 +1,893 @@
+[
+  {
+    "attributes": "*",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d501239",
+    "role": "admin",
+    "resource": "brand",
+    "action": "create:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d50123a",
+    "role": "admin",
+    "resource": "brand",
+    "action": "read:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d50123b",
+    "role": "admin",
+    "resource": "brand",
+    "action": "update:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d50123c",
+    "role": "admin",
+    "resource": "brand",
+    "action": "delete:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d50123d",
+    "role": "admin",
+    "resource": "category",
+    "action": "create:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d50123e",
+    "role": "admin",
+    "resource": "category",
+    "action": "read:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d50123f",
+    "role": "admin",
+    "resource": "category",
+    "action": "update:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d501240",
+    "role": "admin",
+    "resource": "category",
+    "action": "delete:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d501241",
+    "role": "admin",
+    "resource": "image",
+    "action": "create:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d501245",
+    "role": "admin",
+    "resource": "import_detail",
+    "action": "create:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d50124b",
+    "role": "admin",
+    "resource": "import",
+    "action": "update:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d501250",
+    "role": "admin",
+    "resource": "order_detail",
+    "action": "delete:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d501254",
+    "role": "admin",
+    "resource": "order",
+    "action": "delete:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d50125a",
+    "role": "admin",
+    "resource": "product_unit",
+    "action": "read:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d501273",
+    "role": "admin",
+    "resource": "unit",
+    "action": "update:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d50125b",
+    "role": "admin",
+    "resource": "product_unit",
+    "action": "update:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d501268",
+    "role": "admin",
+    "resource": "staff",
+    "action": "delete:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d50127e",
+    "role": "admin",
+    "resource": "permission",
+    "action": "read:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*, !password, !email",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d501277",
+    "role": "admin",
+    "resource": "user",
+    "action": "update:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d501261",
+    "role": "admin",
+    "resource": "shipment",
+    "action": "create:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d50126b",
+    "role": "admin",
+    "resource": "stock",
+    "action": "update:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d501242",
+    "role": "admin",
+    "resource": "image",
+    "action": "read:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d501247",
+    "role": "admin",
+    "resource": "import_detail",
+    "action": "update:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d501284",
+    "role": "admin",
+    "resource": "recycle",
+    "action": "delete:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d501280",
+    "role": "admin",
+    "resource": "permission",
+    "action": "delete:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-10-11T14:42:51.947Z",
+    "_id": "5da09509464a4f1509cb3d44",
+    "role": "admin",
+    "resource": "role",
+    "action": "update:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*, !user.password",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d50124e",
+    "role": "admin",
+    "resource": "order_detail",
+    "action": "read:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d501251",
+    "role": "admin",
+    "resource": "order",
+    "action": "create:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d501259",
+    "role": "admin",
+    "resource": "product_unit",
+    "action": "create:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d50125f",
+    "role": "admin",
+    "resource": "product",
+    "action": "update:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*, !password",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d501278",
+    "role": "admin",
+    "resource": "user",
+    "action": "delete:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d501260",
+    "role": "admin",
+    "resource": "product",
+    "action": "delete:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d50126a",
+    "role": "admin",
+    "resource": "stock",
+    "action": "read:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d501283",
+    "role": "admin",
+    "resource": "recycle",
+    "action": "update:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d501243",
+    "role": "admin",
+    "resource": "image",
+    "action": "update:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d50124a",
+    "role": "admin",
+    "resource": "import",
+    "action": "read:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d50124f",
+    "role": "admin",
+    "resource": "order_detail",
+    "action": "update:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d501258",
+    "role": "admin",
+    "resource": "payment",
+    "action": "delete:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d501255",
+    "role": "admin",
+    "resource": "payment",
+    "action": "create:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d50126e",
+    "role": "admin",
+    "resource": "supplier",
+    "action": "read:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*, !password, !role",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d501287",
+    "role": "user",
+    "resource": "user",
+    "action": "update:own",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d501263",
+    "role": "admin",
+    "resource": "shipment",
+    "action": "update:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d501279",
+    "role": "admin",
+    "resource": "call",
+    "action": "create:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d501272",
+    "role": "admin",
+    "resource": "unit",
+    "action": "read:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d501244",
+    "role": "admin",
+    "resource": "image",
+    "action": "delete:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d501248",
+    "role": "admin",
+    "resource": "import_detail",
+    "action": "delete:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d50124d",
+    "role": "admin",
+    "resource": "order_detail",
+    "action": "create:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d501253",
+    "role": "admin",
+    "resource": "order",
+    "action": "update:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d501257",
+    "role": "admin",
+    "resource": "payment",
+    "action": "update:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d501246",
+    "role": "admin",
+    "resource": "import_detail",
+    "action": "read:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d501249",
+    "role": "admin",
+    "resource": "import",
+    "action": "create:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d501269",
+    "role": "admin",
+    "resource": "stock",
+    "action": "create:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*, !caller.password",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d501282",
+    "role": "admin",
+    "resource": "recycle",
+    "action": "read:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d50125e",
+    "role": "admin",
+    "resource": "product",
+    "action": "read:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d50124c",
+    "role": "admin",
+    "resource": "import",
+    "action": "delete:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*, !user.password",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d501252",
+    "role": "admin",
+    "resource": "order",
+    "action": "read:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d501256",
+    "role": "admin",
+    "resource": "payment",
+    "action": "read:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d501274",
+    "role": "admin",
+    "resource": "unit",
+    "action": "delete:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d50126d",
+    "role": "admin",
+    "resource": "supplier",
+    "action": "create:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d501264",
+    "role": "admin",
+    "resource": "shipment",
+    "action": "delete:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d50127d",
+    "role": "admin",
+    "resource": "permission",
+    "action": "create:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d501265",
+    "role": "admin",
+    "resource": "staff",
+    "action": "create:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d50126f",
+    "role": "admin",
+    "resource": "supplier",
+    "action": "update:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*, !password, !role",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d501288",
+    "role": "user",
+    "resource": "user",
+    "action": "delete:own",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d50127c",
+    "role": "admin",
+    "resource": "call",
+    "action": "delete:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*, !password",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d501266",
+    "role": "admin",
+    "resource": "staff",
+    "action": "read:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d501270",
+    "role": "admin",
+    "resource": "supplier",
+    "action": "delete:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d50126c",
+    "role": "admin",
+    "resource": "stock",
+    "action": "delete:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*, !password, !role",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d501285",
+    "role": "user",
+    "resource": "user",
+    "action": "create:own",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d50125c",
+    "role": "admin",
+    "resource": "product_unit",
+    "action": "delete:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*, !password",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d501267",
+    "role": "admin",
+    "resource": "staff",
+    "action": "update:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d50127f",
+    "role": "admin",
+    "resource": "permission",
+    "action": "update:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d50127b",
+    "role": "admin",
+    "resource": "call",
+    "action": "update:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-10-11T14:42:51.947Z",
+    "_id": "5da09509464a4f1509cb3d43",
+    "role": "admin",
+    "resource": "role",
+    "action": "delete:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d501281",
+    "role": "admin",
+    "resource": "recycle",
+    "action": "create:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d50125d",
+    "role": "admin",
+    "resource": "product",
+    "action": "create:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*, !password",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d501275",
+    "role": "admin",
+    "resource": "user",
+    "action": "create:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*, !password, !role",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d501286",
+    "role": "user",
+    "resource": "user",
+    "action": "read:own",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d501262",
+    "role": "admin",
+    "resource": "shipment",
+    "action": "read:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*, !caller.password",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d50127a",
+    "role": "admin",
+    "resource": "call",
+    "action": "read:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d501271",
+    "role": "admin",
+    "resource": "unit",
+    "action": "create:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-10-11T14:42:51.947Z",
+    "_id": "5da09509464a4f1509cb3d41",
+    "role": "admin",
+    "resource": "role",
+    "action": "read:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*, !password",
+    "create_date": "2019-10-10T14:30:58.537Z",
+    "_id": "5d9f40abd4d443149d501276",
+    "role": "admin",
+    "resource": "user",
+    "action": "read:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-10-11T14:42:51.947Z",
+    "_id": "5da09509464a4f1509cb3d42",
+    "role": "admin",
+    "resource": "role",
+    "action": "create:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-12-12T15:09:17.700Z",
+    "_id": "5df258230a11f6176154ebef",
+    "resource": "user_oauth",
+    "role": "admin",
+    "action": "read:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-12-12T15:09:17.700Z",
+    "_id": "5df2582f0a11f6176154ebf1",
+    "resource": "user_oauth",
+    "role": "admin",
+    "action": "create:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-12-12T15:09:17.700Z",
+    "_id": "5df258400a11f6176154ebf3",
+    "resource": "user_oauth",
+    "role": "admin",
+    "action": "update:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2019-12-12T15:09:17.700Z",
+    "_id": "5df258500a11f6176154ebf5",
+    "resource": "user_oauth",
+    "role": "admin",
+    "action": "delete:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2020-01-14T14:33:58.841Z",
+    "_id": "5e1dd1b8520e7f0046d82dce",
+    "role": "staff",
+    "resource": "user",
+    "action": "read:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*, !role",
+    "create_date": "2020-03-20T13:39:22.543Z",
+    "_id": "5e74c83a8b01ae0051d54580",
+    "role": "user",
+    "resource": "user",
+    "action": "read:own",
+    "__v": 0
+  },
+  {
+    "attributes": "*, !role",
+    "create_date": "2020-03-20T13:39:22.543Z",
+    "_id": "5e74c8d18b01ae0051d54582",
+    "role": "user",
+    "resource": "user",
+    "action": "read:own",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2020-03-24T13:07:26.715Z",
+    "_id": "5e7a1652af6ae6004ff6176c",
+    "role": "user",
+    "resource": "product",
+    "action": "update:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2020-03-24T13:07:26.715Z",
+    "_id": "5e7a1652af6ae6004ff6176d",
+    "role": "user",
+    "resource": "product",
+    "action": "delete:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2020-03-24T13:07:26.715Z",
+    "_id": "5e7a1652af6ae6004ff6176b",
+    "role": "user",
+    "resource": "product",
+    "action": "create:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2020-03-24T13:07:26.715Z",
+    "_id": "5e7a1652af6ae6004ff6176a",
+    "role": "user",
+    "resource": "product",
+    "action": "read:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2020-03-24T13:07:26.715Z",
+    "_id": "5e7a1671af6ae6004ff61771",
+    "role": "user",
+    "resource": "stock",
+    "action": "update:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2020-03-24T13:07:26.715Z",
+    "_id": "5e7a1671af6ae6004ff61772",
+    "role": "user",
+    "resource": "stock",
+    "action": "delete:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2020-03-24T13:07:26.715Z",
+    "_id": "5e7a1671af6ae6004ff61770",
+    "role": "user",
+    "resource": "stock",
+    "action": "create:any",
+    "__v": 0
+  },
+  {
+    "attributes": "*",
+    "create_date": "2020-03-24T13:07:26.715Z",
+    "_id": "5e7a1671af6ae6004ff6176f",
+    "role": "user",
+    "resource": "stock",
+    "action": "read:any",
+    "__v": 0
+  }
+]

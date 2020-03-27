@@ -5,7 +5,7 @@ const passport = require('../../plugins/passport');
 const auth = passport.authenticate('jwt', { session: false });
 const canUser = require('../../middlewares/permission');
 
-const { setOrderComplete } = require('../../workers/payment');
+// const { setOrderComplete } = require('../../workers/payment');
 const { record } = require('../../workers/call');
 const { filter, response } = require('./helpers');
 
@@ -23,7 +23,7 @@ module.exports = (model = 'payment') => {
 
           res.json(response[200](undefined, filter(permission, doc)));
 
-          setOrderComplete(doc.order, true, console.log);
+          // setOrderComplete(doc._order, true, console.log);
           record(req, { status: 200 });
         }
       });
@@ -40,7 +40,7 @@ module.exports = (model = 'payment') => {
 
         res.json(response[200](undefined, filter(permission, doc)));
 
-        setOrderComplete(doc.order, false, console.log);
+        // setOrderComplete(doc._order, false, console.log);
         record(req, { status: 200 });
         return true;
       });

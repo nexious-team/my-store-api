@@ -1,0 +1,128 @@
+{
+  "admin": {
+    "_id": "5e78b1c279f4893e92addd06",
+    "role": "admin",
+    "contact": [],
+    "first_name": "Admin",
+    "last_name": "Test",
+    "username": "admin",
+    "email": "admin@store.com",
+    "password": "admin123"
+  },
+  "user": {
+    "_id": "5e7db683335ee422d93e64db",
+    "role": "user",
+    "verified": false,
+    "contact": [],
+    "first_name": "Sam",
+    "last_name": "Kok",
+    "username": "samkok",
+    "email": "samkok@store.com",
+    "password": "user123"
+  },
+  "brand": {
+    "_id": "5e7c20161db96117644a2591",
+    "name": "DKSH"
+  },
+  "category": {
+    "_id": "5da87560f4bae70cce7d28fd",
+    "name": "Beverage"
+  },
+  "product": {
+    "_categories": [
+      "5da87560f4bae70cce7d28fd"
+    ],
+    "_id": "5e7c222c6ab5e617c1644e7a",
+    "_brand": "5e7c20161db96117644a2591",
+    "name": "Kulen"
+  },
+  "unit": [
+    {
+      "_id": "5da9d44351082717b0118da2",
+      "name": "Box"
+    },
+    {
+      "_id": "5e7c2e30feeac01d20716e04",
+      "name": "Bottle 500ml"
+    }
+  ],
+  "product_unit": [
+    {
+      "_id": "5e7c30eb5b91161f2b5b11de",
+      "_unit": "5e7c2e30feeac01d20716e04",
+      "_product": "5e7c222c6ab5e617c1644e7a",
+      "quantity": 1,
+      "max_order": 23,
+      "price": 0.5
+    },
+    {
+      "_id": "5e7c32f5a8ef811f690dd436",
+      "_unit": "5da9d44351082717b0118da2",
+      "_product": "5e7c222c6ab5e617c1644e7a",
+      "quantity": 24,
+      "max_order": 10,
+      "price": 7
+    }
+  ],
+  "supplier": {
+    "contact": [
+      "(+855)23 725 151"
+    ],
+    "_id": "5e7c2aebf5188019e4a74ddc",
+    "name": "DKSH"
+  },
+  "import": {
+    "_id": "5e7c2c2d73ab491d01646714",
+    "_supplier": "5e7c2aebf5188019e4a74ddc",
+    "amount": 50
+  },
+  "import_detail": {
+    "_id": "5e7c34893a5bd42053267d56",
+    "_import": "5e7c2c2d73ab491d01646714",
+    "_product": "5e7c222c6ab5e617c1644e7a",
+    "_product_unit": "5e7c32f5a8ef811f690dd436",
+    "quantity": 10,
+    "price": 5,
+    "amount": 50
+  },
+  "stock": {
+    "_id": "5e7c49f63a5bd42053267d5b",
+    "_product": "5e7c222c6ab5e617c1644e7a",
+    "_product_unit": "5e7c32f5a8ef811f690dd436",
+    "quantity": 10
+  },
+  "order": {
+    "_id": "5e72262c224631150a6c8124",
+    "_user": "5e7db683335ee422d93e64db"
+  },
+  "order_detail": [
+    {
+      "_id": "5e7c4ea8b35b6f277e967096",
+      "_order": "5e72262c224631150a6c8124",
+      "_product": "5e7c222c6ab5e617c1644e7a",
+      "_product_unit": "5e7c32f5a8ef811f690dd436",
+      "quantity": 2,
+      "price": 7,
+      "amount": 14
+    },
+    {
+      "_id": "5e7c4f0ab35b6f277e967098",
+      "_order": "5e72262c224631150a6c8124",
+      "_product": "5e7c222c6ab5e617c1644e7a",
+      "_product_unit": "5e7c30eb5b91161f2b5b11de",
+      "quantity": 6,
+      "price": 0.5,
+      "amount": 3
+    }
+  ],
+  "shipment": {
+    "_id": "5e7dcb6b1c85aa004c43ce72",
+    "_order": "5e72262c224631150a6c8124",
+    "phone_number": "(+855)98 765 432",
+    "address": "Phnom Penh"
+  },
+  "payment": {
+    "_id": "5e7c50c2b35b6f277e96709c",
+    "_user": "5e7db683335ee422d93e64db"
+  }
+}

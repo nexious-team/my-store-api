@@ -6,7 +6,7 @@ const auth = passport.authenticate('jwt', { session: false });
 const canUser = require('../../middlewares/permission');
 
 const { calculateImportAmount } = require('../../workers/common');
-const { decreaseProductQty, increaseProductQty } = require('../../workers/order');
+// const { decreaseProductStock, increaseProductStock } = require('../../workers/order');
 const { record } = require('../../workers/call');
 const { filter, response } = require('./helpers');
 
@@ -16,7 +16,7 @@ module.exports = (model = 'import') => {
   router.route('/')
     .all(auth)
     .post(canUser('createAny', model), (req, res, next) => {
-      req.body.amount = calculateImportAmount(req.body);
+      req.body.amount = calculateImportAmount(req.body) || 0;
 
       Models[model].create(req.body, (err, doc) => {
         if (err) return next(err);
@@ -24,7 +24,7 @@ module.exports = (model = 'import') => {
 
         res.json(response[200](undefined, filter(permission, doc)));
 
-        increaseProductQty(doc.product, doc.qty, console.log);
+        // increaseProductStock(doc.product, doc.qty, console.log);
         record(req, { status: 200 });
         return true;
       });
@@ -41,7 +41,7 @@ module.exports = (model = 'import') => {
 
         res.json(response[200](undefined, filter(permission, doc)));
 
-        decreaseProductQty(doc.product, doc.qty, console.log);
+        // decreaseProductStock(doc.product, doc.qty, console.log);
         record(req, { status: 200 });
         return true;
       });

@@ -2,3 +2,4 @@ bin
 .cache
 build
 **/node_modules/**
+test

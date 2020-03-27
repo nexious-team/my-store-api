@@ -4,25 +4,25 @@ module.exports.definition = {
   provider: 'String',
   id: {
     type: 'String',
-    unique: true
+    unique: true,
   },
   displayName: 'String',
   name: {
     familyName: 'String',
     givenName: 'String',
-    middleName: 'String'
+    middleName: 'String',
   },
   emails: [{
     value: 'String',
-    type: { 
-      type: 'String'
-    }
+    type: {
+      type: 'String',
+    },
   }],
   photos: [{
-    value: 'String'
+    value: 'String',
   }],
-}
+};
 
 module.exports.decorate = (schema) => {
   schema.statics.findOneOrCreate = findOneOrCreate('id');
-}
+};
