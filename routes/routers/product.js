@@ -2,6 +2,56 @@ const express = require('express');
 const Models = require('../../models');
 const { response } = require('./helpers');
 
+const lookups = [
+  {
+    $lookup: {
+      from: 'brands',
+      localField: '_brand',
+      foreignField: '_id',
+      as: 'brand',
+    },
+  },
+  {
+    $unwind: {
+      path: '$brand',
+      preserveNullAndEmptyArrays: true,
+    },
+  },
+  {
+    $lookup: {
+      from: 'categories',
+      localField: '_categories',
+      foreignField: '_id',
+      as: 'categories',
+    },
+  },
+  {
+    $lookup: {
+      from: 'images',
+      localField: '_images',
+      foreignField: '_id',
+      as: 'images',
+    },
+  },
+  {
+    $lookup: {
+      from: 'stocks',
+      localField: '_id',
+      foreignField: '_product',
+      as: 'stock',
+    },
+  },
+  { $unwind: '$stock' },
+  {
+    $lookup: {
+      from: 'productunits',
+      localField: '_id',
+      foreignField: '_product',
+      as: 'product_units',
+    },
+  },
+];
+
 module.exports = (model = 'product') => {
   const router = express.Router();
 
@@ -16,53 +66,7 @@ module.exports = (model = 'product') => {
         const skip = (pageNumber - 1) * limitNumber;
 
         const pipeline = [
-          {
-            $lookup: {
-              from: 'brands',
-              localField: '_brand',
-              foreignField: '_id',
-              as: 'brand',
-            },
-          },
-          {
-            $unwind: {
-              path: '$brand',
-              preserveNullAndEmptyArrays: true,
-            },
-          },
-          {
-            $lookup: {
-              from: 'categories',
-              localField: '_categories',
-              foreignField: '_id',
-              as: 'categories',
-            },
-          },
-          {
-            $lookup: {
-              from: 'images',
-              localField: '_images',
-              foreignField: '_id',
-              as: 'images',
-            },
-          },
-          {
-            $lookup: {
-              from: 'stocks',
-              localField: '_id',
-              foreignField: '_product',
-              as: 'stock',
-            },
-          },
-          { $unwind: '$stock' },
-          {
-            $lookup: {
-              from: 'productunits',
-              localField: '_id',
-              foreignField: '_product',
-              as: 'product_units',
-            },
-          },
+          ...lookups,
           { $match: query },
           { $skip: skip },
           { $limit: limitNumber },
@@ -78,7 +82,26 @@ module.exports = (model = 'product') => {
         res.json(response[200](undefined, docs));
       }
     } catch (err) {
-      console.log(err);
+      next(err);
+    }
+  });
+
+  router.get('/:id', async (req, res, next) => {
+    try {
+      if (req.headers.admin) next();
+      else {
+        const product = await Models[model].findById(req.params.id);
+        if (!product) next();
+        else {
+          const docs = await Models[model].aggregate([
+            { $match: { _id: product._id } },
+            ...lookups,
+          ]);
+
+          res.json(response[200](undefined, docs[0]));
+        }
+      }
+    } catch (err) {
       next(err);
     }
   });
