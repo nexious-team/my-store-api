@@ -12,15 +12,6 @@ module.exports = {
     type: 'ObjectId',
     ref: 'Payment',
   },
-  amount: {
-    type: 'Number',
-    required: false,
-    min: 0,
-  },
-  paid: {
-    type: 'Boolean',
-    default: false,
-  },
   info: 'String',
   create_date: {
     type: 'Date',

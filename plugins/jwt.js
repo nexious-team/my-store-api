@@ -7,7 +7,7 @@ const keys = {
   },
   user_oauth: {
     secret: 'store-oauth-secret',
-    exp: '24h'
+    exp: '24h',
   },
   verify_email: {
     secret: 'store-verify-email',
