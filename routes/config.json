@@ -81,7 +81,7 @@
   {
     "endpoint": "products?",
     "model": "product",
-    "routers": ["util", "populate", "common"],
+    "routers": ["product", "util", "populate", "common"],
     "params": {
       "populate": {
         "references": [
