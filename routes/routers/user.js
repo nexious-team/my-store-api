@@ -8,7 +8,7 @@ const mailer = require('../../plugins/nodemailer');
 const { generateToken, decodeToken } = require('../../plugins/jwt');
 const { common, logger, filter, response } = require('./helpers');
 const { record } = require('../../workers/call');
-const upload = require('../../plugins/multer');
+const { upload } = require('../../plugins/multer');
 
 const auth = passport.authenticate('jwt', { session: false });
 
