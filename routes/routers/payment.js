@@ -1,49 +1,104 @@
 const express = require('express');
-const Models = require('../../models');
-const passport = require('../../plugins/passport');
 
-const auth = passport.authenticate('jwt', { session: false });
+const Models = require('../../models');
 const canUser = require('../../middlewares/permission');
 
-// const { setOrderComplete } = require('../../workers/payment');
+const passport = require('../../plugins/passport');
+const { createPayment } = require('../../plugins/stripe');
+
+const { calculateOrderTotalAmount } = require('../../workers/order');
+const { checkPaymentStatus } = require('../../workers/payment');
 const { record } = require('../../workers/call');
+const { sentry } = require('../../workers/recycle');
+
 const { filter, response } = require('./helpers');
+
+const auth = passport.authenticate('jwt', { session: false });
 
 module.exports = (model = 'payment') => {
   const router = express.Router();
 
   router.route('/')
     .all(auth)
-    .post(canUser('createAny', model), (req, res, next) => {
-      Models[model].create(req.body, (err, doc) => {
-        if (err) {
-          next(err);
-        } else {
-          const { permission } = res.locals;
-
-          res.json(response[200](undefined, filter(permission, doc)));
-
-          // setOrderComplete(doc._order, true, console.log);
-          record(req, { status: 200 });
+    .post(canUser('createAny', model), async (req, res, next) => {
+      try {
+        const order = await Models.order.findById(req.body._order);
+        if (!order) {
+          return res.status(404).json(response[404](undefined, order));
         }
-      });
+        const [err, amount] = await calculateOrderTotalAmount({ _id: order._id });
+        if (err) throw err;
+
+        const paymentIntent = await createPayment({ amount });
+
+        const doc = await Models[model].create({ ...req.body, amount, _stripe: paymentIntent.id });
+        const { permission } = res.locals;
+
+        order._payment = doc._id;
+        await order.save();
+
+        record(req, { status: 200 });
+
+        const payload = { ...filter(permission, doc), client_secret: paymentIntent.client_secret };
+
+        res.json(response[200](undefined, payload));
+        return null;
+      } catch (err) {
+        return next(err);
+      }
     });
 
   router.route('/:id')
     .all(auth)
-    .delete(canUser('deleteAny', model), (req, res, next) => {
-      Models[model].findByIdAndRemove(req.params.id, (err, doc) => {
-        if (err) return next(err);
-        if (!doc) return res.status(404).json(response[404](undefined, doc));
+    .get(canUser('readAny', model), async (req, res, next) => {
+      try {
+        const [match, doc, paymentIntent] = await checkPaymentStatus({ _id: req.params.id });
+        console.log({ doc, paymentIntent });
+        if (match) {
+          next();
+        } else {
+          doc.status = paymentIntent.status;
+          await doc.save();
+          next();
+        }
+      } catch (err) {
+        next(err);
+      }
+    })
+    .put(canUser('updateAny', model), async (req, res, next) => {
+      try {
+        if (req.body.status) {
+          const [match] = await checkPaymentStatus({ _id: req.params.id });
+          if (match) {
+            next();
+          } else {
+            res.status(400).json(response[400]('The status doesn\'t match what on stripe server'));
+          }
+        } else {
+          next();
+        }
+      } catch (err) {
+        next(err);
+      }
+    })
+    .delete(canUser('deleteAny', model), async (req, res, next) => {
+      try {
+        const doc = await Models[model].findById(req.params.id);
+        if (!doc) return res.status(404).json(response[404]('Payment not found!'));
+        if (doc.status === 'succeeded') {
+          return res.status(400).json(response[400]('Cannot delete payment which was paid'));
+        }
+        const trash = await doc.remove();
+        sentry.collect(req, trash);
 
+        await Models.order.findByIdAndUpdate(trash._order, { $unset: { _payment: 1 } });
         const { permission } = res.locals;
 
-        res.json(response[200](undefined, filter(permission, doc)));
-
-        // setOrderComplete(doc._order, false, console.log);
-        record(req, { status: 200 });
-        return true;
-      });
+        return res.json(response[200](undefined, filter(permission, trash)));
+      } catch (err) {
+        return next(err);
+      }
     });
+
   return router;
 };
