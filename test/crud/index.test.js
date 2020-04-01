@@ -34,6 +34,7 @@ describe('CRUD', () => {
           chai.request(server)
             .get(`/api/${item.endpoint}`)
             .set('x-store', TOKEN)
+            .set('admin', true)
             .end((err, res) => {
               res.should.have.status(200);
               res.body.should.be.a('object');
@@ -65,7 +66,9 @@ describe('CRUD', () => {
           chai.request(server)
             .get(`/api/${item.endpoint}/${ID}`)
             .set('x-store', TOKEN)
+            .set('admin', true)
             .end((err, res) => {
+              console.log(res.body);
               res.should.have.status(200);
               res.body.should.be.a('object');
               res.body.payload.should.be.a('object').have.property('_id').eql(ID);

@@ -17,9 +17,9 @@ const state = {
   id: '',
   createBody: data.order,
   updateBody: {
-    amount: 50
+    info: 'Testing update order'
   },
-  key: 'amount'
+  key: 'info'
 }
 
 chai.use(chaiHttp);

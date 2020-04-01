@@ -93,7 +93,8 @@
   },
   "order": {
     "_id": "5e72262c224631150a6c8124",
-    "_user": "5e7db683335ee422d93e64db"
+    "_user": "5e7db683335ee422d93e64db",
+    "info": "Testing order"
   },
   "order_detail": [
     {
@@ -123,6 +124,7 @@
   },
   "payment": {
     "_id": "5e7c50c2b35b6f277e96709c",
-    "_user": "5e7db683335ee422d93e64db"
+    "_order": "5e72262c224631150a6c8124",
+    "info": "Testing payment"
   }
 }

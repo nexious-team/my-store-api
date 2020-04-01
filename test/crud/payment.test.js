@@ -17,14 +17,14 @@ const state = {
   id: '',
   createBody: data.payment,
   updateBody: {
-    method: "Visa card"
+    info: "Testing update payment"
   },
-  key: 'method'
+  key: 'info'
 }
 
 chai.use(chaiHttp);
 
-const models = ['brand', 'category', 'product', 'unit', 'product_unit', 'supplier', 'import', 'import_detail', 'stock', 'order'];
+const models = ['brand', 'category', 'product', 'unit', 'product_unit', 'supplier', 'import', 'import_detail', 'stock', 'order', 'order_detail'];
 
 describe(state.model.toUpperCase(), () => {
   before(async (done) => {

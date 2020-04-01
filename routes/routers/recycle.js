@@ -14,43 +14,47 @@ module.exports = (model = 'recycle') => {
   const router = express.Router();
   const middlewares = [auth, canUser('createAny', model)];
 
-  router.post('/restore/:id', middlewares, (req, res, next) => {
-    Models[model].findById(req.params.id, (err, trash) => {
-      if (err) {
-        next(err);
-      } else if (!trash) {
-        next(new Error('Not Found'));
-      } else {
-        const { permission } = res.locals;
+  router.post('/restore/:id', middlewares, async (req, res, next) => {
+    try {
+      const trash = await Models[model].findById(req.params.id);
+      if (!trash) throw new Error('Not Found');
+      const { permission } = res.locals;
 
-        sentry.restore(trash, (doc) => {
-          const message = `Restore trash ${doc.id} successfully`;
-          res.json(response[200](message, filter(permission, doc)));
-          record(req, { status: 200, message });
-        });
-      }
-    });
+      sentry.restore(trash, async (doc) => {
+        const message = `Restore trash ${doc.id} successfully`;
+        const [err] = await record(req, { status: 200, message });
+        if (err) throw err;
+
+        res.json(response[200](message, filter(permission, doc)));
+      });
+    } catch (error) {
+      next(error);
+    }
   });
 
-  router.post('/restore/:model/:id', middlewares, (req, res, next) => {
-    Models[model].findOne({
-      model: req.params.model,
-      'document._id': req.params.id,
-    }, (err, trash) => {
-      if (err) {
-        next(err);
-      } else if (!trash) {
-        next(new Error('Not Found'));
+  router.post('/restore/:model/:id', middlewares, async (req, res, next) => {
+    try {
+      const body = {
+        model: req.params.model,
+        'document._id': req.params.id,
+      };
+      const trash = await Models[model].findOne(body);
+      if (!trash) {
+        throw new Error('Not Found');
       } else {
         const { permission } = res.locals;
 
-        sentry.restore(trash, (doc) => {
+        sentry.restore(trash, async (doc) => {
           const message = `Restore ${trash.model} with id ${trash._id} successfully`;
+          const [err] = await record(req, { status: 200, message });
+          if (err) throw err;
+
           res.json(response[200](message, filter(permission, doc)));
-          record(req, { status: 200, message });
         });
       }
-    });
+    } catch (error) {
+      next(error);
+    }
   });
 
   return router;

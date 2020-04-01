@@ -41,13 +41,13 @@ module.exports = (model = 'order_detail') => {
           }
 
           await decreaseProductStock(doc);
-          record(req, { status: 200 });
+          const [err5] = await record(req, { status: 200 });
+          if (err5) throw err5;
 
           res.json(response[200](undefined, filter(permission, doc)));
         }
-      } catch (e) {
-        console.log(e);
-        next(e);
+      } catch (error) {
+        next(error);
       }
     });
 
@@ -109,12 +109,14 @@ module.exports = (model = 'order_detail') => {
               if (err3) throw err3;
             }
 
-            record(req, { status: 200 });
+            const [err4] = await record(req, { status: 200 });
+            if (err4) throw err4;
+
             res.json(response[200](undefined, filter(permission, updatedDoc)));
           }
         }
-      } catch (err) {
-        next(err);
+      } catch (error) {
+        next(error);
       }
     })
     .delete(canUser('deleteAny', model), async (req, res, next) => {
@@ -136,12 +138,13 @@ module.exports = (model = 'order_detail') => {
         const { permission } = res.locals;
 
         await increaseProductStock(doc);
-        record(req, { status: 200 });
+        const [err3] = await record(req, { status: 200 });
+        if (err3) throw err3;
 
         res.json(response[200](undefined, filter(permission, doc)));
         return true;
-      } catch (e) {
-        return next(e);
+      } catch (error) {
+        return next(error);
       }
     });
 
