@@ -138,11 +138,6 @@
     "routers": ["util", "common"]
   },
   {
-    "endpoint": "units?",
-    "model": "unit",
-    "routers": ["util", "common"]
-  },
-  {
     "endpoint": "user-oauth?",
     "model": "user_oauth",
     "routers": ["util", "common"]
