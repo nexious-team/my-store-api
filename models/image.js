@@ -16,6 +16,10 @@ module.exports = {
     required: true,
     validate: validators.url,
   },
+  filename: {
+    type: 'String',
+    required: true,
+  },
   info: 'String',
   create_date: {
     type: 'Date',
