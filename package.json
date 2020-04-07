@@ -5,7 +5,7 @@
   "scripts": {
     "start": "nodemon ./bin/www",
     "dev": "DEBUG=my-store:* npm start --scripts-prepend-node-path",
-    "test": "mocha --recursive --timeout 10000"
+    "test": "mocha --recursive --timeout 20000"
   },
   "dependencies": {
     "@sentry/node": "5.10.2",
