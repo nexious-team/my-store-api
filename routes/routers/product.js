@@ -1,6 +1,7 @@
 const express = require('express');
+const { Types: { ObjectId } } = require('mongoose');
 const Models = require('../../models');
-const { response } = require('./helpers');
+const { response, queryParser } = require('./helpers');
 
 const lookups = [
   {
@@ -52,6 +53,10 @@ const lookups = [
   },
 ];
 
+const isNotNullObjectHasProperties = (obj) => (
+  obj !== null && typeof obj === 'object' && Object.keys(obj).length > 0
+);
+
 module.exports = (model = 'product') => {
   const router = express.Router();
 
@@ -60,18 +65,29 @@ module.exports = (model = 'product') => {
       if (req.headers.admin) {
         next();
       } else {
-        const { page, limit, sort, ...query } = req.query;
-        const limitNumber = isNaN(limit) ? 25 : parseInt(limit, 10);
-        const pageNumber = isNaN(page) || page === '0' ? 1 : parseInt(page, 10);
-        const skip = (pageNumber - 1) * limitNumber;
+        const { filters, select, options } = queryParser.parse(req.query);
+        const { skip, limit, sort } = options;
 
+        if (filters._id) {
+          if (filters._id.$in) {
+            filters._id.$in = filters._id.$in.map((id) => ObjectId(id));
+          } else {
+            filters._id = ObjectId(filters._id);
+          }
+        }
         const pipeline = [
           ...lookups,
-          { $match: query },
+          { $match: filters },
           { $skip: skip },
-          { $limit: limitNumber },
+          { $limit: limit },
         ];
-        if (typeof sort === 'object' && sort !== null && Object.keys(sort).length > 0) {
+        if (isNotNullObjectHasProperties(select)) {
+          for (const key in select) {
+            select[key] = parseInt(select[key], 10);
+          }
+          pipeline.push({ $project: select });
+        }
+        if (isNotNullObjectHasProperties(sort)) {
           for (const key in sort) {
             sort[key] = parseInt(sort[key], 10);
           }
