@@ -12,7 +12,7 @@ const { filter, response } = require('./helpers');
 
 module.exports = (model = 'recycle') => {
   const router = express.Router();
-  const middlewares = [auth, canUser('createAny', model)];
+  const middlewares = [auth, canUser('create', model)];
 
   router.post('/restore/:id', middlewares, (req, res, next) => {
     Models[model].findById(req.params.id, (err, trash) => {

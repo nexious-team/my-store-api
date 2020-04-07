@@ -15,7 +15,7 @@ module.exports = (model = 'import') => {
 
   router.route('/')
     .all(auth)
-    .post(canUser('createAny', model), (req, res, next) => {
+    .post(canUser('create', model), (req, res, next) => {
       req.body.amount = calculateImportAmount(req.body);
 
       Models[model].create(req.body, (err, doc) => {
@@ -32,7 +32,7 @@ module.exports = (model = 'import') => {
 
   router.route('/:id')
     .all(auth)
-    .delete(canUser('deleteAny', model), (req, res, next) => {
+    .delete(canUser('delete', model), (req, res, next) => {
       Models[model].findByIdAndRemove(req.params.id, (err, doc) => {
         if (err) return next(err);
         if (!doc) return res.status(404).json(response[404](undefined, doc));

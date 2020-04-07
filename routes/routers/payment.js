@@ -20,7 +20,7 @@ module.exports = (model = 'payment') => {
 
   router.route('/')
     .all(auth)
-    .post(canUser('createAny', model), async (req, res, next) => {
+    .post(canUser('create', model), async (req, res, next) => {
       try {
         const order = await Models.order.findById(req.body._order);
         if (!order) {
@@ -50,7 +50,7 @@ module.exports = (model = 'payment') => {
 
   router.route('/:id')
     .all(auth)
-    .get(canUser('readAny', model), async (req, res, next) => {
+    .get(canUser('read', model), async (req, res, next) => {
       try {
         const [match, doc, paymentIntent] = await checkPaymentStatus({ _id: req.params.id });
         console.log({ doc, paymentIntent });
@@ -65,7 +65,7 @@ module.exports = (model = 'payment') => {
         next(err);
       }
     })
-    .put(canUser('updateAny', model), async (req, res, next) => {
+    .put(canUser('update', model), async (req, res, next) => {
       try {
         if (req.body.status) {
           const [match] = await checkPaymentStatus({ _id: req.params.id });
@@ -81,7 +81,7 @@ module.exports = (model = 'payment') => {
         next(err);
       }
     })
-    .delete(canUser('deleteAny', model), async (req, res, next) => {
+    .delete(canUser('delete', model), async (req, res, next) => {
       try {
         const doc = await Models[model].findById(req.params.id);
         if (!doc) return res.status(404).json(response[404]('Payment not found!'));

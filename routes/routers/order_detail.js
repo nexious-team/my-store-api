@@ -17,7 +17,7 @@ module.exports = (model = 'order_detail') => {
 
   router.route('/')
     .all(auth)
-    .post(canUser('createAny', model), async (req, res, next) => {
+    .post(canUser('create', model), async (req, res, next) => {
       try {
         const [err1, isPaid, , payment] = await isOrderPaid({ _id: req.body._order });
         if (err1) throw err1;
@@ -53,7 +53,7 @@ module.exports = (model = 'order_detail') => {
 
   router.route('/:id')
     .all(auth)
-    .put(canUser('updateAny', model), async (req, res, next) => {
+    .put(canUser('update', model), async (req, res, next) => {
       try {
         const { permission } = res.locals;
         const body = permission.filter(req.body);
@@ -117,7 +117,7 @@ module.exports = (model = 'order_detail') => {
         next(err);
       }
     })
-    .delete(canUser('deleteAny', model), async (req, res, next) => {
+    .delete(canUser('delete', model), async (req, res, next) => {
       try {
         const doc = await Models[model].findByIdAndRemove(req.params.id);
         if (!doc) return res.status(404).json(response[404](undefined, doc));

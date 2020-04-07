@@ -13,7 +13,7 @@ module.exports = (model = 'order') => {
 
   router.route('/')
     .all(auth)
-    .post(canUser('createAny', model), async (req, res, next) => {
+    .post(canUser('create', model), async (req, res, next) => {
       try {
         req.body._user = req.user._identity._id;
 
@@ -35,7 +35,7 @@ module.exports = (model = 'order') => {
 
   router.route('/:id/order-details')
     .all(auth)
-    .get(canUser('readOwn', 'order_detail'), async (req, res, next) => {
+    .get(canUser('read', 'order_detail'), async (req, res, next) => {
       try {
         const docs = await Models.order_detail.find({ _order: req.params.id }).populate('_product');
         const { permission } = res.locals;
