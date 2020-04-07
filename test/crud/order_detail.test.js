@@ -3,6 +3,7 @@ const chaiHttp = require('chai-http');
 const server = require('../../server.test');
 const data = require('../data.json');
 const { clear, clearAndInsert } = require('../helper');
+const Models = require('../../models');
 
 chai.should();
 
@@ -39,10 +40,13 @@ describe(state.model.toUpperCase(), () => {
       .post('/api/staff/login')
       .send(state.adminLoginBody)
       .end((err, res) => {
-        res.should.have.status(200);
-        res.body.should.be.a('object');
-        state.token = res.body.payload.token;
-        done();
+        if (err) done(err);
+        else {
+          res.should.have.status(200);
+          res.body.should.be.a('object');
+          state.token = res.body.payload.token;
+          done();
+        }
       });
   });
 
@@ -52,28 +56,56 @@ describe(state.model.toUpperCase(), () => {
         .get(`/api/${state.endpoint}`)
         .set('x-store', state.token)
         .end((err, res) => {
-          res.should.have.status(200);
-          res.body.should.be.a('object');
-          res.body.payload.should.be.a('array');
-          done();
+          if (err) done(err);
+          else {
+            res.should.have.status(200);
+            res.body.should.be.a('object');
+            res.body.payload.should.be.a('array');
+            done();
+          }
         });
     });
   });
 
   describe(`POST ${state.model}`, () => {
+    before(async (done) => {
+      try {
+        state.filter = { _product: data.order_detail[0]._product };
+        state.stock = await Models.stock.findOne(state.filter);
+        done();
+      } catch (err) {
+        done(err);
+      }
+    });
+
     it(`it should create a ${state.model}`, (done) => {
       chai.request(server)
         .post(`/api/${state.endpoint}`)
         .set('x-store', state.token)
         .send(state.createBody)
         .end((err, res) => {
-          res.should.have.status(200);
-          res.body.should.be.a('object');
-          res.body.payload.should.be.a('object');
-          res.body.payload.should.have.property('_id');
-          state.id = res.body.payload._id;
-          done();
+          if (err) done(err);
+          else {
+            res.should.have.status(200);
+            res.body.should.be.a('object');
+            res.body.payload.should.be.a('object');
+            res.body.payload.should.have.property('_id');
+            state.id = res.body.payload._id;
+            state.payload = res.body.payload;
+            done();
+          }
         });
+    });
+
+    it(`it should decrease product stock`, async (done) => {
+      try {
+        const newStock = await Models.stock.findOne(state.filter);
+        newStock.quantity.should.be.below(state.stock.quantity);
+        state.stock = newStock;
+        done();
+      } catch (err) {
+        done(err);
+      }
     });
   });
 
@@ -83,10 +115,13 @@ describe(state.model.toUpperCase(), () => {
         .get(`/api/${state.endpoint}/${state.id}`)
         .set('x-store', state.token)
         .end((err, res) => {
-          res.should.have.status(200);
-          res.body.should.be.a('object');
-          res.body.payload.should.be.a('object').have.property('_id').eql(state.id);
-          done();
+          if (err) done(err);
+          else {
+            res.should.have.status(200);
+            res.body.should.be.a('object');
+            res.body.payload.should.be.a('object').have.property('_id').eql(state.id);
+            done();
+          }
         });
     });
   });
@@ -98,10 +133,13 @@ describe(state.model.toUpperCase(), () => {
         .set('x-store', state.token)
         .send(state.updateBody)
         .end((err, res) => {
-          res.should.have.status(200);
-          res.body.should.be.a('object');
-          res.body.payload.should.be.a('object').have.property(state.key).eql(state.updateBody[state.key]);
-          done();
+          if (err) done(err);
+          else {
+            res.should.have.status(200);
+            res.body.should.be.a('object');
+            res.body.payload.should.be.a('object').have.property(state.key).eql(state.updateBody[state.key]);
+            done();
+          }
         });
     });
   });
@@ -112,11 +150,24 @@ describe(state.model.toUpperCase(), () => {
         .delete(`/api/${state.endpoint}/${state.id}`)
         .set('x-store', state.token)
         .end((err, res) => {
-          res.should.have.status(200);
-          res.body.should.be.a('object');
-          res.body.payload.should.be.a('object').have.property('_id').eql(state.id);
-          done();
+          if (err) done(err);
+          else {
+            res.should.have.status(200);
+            res.body.should.be.a('object');
+            res.body.payload.should.be.a('object').have.property('_id').eql(state.id);
+            done();
+          }
         });
+    });
+
+    it('it should increase product stock', async (done) => {
+      try {
+        const updateStock = await Models.stock.findOne(state.filter);
+        updateStock.quantity.should.be.above(state.stock.quantity);
+        done();
+      } catch (err) {
+        done(err);
+      }
     });
   });
 });

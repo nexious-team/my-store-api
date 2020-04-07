@@ -5,6 +5,7 @@ const order = require('./order');
 const orderDetail = require('./order_detail');
 const payment = require('./payment');
 const importOrder = require('./import');
+const importDetail = require('./import_detail');
 const recycle = require('./recycle');
 const util = require('./util');
 const image = require('./image');
@@ -19,6 +20,7 @@ module.exports = {
   orderDetail,
   payment,
   importOrder,
+  importDetail,
   recycle,
   util,
   image,

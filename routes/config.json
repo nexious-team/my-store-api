@@ -21,7 +21,7 @@
   },  {
     "endpoint": "import-details?",
     "model": "import_detail",
-    "routers": ["util", "populate", "common"],
+    "routers": ["util", "populate", "importDetail", "common"],
     "params": {
       "populate": {
         "references": ["_import", "_product", "_product_unit"]
