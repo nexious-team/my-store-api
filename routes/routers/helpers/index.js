@@ -2,7 +2,7 @@ const { record } = require('../../../workers/call');
 const { sentry } = require('../../../workers/recycle');
 const { logger } = require('./logger');
 const response = require('./response');
-const query = require('./query');
+const queryParser = require('./queryParser');
 
 function lean(document) {
   return JSON.parse(JSON.stringify(document));
@@ -57,6 +57,6 @@ module.exports = {
   filter,
   lean,
   logger,
-  query,
+  queryParser,
   response,
 };

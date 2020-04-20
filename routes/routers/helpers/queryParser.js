@@ -1,4 +1,4 @@
-const mapConditions = (filter) => {
+const mapFilters = (filter) => {
   const conditions = {};
   for (const key in filter) {
     if (Array.isArray(filter[key])) {
@@ -23,14 +23,14 @@ const mapOptions = (page = 1, limit = 25, sort = {}) => {
   return { skip, limit, sort };
 };
 
-module.exports.map = (query) => {
-  const { select, page, limit, sort, ...filter } = query;
+module.exports.parse = (query) => {
+  const { select = {}, page, limit, sort, ...filter } = query;
 
-  const conditions = mapConditions(filter);
+  const filters = mapFilters(filter);
   const options = mapOptions(page, limit, sort);
 
   return {
-    conditions,
+    filters,
     select,
     options,
   };
