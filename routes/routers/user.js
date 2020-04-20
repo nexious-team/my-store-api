@@ -127,9 +127,10 @@ module.exports = (model) => {
         user._avatar = image._id;
         await user.save();
 
-        res.json(response[200]('Avatar uploaded!', image));
+        const [err] = await record(req, { status: 200 });
+        if (err) throw err;
 
-        record(req, { status: 200 });
+        res.json(response[200]('Avatar uploaded!', image));
         return true;
       } catch (err) {
         logger.error(err);

@@ -1,0 +1,37 @@
+{
+  "admin": {
+    "_id": "5e78b1c279f4893e92addd06",
+    "role": "admin",
+    "contact": [],
+    "first_name": "Admin",
+    "last_name": "Test",
+    "username": "admin",
+    "email": "admin@store.com",
+    "password": "$2a$10$GcyXwjVdWiDK5drQkzj5veGXU6URuLEedifAjfYmvVkzV50jJMKAi"
+  },
+  "user": {
+    "_id": "5e7db683335ee422d93e64db",
+    "role": "user",
+    "verified": false,
+    "contact": [],
+    "first_name": "Sam",
+    "last_name": "Kok",
+    "username": "samkok",
+    "email": "samkok@store.com",
+    "password": "$2a$10$7RExOfcmu6Mt8zodeiyeKuK572eD15geYHb8S7rIGKWnQ2oUMDnoW"
+  },
+  "role": [
+    {
+      "_id": "5e78b1c279f4893e92addd07",
+      "refModel": "Staff",
+      "_identity": "5e78b1c279f4893e92addd06",
+      "role": "admin"
+    },
+    {
+      "_id": "5e7db684335ee422d93e64dc",
+      "refModel": "User",
+      "_identity": "5e7db683335ee422d93e64db",
+      "role": "user"
+    }
+  ]
+}
