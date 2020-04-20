@@ -1,13 +1,12 @@
 module.exports = {
-  _unit: {
-    type: 'ObjectId',
-    required: true,
-    ref: 'Unit',
-  },
   _product: {
     type: 'ObjectId',
     required: true,
     ref: 'Product',
+  },
+  name: {
+    type: 'String',
+    required: true,
   },
   quantity: {
     type: 'Number',
