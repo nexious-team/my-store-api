@@ -21,6 +21,7 @@ module.exports = (model = 'import') => {
 
         const doc = await Models[model].create(req.body);
 
+
         const { permission } = res.locals;
 
         const [err] = await record(req, { status: 200 });

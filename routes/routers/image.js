@@ -11,7 +11,7 @@ const canUser = require('../../middlewares/permission');
 module.exports = (model) => {
   const router = express.Router();
 
-  const middlewares = [auth, canUser('createAny', model), upload.single('image')];
+  const middlewares = [auth, canUser('create', model), upload.single('image')];
   router.post('/upload', middlewares, async (req, res, next) => {
     try {
       // POST IMAGE TO CLOUDINARY
