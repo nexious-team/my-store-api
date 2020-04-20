@@ -86,7 +86,7 @@ module.exports = (model) => {
 
   router.route('/profile')
     .all(auth)
-    .get(canUser('readOwn', model), async (req, res, next) => {
+    .get(canUser('read', model), async (req, res, next) => {
       try {
         const user = await Models[model].findById(req.user._identity._id).populate('_avatar');
         if (!user) return res.status(404).json(response[404](undefined, user));
@@ -98,7 +98,7 @@ module.exports = (model) => {
         return next(err);
       }
     })
-    .put(canUser('updateOwn', model), async (req, res, next) => {
+    .put(canUser('update', model), async (req, res, next) => {
       try {
         const user = await Models[model].findById(req.user._identity._id);
         if (!user) return res.status(404).json(response[404](undefined, user));
@@ -114,7 +114,7 @@ module.exports = (model) => {
       }
     });
 
-  const middlewares = [auth, canUser('updateOwn', model), upload.single('avatar')];
+  const middlewares = [auth, canUser('update', model), upload.single('avatar')];
   router.route('/avatar')
     .post(middlewares, async (req, res, next) => {
       try {
@@ -127,9 +127,10 @@ module.exports = (model) => {
         user._avatar = image._id;
         await user.save();
 
-        res.json(response[200]('Avatar uploaded!', image));
+        const [err] = await record(req, { status: 200 });
+        if (err) throw err;
 
-        record(req, { status: 200 });
+        res.json(response[200]('Avatar uploaded!', image));
         return true;
       } catch (err) {
         logger.error(err);
@@ -139,7 +140,7 @@ module.exports = (model) => {
 
   router.route('/calls?')
     .all(auth)
-    .get(canUser('readOwn', 'call'), (req, res, next) => {
+    .get(canUser('read', 'call'), (req, res, next) => {
       Models.call.find({ _caller: req.user._id }, common(req, res, next));
     });
 

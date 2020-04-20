@@ -6,7 +6,7 @@ const auth = passport.authenticate('jwt', { session: false });
 const canUser = require('../../middlewares/permission');
 
 const { calculateImportAmount } = require('../../workers/common');
-const { decreaseProductQty, increaseProductQty } = require('../../workers/order');
+// const { decreaseProductStock, increaseProductStock } = require('../../workers/order');
 const { record } = require('../../workers/call');
 const { filter, response } = require('./helpers');
 
@@ -15,36 +15,44 @@ module.exports = (model = 'import') => {
 
   router.route('/')
     .all(auth)
-    .post(canUser('createAny', model), (req, res, next) => {
-      req.body.amount = calculateImportAmount(req.body);
+    .post(canUser('createAny', model), async (req, res, next) => {
+      try {
+        req.body.amount = calculateImportAmount(req.body) || 0;
 
-      Models[model].create(req.body, (err, doc) => {
-        if (err) return next(err);
+        const doc = await Models[model].create(req.body);
+
+
         const { permission } = res.locals;
 
-        res.json(response[200](undefined, filter(permission, doc)));
+        const [err] = await record(req, { status: 200 });
+        if (err) throw err;
 
-        increaseProductQty(doc.product, doc.qty, console.log);
-        record(req, { status: 200 });
-        return true;
-      });
+        res.json(response[200](undefined, filter(permission, doc)));
+      } catch (error) {
+        next(error);
+      }
     });
 
   router.route('/:id')
     .all(auth)
-    .delete(canUser('deleteAny', model), (req, res, next) => {
-      Models[model].findByIdAndRemove(req.params.id, (err, doc) => {
-        if (err) return next(err);
-        if (!doc) return res.status(404).json(response[404](undefined, doc));
+    .delete(canUser('deleteAny', model), async (req, res, next) => {
+      try {
+        const { id } = req.params;
+
+        const doc = await Models[model].findByIdAndRemove(id);
+        if (!doc) throw new Error(`Can't found ${model} with id: ${id}`);
 
         const { permission } = res.locals;
 
-        res.json(response[200](undefined, filter(permission, doc)));
+        // decreaseProductStock(doc.product, doc.qty, console.log);
+        const [err] = await record(req, { status: 200 });
+        if (err) throw err;
 
-        decreaseProductQty(doc.product, doc.qty, console.log);
-        record(req, { status: 200 });
-        return true;
-      });
+        res.json(response[200](undefined, filter(permission, doc)));
+      } catch (error) {
+        next(error);
+      }
     });
+
   return router;
 };

@@ -1,7 +1,6 @@
 module.exports = {
   _categories: {
     type: ['ObjectId'],
-    required: true,
     ref: 'Category',
   },
   _brand: {

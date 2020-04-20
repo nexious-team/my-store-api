@@ -1,5 +1,5 @@
-function messager(key) {
-  return ({ value }) => `${value} is not a valid ${key}!`;
+function messager(key, detail) {
+  return ({ value }) => `${value} is not a valid ${key}! ${detail || ''}`;
 }
 
 module.exports = {
@@ -15,7 +15,7 @@ module.exports = {
       return /^((\+855)|(\(\+855\))|0)[1-9]\d( |-)\d{3}( |-)\d{3,4}/.test(v)
             || /^((\+855)|(\(\+855\))|0)[1-9]\d( |-)\d{2}( |-)\d{2}( |-)\d{2,3}/.test(v);
     },
-    message: messager('phone number'),
+    message: messager('phone number', 'Correct format: (+855)12 34 56 78[0] | 012-345-678[0]'),
   },
   url: {
     validator(v) {

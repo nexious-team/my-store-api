@@ -20,14 +20,14 @@ module.exports = (model = 'payment') => {
 
   router.route('/')
     .all(auth)
-    .post(canUser('createAny', model), async (req, res, next) => {
+    .post(canUser('create', model), async (req, res, next) => {
       try {
         const order = await Models.order.findById(req.body._order);
         if (!order) {
           return res.status(404).json(response[404](undefined, order));
         }
-        const [err, amount] = await calculateOrderTotalAmount({ _id: order._id });
-        if (err) throw err;
+        const [err1, amount] = await calculateOrderTotalAmount({ _id: order._id });
+        if (err1) throw err1;
 
         const paymentIntent = await createPayment({ amount });
 
@@ -37,7 +37,8 @@ module.exports = (model = 'payment') => {
         order._payment = doc._id;
         await order.save();
 
-        record(req, { status: 200 });
+        const [err2] = await record(req, { status: 200 });
+        if (err2) throw err2;
 
         const payload = { ...filter(permission, doc), client_secret: paymentIntent.client_secret };
 
@@ -50,10 +51,9 @@ module.exports = (model = 'payment') => {
 
   router.route('/:id')
     .all(auth)
-    .get(canUser('readAny', model), async (req, res, next) => {
+    .get(canUser('read', model), async (req, res, next) => {
       try {
         const [match, doc, paymentIntent] = await checkPaymentStatus({ _id: req.params.id });
-        console.log({ doc, paymentIntent });
         if (match) {
           next();
         } else {
@@ -65,7 +65,7 @@ module.exports = (model = 'payment') => {
         next(err);
       }
     })
-    .put(canUser('updateAny', model), async (req, res, next) => {
+    .put(canUser('update', model), async (req, res, next) => {
       try {
         if (req.body.status) {
           const [match] = await checkPaymentStatus({ _id: req.params.id });
@@ -81,7 +81,7 @@ module.exports = (model = 'payment') => {
         next(err);
       }
     })
-    .delete(canUser('deleteAny', model), async (req, res, next) => {
+    .delete(canUser('delete', model), async (req, res, next) => {
       try {
         const doc = await Models[model].findById(req.params.id);
         if (!doc) return res.status(404).json(response[404]('Payment not found!'));
@@ -94,9 +94,12 @@ module.exports = (model = 'payment') => {
         await Models.order.findByIdAndUpdate(trash._order, { $unset: { _payment: 1 } });
         const { permission } = res.locals;
 
+        const [err] = await record(req, { status: 200 });
+        if (err) throw err;
+
         return res.json(response[200](undefined, filter(permission, trash)));
-      } catch (err) {
-        return next(err);
+      } catch (error) {
+        return next(error);
       }
     });
 
