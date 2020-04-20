@@ -21,10 +21,12 @@ module.exports = (model) => {
       const filename = req.file.originalname;
       const image = await Models[model].create({ url, filename });
 
+      const [err] = await record(req, { status: 200 });
+      if (err) throw err;
+
       res.json(image);
-      record(req, { status: 200 });
-    } catch (err) {
-      next(err);
+    } catch (error) {
+      next(error);
     }
   });
 

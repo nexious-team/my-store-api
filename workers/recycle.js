@@ -1,15 +1,16 @@
 const Models = require('../models');
 
 function collect({ user: { id: caller } }, document) {
+  const modelName = document.constructor.modelName.toLowerCase();
   Models.recycle.create({
     caller,
-    model: document.constructor.modelName.toLowerCase(),
+    model: modelName,
     document: JSON.parse(JSON.stringify(document)),
   }, (err, doc) => {
     if (err) {
       console.log(err);
     } else {
-      console.log(`SENTRY COLLECT: ${doc}`);
+      console.log(`COLLECT: a ${modelName}`);
     }
   });
 }
@@ -27,7 +28,7 @@ function restore(trash, callback) {
         }
       });
       callback(doc);
-      console.log(`SENTRY RESTORE: ${doc}`);
+      console.log(`SENTRY RESTORE: ${trash.model}`);
     }
   });
 }
