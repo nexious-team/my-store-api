@@ -1,8 +1,24 @@
 module.exports = {
-  _user: {
+  _order: {
     type: 'ObjectId',
-    ref: 'User',
+    ref: 'Order',
     required: true,
+  },
+  _stripe: {
+    type: 'String',
+    required: false,
+  },
+  amount: 'Number',
+  status: {
+    type: 'String',
+    enum: [
+      'requires_payment_method',
+      'requires_confirmation',
+      'requires_action',
+      'processing',
+      'succeeded',
+      'canceled',
+    ],
   },
   method: 'String',
   credential: 'Object',
@@ -14,5 +30,4 @@ module.exports = {
   update_date: {
     type: 'Date',
   },
-
 };
