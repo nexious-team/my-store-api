@@ -13,6 +13,11 @@ const grantObject = {
 };
 
 const ac = new AccessControl();
+ac.setGrants({
+  admin: {},
+  staff: {},
+  user: {},
+});
 
 (async () => {
   const docs = await Permission.find().lean();

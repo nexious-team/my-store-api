@@ -6,7 +6,13 @@ const auth = passport.authenticate('jwt', { session: false });
 const canUser = require('../../middlewares/permission');
 
 const { checkStockAndCalculateAmount } = require('../../workers/common');
-const { decreaseProductStock, increaseProductStock, isOrderPaid, calculateOrderTotalAmount } = require('../../workers/order');
+const {
+  isOrderPaid,
+  calculateOrderTotalAmount,
+} = require('../../workers/order');
+const { decreaseProductStock,
+  increaseProductStock,
+} = require('../../workers/stock');
 const { updatePaymentAmount } = require('../../workers/payment');
 const { calculateAndUpdatePaymentAmount } = require('../../workers/order_detail');
 const { record } = require('../../workers/call');
@@ -17,9 +23,16 @@ module.exports = (model = 'order_detail') => {
 
   router.route('/')
     .all(auth)
-    .post(canUser('createAny', model), async (req, res, next) => {
+    .post(canUser('create', model), async (req, res, next) => {
       try {
-        const [err1, isPaid, , payment] = await isOrderPaid({ _id: req.body._order });
+        const { _order, _product, _product_unit: _productUnit } = req.body;
+
+        const product = await Models.product.findById(_product);
+        if (!product) throw new Error(`Not found: product of ${_product}`);
+        const productUnit = await Models.product_unit.findById(_productUnit);
+        if (!productUnit) throw new Error(`Not found: product_unit of ${_productUnit}`);
+
+        const [err1, isPaid, , payment] = await isOrderPaid({ _id: _order });
         if (err1) throw err1;
 
         if (isPaid) {
@@ -41,19 +54,19 @@ module.exports = (model = 'order_detail') => {
           }
 
           await decreaseProductStock(doc);
-          record(req, { status: 200 });
+          const [err5] = await record(req, { status: 200 });
+          if (err5) throw err5;
 
           res.json(response[200](undefined, filter(permission, doc)));
         }
-      } catch (e) {
-        console.log(e);
-        next(e);
+      } catch (error) {
+        next(error);
       }
     });
 
   router.route('/:id')
     .all(auth)
-    .put(canUser('updateAny', model), async (req, res, next) => {
+    .put(canUser('update', model), async (req, res, next) => {
       try {
         const { permission } = res.locals;
         const body = permission.filter(req.body);
@@ -109,15 +122,17 @@ module.exports = (model = 'order_detail') => {
               if (err3) throw err3;
             }
 
-            record(req, { status: 200 });
+            const [err4] = await record(req, { status: 200 });
+            if (err4) throw err4;
+
             res.json(response[200](undefined, filter(permission, updatedDoc)));
           }
         }
-      } catch (err) {
-        next(err);
+      } catch (error) {
+        next(error);
       }
     })
-    .delete(canUser('deleteAny', model), async (req, res, next) => {
+    .delete(canUser('delete', model), async (req, res, next) => {
       try {
         const doc = await Models[model].findByIdAndRemove(req.params.id);
         if (!doc) return res.status(404).json(response[404](undefined, doc));
@@ -135,13 +150,16 @@ module.exports = (model = 'order_detail') => {
         }
         const { permission } = res.locals;
 
-        await increaseProductStock(doc);
-        record(req, { status: 200 });
+        const [err3] = await increaseProductStock(doc);
+        if (err3) throw err3;
+
+        const [err4] = await record(req, { status: 200 });
+        if (err4) throw err4;
 
         res.json(response[200](undefined, filter(permission, doc)));
         return true;
-      } catch (e) {
-        return next(e);
+      } catch (error) {
+        return next(error);
       }
     });
 

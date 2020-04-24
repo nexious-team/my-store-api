@@ -16,7 +16,6 @@ const shipment = require('./shipment');
 const staff = require('./staff');
 const stock = require('./stock');
 const supplier = require('./supplier');
-const unit = require('./unit');
 const userOauth = require('./user_oauth');
 const user = require('./user');
 
@@ -48,7 +47,6 @@ module.exports = {
   staff: model('Staff', create(staff)),
   stock: model('Stock', new Schema(stock)),
   supplier: model('Supplier', new Schema(supplier)),
-  unit: model('Unit', new Schema(unit)),
   user_oauth: model('UserOauth', create(userOauth)),
   user: model('User', create(user)),
 

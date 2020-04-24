@@ -2,7 +2,7 @@ const { record } = require('../../../workers/call');
 const { sentry } = require('../../../workers/recycle');
 const { logger } = require('./logger');
 const response = require('./response');
-const query = require('./query');
+const queryParser = require('./queryParser');
 
 function lean(document) {
   return JSON.parse(JSON.stringify(document));
@@ -13,21 +13,21 @@ function filter(permission, data) {
 }
 
 function common(req, res, next) {
-  return (err, result) => {
+  return async (err, result) => {
     if (err) {
       next(err);
     } else if (!result) {
       res.status(404).json(response[404](undefined, result));
     } else {
       const { permission } = res.locals;
-
       const data = result ? filter(permission, result) : result;
 
-      res.json(response[200](undefined, data));
-
       const json = result ? { status: 200 } : { payload: null };
-      record(req, json);
+      const [errRecord] = await record(req, json);
+      if (errRecord) throw errRecord;
       if (req.method === 'DELETE' && result) sentry.collect(req, result);
+
+      res.json(response[200](undefined, data));
     }
   };
 }
@@ -57,6 +57,6 @@ module.exports = {
   filter,
   lean,
   logger,
-  query,
+  queryParser,
   response,
 };
