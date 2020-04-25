@@ -28,7 +28,7 @@ const lookups = [
   },
   {
     $lookup: {
-      from: 'images',
+      from: 'files',
       localField: '_images',
       foreignField: '_id',
       as: 'images',

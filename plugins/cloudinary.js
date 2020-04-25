@@ -8,7 +8,7 @@ cloudinary.config({
 });
 
 exports.uploads = (file) => new Promise((resolve, reject) => {
-  cloudinary.uploader.upload(file, (err, result) => {
+  cloudinary.uploader.upload(file, { resource_type: 'auto' }, (err, result) => {
     if (err) {
       logger.log('error', `Error upload to cloudinary: ${err}`);
       reject(err);

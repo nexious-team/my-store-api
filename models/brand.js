@@ -1,7 +1,7 @@
 module.exports = {
   _image: {
     type: 'ObjectId',
-    ref: 'Image',
+    ref: 'File',
   },
   name: {
     type: 'String',
