@@ -1,3 +1,4 @@
+const createError = require('http-errors');
 const { record } = require('../../../workers/call');
 const { sentry } = require('../../../workers/recycle');
 const { logger } = require('./logger');
@@ -17,7 +18,7 @@ function common(req, res, next) {
     if (err) {
       next(err);
     } else if (!result) {
-      res.status(404).json(response[404](undefined, result));
+      next(createError(404));
     } else {
       const { permission } = res.locals;
       const data = result ? filter(permission, result) : result;

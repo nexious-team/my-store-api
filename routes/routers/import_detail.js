@@ -1,3 +1,4 @@
+const createError = require('http-errors');
 const express = require('express');
 const Models = require('../../models');
 const passport = require('../../plugins/passport');
@@ -47,7 +48,7 @@ module.exports = (model = 'import_detail') => {
       try {
         const { id } = req.params;
         const doc = await Models[model].findById(id);
-        if (!doc) throw new Error(`Not found: import detail of ${id}`);
+        if (!doc) throw createError(404, `Can't found ${model} with id: ${id}`);
 
         const trash = await doc.remove();
 

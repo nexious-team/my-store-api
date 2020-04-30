@@ -1,3 +1,4 @@
+const createError = require('http-errors');
 const express = require('express');
 const passport = require('../../plugins/passport');
 const Models = require('../../models');
@@ -14,7 +15,7 @@ module.exports = (model = 'user') => {
 
       const { _id } = decodeToken(token, 'user_oauth');
       const user = await Models[model].findById(_id);
-      if (!user) return res.status(404).json(response[404](undefined, user));
+      if (!user) return next(createError(404, 'User: not found'));
 
       return res.json(response[200](undefined, user));
     } catch (err) {
@@ -27,7 +28,7 @@ module.exports = (model = 'user') => {
   router.get('/auth/facebook/callback', (req, res, next) => {
     passport.authenticate('facebook', (err, user, info) => {
       if (err) return next(err);
-      if (!user) return res.status(400).json(response[400](info.message));
+      if (!user) return next(createError(400, info.message));
 
       const token = generateToken({ _id: user._id }, 'user_oauth');
 
@@ -40,7 +41,7 @@ module.exports = (model = 'user') => {
   router.get('/auth/google/callback', (req, res, next) => {
     passport.authenticate('google', (err, user, info) => {
       if (err) return next(err);
-      if (!user) return res.status(400).json(response[400](info.message));
+      if (!user) return next(createError(400, info.message));
 
       const token = generateToken({ _id: user._id }, 'user_oauth');
 
