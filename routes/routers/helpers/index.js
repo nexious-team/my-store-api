@@ -50,6 +50,10 @@ function copy(source, target) {
   }
 }
 
+const isNotNullObjectHasProperties = (obj) => (
+  obj !== null && typeof obj === 'object' && Object.keys(obj).length > 0
+);
+
 module.exports = {
   copy,
   common,
@@ -59,4 +63,5 @@ module.exports = {
   logger,
   queryParser,
   response,
+  isNotNullObjectHasProperties,
 };
