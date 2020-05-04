@@ -8,7 +8,7 @@ const importOrder = require('./import');
 const importDetail = require('./import_detail');
 const recycle = require('./recycle');
 const util = require('./util');
-const image = require('./image');
+const file = require('./file');
 const oauth = require('./oauth');
 const product = require('./product');
 
@@ -23,7 +23,7 @@ module.exports = {
   importDetail,
   recycle,
   util,
-  image,
+  file,
   oauth,
   product,
 };

@@ -9,7 +9,7 @@ module.exports = {
   },
   _images: {
     type: ['ObjectId'],
-    ref: 'Image',
+    ref: 'File',
   },
   name: {
     type: 'String',

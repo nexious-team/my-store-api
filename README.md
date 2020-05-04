@@ -1,7 +1,7 @@
 # my-store-api
 This is the API for my-store application, one of developers-town project base on online marketing.
 
-## Installation 
+## Installation
 ```
 # git clone https://github.com/nexious-team/my-store-api.git
 # cd my-store-api
@@ -29,7 +29,7 @@ This is the API for my-store application, one of developers-town project base on
 - GET: /api/user/auth/google/callback    => authenticated result from Google
 
 ### Recycle
-- POST: /api/recycle/restore/:id        => Restore deleted document by recycle id 
+- POST: /api/recycle/restore/:id        => Restore deleted document by recycle id
 - POST: /api/recycle/restore/:model/:id => Restore deleted document by modelName and document id
 
 ### CRUD
@@ -49,8 +49,8 @@ This is the API for my-store application, one of developers-town project base on
 - GET: /api/:model/populate/:reference     => get all documents with embed specific reference field
 - GET: /api/:model/:id/populate/:reference => get one document with embed specific reference field
 
-### Image
-- POST: /api/images?/upload => upload image # { image: (file) }
+### File
+- POST: /api/files?/upload => upload file # { file: (file) }
 
 ### Query with GET: /api/:model
 - Filter by field => GET: /api/:model ? field1Name=field1Value & field2Name=field2Value...
@@ -85,10 +85,10 @@ Mount routers for new resource (model) by add an json object at /routes/config.j
   }
 ```
  * Mountable routers stay at /routes/routers
- 
+
 ### Create new routers
-Or create an new router to mount on a specific resource (model): 
-- Create a new file at /routes/routers/ 
+Or create an new router to mount on a specific resource (model):
+- Create a new file at /routes/routers/
 - instance an router from express.Router()
 - implement desire routes within the router instance, then export the router
 - mount to resoures in /routes/config.json

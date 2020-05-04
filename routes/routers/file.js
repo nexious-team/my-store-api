@@ -11,22 +11,20 @@ const canUser = require('../../middlewares/permission');
 module.exports = (model) => {
   const router = express.Router();
 
-  const middlewares = [auth, canUser('create', model), upload.single('image')];
+  const middlewares = [auth, canUser('create', model), upload.single('file')];
   router.post('/upload', middlewares, async (req, res, next) => {
     try {
-      // POST IMAGE TO CLOUDINARY
-      const file = dataUri(req).content;
-      const { url } = await cloud.uploads(file);
+      // upload file to cloudinary
+      const fileContent = dataUri(req).content;
+      const { url } = await cloud.uploads(fileContent);
 
       const filename = req.file.originalname;
-      const image = await Models[model].create({ url, filename });
+      const file = await Models[model].create({ url, filename });
 
-      const [err] = await record(req, { status: 200 });
-      if (err) throw err;
-
-      res.json(image);
-    } catch (error) {
-      next(error);
+      res.json(file);
+      record(req, { status: 200 });
+    } catch (err) {
+      next(err);
     }
   });
 

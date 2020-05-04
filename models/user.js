@@ -50,7 +50,7 @@ module.exports.definition = {
   },
   _avatar: {
     type: 'ObjectId',
-    ref: 'Image',
+    ref: 'File',
   },
   info: 'String',
   create_date: {

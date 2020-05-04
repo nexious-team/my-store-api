@@ -121,7 +121,7 @@ module.exports = (model) => {
     .post(middlewares, async (req, res, next) => {
       try {
         const path = `/images/${req.file.filename}`;
-        const image = await Models.image.create({ path });
+        const image = await Models.file.create({ path });
 
         const user = await Models[model].findById(req.user._identity._id);
         if (!user) throw createError(404, 'Identity not found');
