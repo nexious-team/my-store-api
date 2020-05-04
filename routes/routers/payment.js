@@ -1,3 +1,4 @@
+const createError = require('http-errors');
 const express = require('express');
 
 const Models = require('../../models');
@@ -24,7 +25,7 @@ module.exports = (model = 'payment') => {
       try {
         const order = await Models.order.findById(req.body._order);
         if (!order) {
-          return res.status(404).json(response[404](undefined, order));
+          throw createError(404, `Not found order of ${req.body._order}`);
         }
         const [err1, amount] = await calculateOrderTotalAmount({ _id: order._id });
         if (err1) throw err1;
@@ -43,9 +44,8 @@ module.exports = (model = 'payment') => {
         const payload = { ...filter(permission, doc), client_secret: paymentIntent.client_secret };
 
         res.json(response[200](undefined, payload));
-        return null;
       } catch (err) {
-        return next(err);
+        next(err);
       }
     });
 
@@ -72,7 +72,7 @@ module.exports = (model = 'payment') => {
           if (match) {
             next();
           } else {
-            res.status(400).json(response[400]('The status doesn\'t match what on stripe server'));
+            throw createError(400, 'The status doesn\'t match what on stripe server');
           }
         } else {
           next();
@@ -84,9 +84,9 @@ module.exports = (model = 'payment') => {
     .delete(canUser('delete', model), async (req, res, next) => {
       try {
         const doc = await Models[model].findById(req.params.id);
-        if (!doc) return res.status(404).json(response[404]('Payment not found!'));
+        if (!doc) throw createError(404, `Not found ${model} of ${req.params.id}`);
         if (doc.status === 'succeeded') {
-          return res.status(400).json(response[400]('Cannot delete payment which was paid'));
+          throw createError(400, 'Cannot delete payment which was paid');
         }
         const trash = await doc.remove();
         sentry.collect(req, trash);
@@ -97,9 +97,9 @@ module.exports = (model = 'payment') => {
         const [err] = await record(req, { status: 200 });
         if (err) throw err;
 
-        return res.json(response[200](undefined, filter(permission, trash)));
+        res.json(response[200](undefined, filter(permission, trash)));
       } catch (error) {
-        return next(error);
+        next(error);
       }
     });
 

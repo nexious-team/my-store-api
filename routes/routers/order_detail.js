@@ -1,3 +1,4 @@
+const createError = require('http-errors');
 const express = require('express');
 const Models = require('../../models');
 const passport = require('../../plugins/passport');
@@ -28,15 +29,16 @@ module.exports = (model = 'order_detail') => {
         const { _order, _product, _product_unit: _productUnit } = req.body;
 
         const product = await Models.product.findById(_product);
-        if (!product) throw new Error(`Not found: product of ${_product}`);
+        if (!product) throw createError(404, `Not found: product of ${_product}`);
+
         const productUnit = await Models.product_unit.findById(_productUnit);
-        if (!productUnit) throw new Error(`Not found: product_unit of ${_productUnit}`);
+        if (!productUnit) throw createError(404, `Not found: product_unit of ${_productUnit}`);
 
         const [err1, isPaid, , payment] = await isOrderPaid({ _id: _order });
         if (err1) throw err1;
 
         if (isPaid) {
-          res.status(400).json(response[400]('Order is paid!'));
+          next(createError(400, 'Order is paid!'));
         } else {
           let err2;
           [err2, req.body.price, req.body.amount] = await checkStockAndCalculateAmount(req.body);
@@ -70,17 +72,17 @@ module.exports = (model = 'order_detail') => {
       try {
         const { permission } = res.locals;
         const body = permission.filter(req.body);
-        if (body._product_unit) throw new Error('Cannot update _product_unit. Please create new one.');
+        if (body._product_unit) throw createError(400, 'Cannot update _product_unit. Please create new one.');
 
         const doc = await Models[model].findById(req.params.id);
         if (!doc) {
-          res.status(404).json(response[404]('Document not founded!'));
+          throw createError(404, 'Document not founded!');
         } else {
           const [err1, isPaid, , payment] = await isOrderPaid({ _id: doc._order });
           if (err1) throw err1;
 
           if (isPaid) {
-            res.status(400).json(response[400]('Cannot update order which is paid!'));
+            throw createError(400, 'Cannot update order which is paid!');
           } else {
             const updateFields = [];
             for (const prop in body) {
@@ -135,14 +137,13 @@ module.exports = (model = 'order_detail') => {
     .delete(canUser('delete', model), async (req, res, next) => {
       try {
         const doc = await Models[model].findByIdAndRemove(req.params.id);
-        if (!doc) return res.status(404).json(response[404](undefined, doc));
+        if (!doc) throw createError(404, `Not found ${model} of ${req.params.id}`);
 
         const [err1, isPaid, , payment] = await isOrderPaid({ _id: doc._order });
         if (err1) throw err1;
 
         if (isPaid) {
-          res.status(400).json(response[400]('Cannot update order which is paid!'));
-          return false;
+          throw createError(400, 'Cannot update order which is paid!');
         }
         if (payment) {
           const [err2] = await calculateAndUpdatePaymentAmount({ _order: doc._order, _payment: payment._id });
@@ -157,9 +158,8 @@ module.exports = (model = 'order_detail') => {
         if (err4) throw err4;
 
         res.json(response[200](undefined, filter(permission, doc)));
-        return true;
       } catch (error) {
-        return next(error);
+        next(error);
       }
     });
 

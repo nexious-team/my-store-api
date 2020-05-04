@@ -59,6 +59,17 @@ describe('CRUD', () => {
               done();
             });
         });
+
+        it(`it should not found`, (done) => {
+          chai.request(server)
+            .get(`/api/${state.endpoint}/${data.admin._id}`)
+            .set('x-store', state.token)
+            .end((err, res) => {
+              res.should.have.status(404);
+              console.log(res.body);
+              done();
+            })
+        });
       });
 
       describe(`GET the ${item.model}`, () => {
