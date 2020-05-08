@@ -6,7 +6,6 @@ const passport = require('../../plugins/passport');
 const auth = passport.authenticate('jwt', { session: false });
 const canUser = require('../../middlewares/permission');
 
-const { calculateImportAmount } = require('../../workers/common');
 const { record } = require('../../workers/call');
 const { filter, response } = require('./helpers');
 
@@ -15,10 +14,8 @@ module.exports = (model = 'import') => {
 
   router.route('/')
     .all(auth)
-    .post(canUser('createAny', model), async (req, res, next) => {
+    .post(canUser('create', model), async (req, res, next) => {
       try {
-        req.body.amount = calculateImportAmount(req.body) || 0;
-
         const doc = await Models[model].create(req.body);
 
         const { permission } = res.locals;
@@ -34,7 +31,7 @@ module.exports = (model = 'import') => {
 
   router.route('/:id')
     .all(auth)
-    .delete(canUser('deleteAny', model), async (req, res, next) => {
+    .delete(canUser('delete', model), async (req, res, next) => {
       try {
         const { id } = req.params;
 

@@ -53,7 +53,8 @@ module.exports = (model = 'payment') => {
     .all(auth)
     .get(canUser('read', model), async (req, res, next) => {
       try {
-        const [match, doc, paymentIntent] = await checkPaymentStatus({ _id: req.params.id });
+        const [err, match, doc, paymentIntent] = await checkPaymentStatus({ _id: req.params.id });
+        if (err) throw err;
         if (match) {
           next();
         } else {
@@ -62,13 +63,15 @@ module.exports = (model = 'payment') => {
           next();
         }
       } catch (err) {
+        console.log(err);
         next(err);
       }
     })
     .put(canUser('update', model), async (req, res, next) => {
       try {
         if (req.body.status) {
-          const [match] = await checkPaymentStatus({ _id: req.params.id });
+          const [err, match] = await checkPaymentStatus({ _id: req.params.id });
+          if (err) throw err;
           if (match) {
             next();
           } else {

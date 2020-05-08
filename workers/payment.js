@@ -1,3 +1,4 @@
+const createError = require('http-errors');
 const Models = require('../models');
 const { getPayment, updatePayment } = require('../plugins/stripe');
 
@@ -16,11 +17,17 @@ async function updatePaymentAmount({ _id, amount }) {
 }
 
 async function checkPaymentStatus({ _id }) {
-  const doc = await Models.payment.findById(_id);
-  const paymentIntent = await getPayment(doc._stripe);
-  const match = doc.status === paymentIntent.status;
+  try {
+    const doc = await Models.payment.findById(_id);
+    if (!doc) throw createError(404, `Not found payment of id ${_id}`);
 
-  return [match, doc, paymentIntent];
+    const paymentIntent = await getPayment(doc._stripe);
+    const match = doc.status === paymentIntent.status;
+
+    return [null, match, doc, paymentIntent];
+  } catch (err) {
+    return [err];
+  }
 }
 
 module.exports = {

@@ -36,20 +36,10 @@
     "_brand": "5e7c20161db96117644a2591",
     "name": "Kulen"
   },
-  "unit": [
-    {
-      "_id": "5da9d44351082717b0118da2",
-      "name": "Box"
-    },
-    {
-      "_id": "5e7c2e30feeac01d20716e04",
-      "name": "Bottle 500ml"
-    }
-  ],
   "product_unit": [
     {
       "_id": "5e7c30eb5b91161f2b5b11de",
-      "_unit": "5e7c2e30feeac01d20716e04",
+      "name": "Bottle 500ml",
       "_product": "5e7c222c6ab5e617c1644e7a",
       "quantity": 1,
       "max_order": 23,
@@ -57,7 +47,7 @@
     },
     {
       "_id": "5e7c32f5a8ef811f690dd436",
-      "_unit": "5da9d44351082717b0118da2",
+      "name": "Box",
       "_product": "5e7c222c6ab5e617c1644e7a",
       "quantity": 24,
       "max_order": 10,
