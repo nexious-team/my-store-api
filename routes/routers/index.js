@@ -11,6 +11,7 @@ const util = require('./util');
 const file = require('./file');
 const oauth = require('./oauth');
 const product = require('./product');
+const shipment = require('./shipment');
 
 module.exports = {
   common,
@@ -26,4 +27,5 @@ module.exports = {
   file,
   oauth,
   product,
+  shipment,
 };

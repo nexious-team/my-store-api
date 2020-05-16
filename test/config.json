@@ -20,8 +20,8 @@
     }
   },
   {
-    "model": "image",
-    "endpoint": "images",
+    "model": "file",
+    "endpoint": "files",
     "createBody": {
       "url": "https://res.cloudinary.com/nexious/image/upload/v1584856818/j0lu3mmyjybwwtycxfk0.jpg",
       "filename": "Animal.png"

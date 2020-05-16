@@ -102,7 +102,7 @@
   {
     "endpoint": "shipments?",
     "model": "shipment",
-    "routers": ["util", "populate", "common"],
+    "routers": ["shipment", "util", "populate", "common"],
     "params": {
       "populate": {
         "references": ["_order"]
