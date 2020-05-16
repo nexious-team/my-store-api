@@ -41,6 +41,7 @@
       "_id": "5e7c30eb5b91161f2b5b11de",
       "name": "Bottle 500ml",
       "_product": "5e7c222c6ab5e617c1644e7a",
+      "name": "Each",
       "quantity": 1,
       "max_order": 23,
       "price": 0.5
@@ -49,6 +50,7 @@
       "_id": "5e7c32f5a8ef811f690dd436",
       "name": "Box",
       "_product": "5e7c222c6ab5e617c1644e7a",
+      "name": "Box",
       "quantity": 24,
       "max_order": 10,
       "price": 7

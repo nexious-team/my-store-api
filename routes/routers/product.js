@@ -3,7 +3,7 @@ const { Types: { ObjectId } } = require('mongoose');
 const createError = require('http-errors');
 
 const Models = require('../../models');
-const { response, queryParser } = require('./helpers');
+const { response, queryParser, isNotNullObjectHasProperties } = require('./helpers');
 
 const lookups = [
   {
@@ -54,10 +54,6 @@ const lookups = [
     },
   },
 ];
-
-const isNotNullObjectHasProperties = (obj) => (
-  obj !== null && typeof obj === 'object' && Object.keys(obj).length > 0
-);
 
 module.exports = (model = 'product') => {
   const router = express.Router();
