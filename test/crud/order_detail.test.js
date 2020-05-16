@@ -27,7 +27,7 @@ const state = {
 
 chai.use(chaiHttp);
 
-const models = ['brand', 'category', 'product', 'unit', 'product_unit', 'supplier', 'import', 'import_detail', 'stock', 'order'];
+const models = ['brand', 'category', 'product', 'product_unit', 'supplier', 'import', 'import_detail', 'stock', 'order'];
 
 describe(state.model.toUpperCase(), () => {
   before(async (done) => {

@@ -64,15 +64,5 @@
     "updateBody": {
       "name": "Testing 001 update"
     }
-  },
-  {
-    "model": "unit",
-    "endpoint": "units",
-    "createBody": {
-      "name": "Testing 001"
-    },
-    "updateBody": {
-      "name": "Testing 001 update"
-    }
   }
 ]

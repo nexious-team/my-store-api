@@ -15,7 +15,7 @@ module.exports = (model = 'import') => {
 
   router.route('/')
     .all(auth)
-    .post(canUser('createAny', model), async (req, res, next) => {
+    .post(canUser('create', model), async (req, res, next) => {
       try {
         req.body.amount = calculateImportAmount(req.body) || 0;
 
@@ -34,7 +34,7 @@ module.exports = (model = 'import') => {
 
   router.route('/:id')
     .all(auth)
-    .delete(canUser('deleteAny', model), async (req, res, next) => {
+    .delete(canUser('delete', model), async (req, res, next) => {
       try {
         const { id } = req.params;
 
