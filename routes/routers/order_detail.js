@@ -22,42 +22,68 @@ const { filter, response, lean } = require('./helpers');
 module.exports = (model = 'order_detail') => {
   const router = express.Router();
 
+  async function createDoc(body) {
+    try {
+      const { _order, _product, _product_unit: _productUnit } = body;
+
+      const product = await Models.product.findById(_product);
+      if (!product) throw createError(404, `Not found: product of ${_product}`);
+
+      const productUnit = await Models.product_unit.findById(_productUnit);
+      if (!productUnit) throw createError(404, `Not found: product_unit of ${_productUnit}`);
+
+      const [err1, isPaid, , payment] = await isOrderPaid({ _id: _order });
+      if (err1) throw err1;
+
+      if (isPaid) {
+        throw createError(400, 'Order is paid!');
+      }
+      let err2;
+      [err2, body.price, body.amount] = await checkStockAndCalculateAmount(body);
+      if (err2) throw err2;
+
+      const doc = await Models[model].create(body);
+
+      if (payment) {
+        const [err3, amount] = await calculateOrderTotalAmount({ _id: doc._order });
+        if (err3) throw err3;
+
+        const [err4] = await updatePaymentAmount({ _id: payment._id, amount });
+        if (err4) throw err4;
+      }
+
+      await decreaseProductStock(doc);
+      return [null, doc];
+    } catch (err) {
+      return [err];
+    }
+  }
+
   router.route('/')
     .all(auth)
     .post(canUser('create', model), async (req, res, next) => {
       try {
-        const { _order, _product, _product_unit: _productUnit } = req.body;
-
-        const product = await Models.product.findById(_product);
-        if (!product) throw createError(404, `Not found: product of ${_product}`);
-
-        const productUnit = await Models.product_unit.findById(_productUnit);
-        if (!productUnit) throw createError(404, `Not found: product_unit of ${_productUnit}`);
-
-        const [err1, isPaid, , payment] = await isOrderPaid({ _id: _order });
-        if (err1) throw err1;
-
-        if (isPaid) {
-          next(createError(400, 'Order is paid!'));
-        } else {
-          let err2;
-          [err2, req.body.price, req.body.amount] = await checkStockAndCalculateAmount(req.body);
+        const { permission } = res.locals;
+        const isMany = Array.isArray(req.body);
+        if (isMany) {
+          const docs = [];
+          const errs = [];
+          for (const obj of req.body) {
+            // eslint-disable-next-line no-await-in-loop
+            const [err, doc] = await createDoc(obj);
+            if (err) errs.push(err.message || err);
+            else docs.push(doc);
+          }
+          const [err2] = await record(req, { status: 200 });
           if (err2) throw err2;
 
-          const doc = await Models[model].create(req.body);
-          const { permission } = res.locals;
+          res.json(response[200](undefined, filter(permission, docs), errs));
+        } else {
+          const [err, doc] = await createDoc(req.body);
+          if (err) throw err;
 
-          if (payment) {
-            const [err3, amount] = await calculateOrderTotalAmount({ _id: doc._order });
-            if (err3) throw err3;
-
-            const [err4] = await updatePaymentAmount({ _id: payment._id, amount });
-            if (err4) throw err4;
-          }
-
-          await decreaseProductStock(doc);
-          const [err5] = await record(req, { status: 200 });
-          if (err5) throw err5;
+          const [err2] = await record(req, { status: 200 });
+          if (err2) throw err2;
 
           res.json(response[200](undefined, filter(permission, doc)));
         }
