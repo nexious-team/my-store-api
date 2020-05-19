@@ -39,18 +39,16 @@
   "product_unit": [
     {
       "_id": "5e7c30eb5b91161f2b5b11de",
-      "name": "Bottle 500ml",
       "_product": "5e7c222c6ab5e617c1644e7a",
-      "name": "Each",
+      "name": "Bottle 500ml",
       "quantity": 1,
       "max_order": 23,
       "price": 0.5
     },
     {
       "_id": "5e7c32f5a8ef811f690dd436",
-      "name": "Box",
       "_product": "5e7c222c6ab5e617c1644e7a",
-      "name": "Box",
+      "name": "Box of Bottle 500ml",
       "quantity": 24,
       "max_order": 10,
       "price": 7
@@ -77,6 +75,24 @@
     "price": 5,
     "amount": 50
   },
+  "import_details": [
+    {
+      "_import": "5e7c2c2d73ab491d01646714",
+      "_product": "5e7c222c6ab5e617c1644e7a",
+      "_product_unit": "5e7c32f5a8ef811f690dd436",
+      "quantity": 2,
+      "price": 5,
+      "amount": 10
+    },
+    {
+      "_import": "5e7c2c2d73ab491d01646714",
+      "_product": "5e7c222c6ab5e617c1644e7a",
+      "_product_unit": "5e7c32f5a8ef811f690dd436",
+      "quantity": 1,
+      "price": 5,
+      "amount": 5
+    }
+  ],
   "stock": {
     "_id": "5e7c49f63a5bd42053267d5b",
     "_product": "5e7c222c6ab5e617c1644e7a",
@@ -88,9 +104,17 @@
     "_user": "5e7db683335ee422d93e64db",
     "info": "Testing order"
   },
-  "order_detail": [
+  "order_detail": {
+    "_id": "5e7c4ea8b35b6f277e967096",
+    "_order": "5e72262c224631150a6c8124",
+    "_product": "5e7c222c6ab5e617c1644e7a",
+    "_product_unit": "5e7c32f5a8ef811f690dd436",
+    "quantity": 1,
+    "price": 7,
+    "amount": 7
+  },
+  "order_details": [
     {
-      "_id": "5e7c4ea8b35b6f277e967096",
       "_order": "5e72262c224631150a6c8124",
       "_product": "5e7c222c6ab5e617c1644e7a",
       "_product_unit": "5e7c32f5a8ef811f690dd436",
@@ -99,7 +123,6 @@
       "amount": 14
     },
     {
-      "_id": "5e7c4f0ab35b6f277e967098",
       "_order": "5e72262c224631150a6c8124",
       "_product": "5e7c222c6ab5e617c1644e7a",
       "_product_unit": "5e7c30eb5b91161f2b5b11de",

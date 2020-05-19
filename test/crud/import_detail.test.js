@@ -97,6 +97,22 @@ describe(state.model.toUpperCase(), () => {
         });
     });
 
+    it(`it should create many ${state.model}s`, (done) => {
+      chai.request(server)
+        .post(`/api/${state.endpoint}`)
+        .set('x-store', state.token)
+        .send(data.import_details)
+        .end((err, res) => {
+          if (err) done(err);
+          else {
+            res.should.have.status(200);
+            res.body.should.be.a('object');
+            res.body.payload.should.be.a('array');
+            done();
+          }
+        });
+    });
+
     it('it should increase product stock', async (done) => {
       try {
         const updateStock = await Models.stock.findOne(state.filter);

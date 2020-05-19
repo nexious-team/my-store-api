@@ -52,7 +52,9 @@ module.exports = (model = 'order_detail') => {
         if (err4) throw err4;
       }
 
-      await decreaseProductStock(doc);
+      const [err5] = await decreaseProductStock(doc);
+      if (err5) throw err5;
+
       return [null, doc];
     } catch (err) {
       return [err];
