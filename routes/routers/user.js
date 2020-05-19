@@ -5,10 +5,11 @@ const Models = require('../../models');
 const canUser = require('../../middlewares/permission');
 const passport = require('../../plugins/passport');
 const ac = require('../../plugins/accesscontrol');
-const { upload } = require('../../plugins/multer');
 const mailer = require('../../plugins/nodemailer');
 const { generateToken, decodeToken } = require('../../plugins/jwt');
 const { record } = require('../../workers/call');
+const { upload, dataUri } = require('../../plugins/multer');
+const cloud = require('../../plugins/cloudinary');
 const worker = require('../../workers/user');
 const { common, logger, filter, response } = require('./helpers');
 
@@ -120,19 +121,27 @@ module.exports = (model) => {
   router.route('/avatar')
     .post(middlewares, async (req, res, next) => {
       try {
-        const path = `/images/${req.file.filename}`;
-        const image = await Models.file.create({ path });
+        const fileContent = dataUri(req).content;
+        const { url } = await cloud.uploads(fileContent);
+
+        if (req.file.mimetype.indexOf('image') > -1) { // check if uploaded file not image type
+          return res.status(400).json(response[400]('uploaded file is not an image'));
+        }
+
+        const filename = req.file.originalname;
+        const file = await Models.file.create({ url, filename });
 
         const user = await Models[model].findById(req.user._identity._id);
         if (!user) throw createError(404, 'Identity not found');
 
-        user._avatar = image._id;
+        user._avatar = file._id;
         await user.save();
 
         const [err] = await record(req, { status: 200 });
         if (err) throw err;
 
-        res.json(response[200]('Avatar uploaded!', image));
+        res.json(response[200]('Avatar uploaded!', file));
+        return true;
       } catch (err) {
         logger.error(err);
         next(err);
