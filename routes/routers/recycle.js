@@ -1,4 +1,5 @@
 const express = require('express');
+const createError = require('http-errors');
 const Models = require('../../models');
 const passport = require('../../plugins/passport');
 
@@ -17,7 +18,8 @@ module.exports = (model = 'recycle') => {
   router.post('/restore/:id', middlewares, async (req, res, next) => {
     try {
       const trash = await Models[model].findById(req.params.id);
-      if (!trash) throw new Error('Not Found');
+      if (!trash) throw createError(404, `Not found ${model} of ${req.params.id}`);
+
       const { permission } = res.locals;
 
       sentry.restore(trash, async (doc) => {
@@ -39,19 +41,17 @@ module.exports = (model = 'recycle') => {
         'document._id': req.params.id,
       };
       const trash = await Models[model].findOne(body);
-      if (!trash) {
-        throw new Error('Not Found');
-      } else {
-        const { permission } = res.locals;
+      if (!trash) throw createError(404, `Not found ${req.params.model} of ${req.params.id}`);
 
-        sentry.restore(trash, async (doc) => {
-          const message = `Restore ${trash.model} with id ${trash._id} successfully`;
-          const [err] = await record(req, { status: 200, message });
-          if (err) throw err;
+      const { permission } = res.locals;
 
-          res.json(response[200](message, filter(permission, doc)));
-        });
-      }
+      sentry.restore(trash, async (doc) => {
+        const message = `Restore ${trash.model} with id ${trash._id} successfully`;
+        const [err] = await record(req, { status: 200, message });
+        if (err) throw err;
+
+        res.json(response[200](message, filter(permission, doc)));
+      });
     } catch (error) {
       next(error);
     }

@@ -1,3 +1,4 @@
+const createError = require('http-errors');
 const express = require('express');
 const Models = require('../../models');
 const passport = require('../../plugins/passport');
@@ -5,8 +6,6 @@ const passport = require('../../plugins/passport');
 const auth = passport.authenticate('jwt', { session: false });
 const canUser = require('../../middlewares/permission');
 
-const { calculateImportAmount } = require('../../workers/common');
-// const { decreaseProductStock, increaseProductStock } = require('../../workers/order');
 const { record } = require('../../workers/call');
 const { filter, response } = require('./helpers');
 
@@ -15,12 +14,9 @@ module.exports = (model = 'import') => {
 
   router.route('/')
     .all(auth)
-    .post(canUser('createAny', model), async (req, res, next) => {
+    .post(canUser('create', model), async (req, res, next) => {
       try {
-        req.body.amount = calculateImportAmount(req.body) || 0;
-
         const doc = await Models[model].create(req.body);
-
 
         const { permission } = res.locals;
 
@@ -35,16 +31,15 @@ module.exports = (model = 'import') => {
 
   router.route('/:id')
     .all(auth)
-    .delete(canUser('deleteAny', model), async (req, res, next) => {
+    .delete(canUser('delete', model), async (req, res, next) => {
       try {
         const { id } = req.params;
 
         const doc = await Models[model].findByIdAndRemove(id);
-        if (!doc) throw new Error(`Can't found ${model} with id: ${id}`);
+        if (!doc) throw createError(404, `Can't found ${model} with id: ${id}`);
 
         const { permission } = res.locals;
 
-        // decreaseProductStock(doc.product, doc.qty, console.log);
         const [err] = await record(req, { status: 200 });
         if (err) throw err;
 

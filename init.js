@@ -19,10 +19,12 @@ mongoose.connect(process.env.DB_HOST_TEST, options)
       // clear
       await Models.staff.deleteMany({});
       await Models.user.deleteMany({});
+      await Models.role.deleteMany({});
       await Models.permission.deleteMany({});
       // insert
       await Models.staff.create(data.admin); // password=admin123
       await Models.user.create(data.user); // password=user123
+      await Models.role.create(data.role);
       await Models.permission.create(permissions);
       console.log('Done.');
       process.exit(0);

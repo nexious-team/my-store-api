@@ -40,9 +40,6 @@ const checkStockAndCalculateAmount = async ({ _product: _id, quantity, _product_
   }
 };
 
-const calculateImportAmount = ({ price, quantity }) => (price * quantity);
-
 module.exports = {
   checkStockAndCalculateAmount,
-  calculateImportAmount,
 };

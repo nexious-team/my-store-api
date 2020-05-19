@@ -1,15 +1,17 @@
 const express = require('express');
+const createError = require('http-errors');
+
 const Models = require('../../models');
-const passport = require('../../plugins/passport');
 const canUser = require('../../middlewares/permission');
-const worker = require('../../workers/user');
+const passport = require('../../plugins/passport');
 const ac = require('../../plugins/accesscontrol');
 const mailer = require('../../plugins/nodemailer');
 const { generateToken, decodeToken } = require('../../plugins/jwt');
-const { common, logger, filter, response } = require('./helpers');
 const { record } = require('../../workers/call');
 const { upload, dataUri } = require('../../plugins/multer');
 const cloud = require('../../plugins/cloudinary');
+const worker = require('../../workers/user');
+const { common, logger, filter, response } = require('./helpers');
 
 const auth = passport.authenticate('jwt', { session: false });
 
@@ -42,18 +44,18 @@ module.exports = (model) => {
   router.get('/verify-email', async (req, res, next) => {
     try {
       const { token } = req.query;
-      if (!token) return res.status(400).json(response[400]('Invalid token!', token));
+      if (!token) throw createError(400, 'Invalid token!', token);
 
       const { _id } = decodeToken(token, 'verify_email');
       const user = await Models[model].findById(_id);
-      if (!user) return res.status(404).json(response[404](undefined, user));
+      if (!user) throw createError(404, 'Identity not found');
 
       user.verified = true;
       await user.save();
 
-      return res.json(response[200]('User verified!'));
+      res.json(response[200]('User verified!'));
     } catch (err) {
-      return next(err);
+      next(err);
     }
   });
 
@@ -72,7 +74,7 @@ module.exports = (model) => {
               if (err) {
                 next(err);
               } else if (!role) {
-                res.status(404).json(response[404]('Role not found'));
+                next(createError(404, 'Role not found'));
               } else {
                 const token = generateToken({ _id: role._id, username: user.username }, 'user');
 
@@ -90,28 +92,28 @@ module.exports = (model) => {
     .get(canUser('read', model), async (req, res, next) => {
       try {
         const user = await Models[model].findById(req.user._identity._id).populate('_avatar');
-        if (!user) return res.status(404).json(response[404](undefined, user));
+        if (!user) throw createError(404, 'Identity not found');
 
         const { permission } = res.locals;
 
-        return res.json(response[200](undefined, filter(permission, user)));
+        res.json(response[200](undefined, filter(permission, user)));
       } catch (err) {
-        return next(err);
+        next(err);
       }
     })
     .put(canUser('update', model), async (req, res, next) => {
       try {
         const user = await Models[model].findById(req.user._identity._id);
-        if (!user) return res.status(404).json(response[404](undefined, user));
+        if (!user) throw createError(404, 'Identity not found');
 
         const { permission } = res.locals;
 
         user.set(permission.filter(req.body));
         const profile = await user.save();
 
-        return res.json(response[200](undefined, filter(permission, profile)));
+        res.json(response[200](undefined, filter(permission, profile)));
       } catch (err) {
-        return next(err);
+        next(err);
       }
     });
 
@@ -130,7 +132,7 @@ module.exports = (model) => {
         const file = await Models.file.create({ url, filename });
 
         const user = await Models[model].findById(req.user._identity._id);
-        if (!user) return res.status(404).json(response[404](undefined, user));
+        if (!user) throw createError(404, 'Identity not found');
 
         user._avatar = file._id;
         await user.save();
@@ -142,7 +144,7 @@ module.exports = (model) => {
         return true;
       } catch (err) {
         logger.error(err);
-        return next(err);
+        next(err);
       }
     });
 
@@ -158,33 +160,33 @@ module.exports = (model) => {
         const { email } = req.body;
 
         const user = await Models[model].findOne({ email });
-        if (!user) return res.status(404).json(response[404]('Email haven\'t registered!'));
+        if (!user) throw createError(404, 'The email haven\'t registered!');
 
         const token = generateToken({ _id: user._id }, 'reset_password');
 
         mailer.send('reset_password', { token, model });
 
-        return res.json(response[200]('Reset email sent!'));
+        res.json(response[200]('Reset email sent!'));
       } catch (err) {
-        return next(err);
+        next(err);
       }
     })
     .put(async (req, res, next) => {
       try {
         const token = req.headers['x-store'];
         const { password } = req.body;
-        if (!token) return res.status(404).json(response[404]('Token not found!'));
+        if (!token) throw createError(404, 'Token not found!');
 
         const { _id } = decodeToken(token, 'reset_password');
         const user = await Models[model].findById(_id);
-        if (!user) return res.status(400).json(response[400]('Invalid token!'));
+        if (!user) throw createError(400, 'Invalid token!');
 
         user.password = password;
         await user.save();
 
-        return res.json(response[200]('Password updated!'));
+        res.json(response[200]('Password updated!'));
       } catch (err) {
-        return next(err);
+        next(err);
       }
     });
 
