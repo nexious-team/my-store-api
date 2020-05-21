@@ -68,13 +68,16 @@ module.exports = (model = 'product') => {
         const { filters, select, options } = queryParser.parse(req.query);
         const { skip, limit, sort } = options;
 
-        if (filters._id) {
-          if (filters._id.$in) {
-            filters._id.$in = filters._id.$in.map((id) => ObjectId(id));
-          } else {
-            filters._id = ObjectId(filters._id);
+        for (const key of ['_id', '_brand', '_categories']) {
+          if (filters[key]) {
+            if (filters[key].$in) {
+              filters[key].$in = filters[key].$in.map((id) => ObjectId(id));
+            } else {
+              filters[key] = ObjectId(filters[key]);
+            }
           }
         }
+
         const pipeline = [
           ...lookups,
           { $match: filters },
