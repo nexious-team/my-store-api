@@ -125,7 +125,7 @@ module.exports = (model) => {
         const { url } = await cloud.uploads(fileContent);
 
         if (req.file.mimetype.indexOf('image') > -1) { // check if uploaded file not image type
-          return res.status(400).json(response[400]('uploaded file is not an image'));
+          throw createError(400, 'uploaded file is not an image');
         }
 
         const filename = req.file.originalname;
@@ -141,7 +141,6 @@ module.exports = (model) => {
         if (err) throw err;
 
         res.json(response[200]('Avatar uploaded!', file));
-        return true;
       } catch (err) {
         logger.error(err);
         next(err);
