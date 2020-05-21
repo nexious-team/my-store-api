@@ -78,8 +78,6 @@ module.exports = (model = 'product') => {
           }
         }
 
-        console.log(filters);
-
         const pipeline = [
           ...lookups,
           { $match: filters },
