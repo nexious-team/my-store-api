@@ -11,6 +11,8 @@ const util = require('./util');
 const image = require('./image');
 const oauth = require('./oauth');
 const product = require('./product');
+const brand = require('./brand');
+const category = require('./category');
 
 module.exports = {
   common,
@@ -26,4 +28,6 @@ module.exports = {
   image,
   oauth,
   product,
+  brand,
+  category,
 };
