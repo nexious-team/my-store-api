@@ -2,7 +2,7 @@
   {
     "endpoint": "brands?",
     "model": "brand",
-    "routers": ["util", "populate", "common"],
+    "routers": ["brand", "util", "populate", "common"],
     "params": {
       "populate": {
         "references": ["_image"]
@@ -12,7 +12,7 @@
   {
     "endpoint": "categor(y|ies)",
     "model": "category",
-    "routers": ["util", "common"]
+    "routers": ["category", "util", "common"]
   },
   {
     "endpoint": "files?",

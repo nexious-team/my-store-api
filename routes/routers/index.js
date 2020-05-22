@@ -11,6 +11,8 @@ const util = require('./util');
 const file = require('./file');
 const oauth = require('./oauth');
 const product = require('./product');
+const brand = require('./brand');
+const category = require('./category');
 const shipment = require('./shipment');
 
 module.exports = {
@@ -27,5 +29,7 @@ module.exports = {
   file,
   oauth,
   product,
+  brand,
+  category,
   shipment,
 };
