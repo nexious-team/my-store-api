@@ -10,7 +10,7 @@ module.exports = {
       'brand',
       'call',
       'category',
-      'image',
+      'file',
       'import_detail',
       'import',
       'order_detail',

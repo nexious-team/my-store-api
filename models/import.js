@@ -6,7 +6,7 @@ module.exports = {
   },
   amount: {
     type: 'Number',
-    required: true,
+    required: false,
     min: 0,
   },
   info: 'String',

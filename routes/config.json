@@ -15,10 +15,11 @@
     "routers": ["category", "util", "common"]
   },
   {
-    "endpoint": "images?",
-    "model": "image",
-    "routers": ["image", "util", "common"]
-  },  {
+    "endpoint": "files?",
+    "model": "file",
+    "routers": ["file", "util", "common"]
+  },
+  {
     "endpoint": "import-details?",
     "model": "import_detail",
     "routers": ["util", "populate", "importDetail", "common"],
@@ -86,13 +87,13 @@
       "populate": {
         "references": [
           {
-            "path": "_categories", 
-            "model": "Category" 
-          }, 
-          "_brand", 
+            "path": "_categories",
+            "model": "Category"
+          },
+          "_brand",
           {
-            "path": "_images", 
-            "model": "Image"
+            "path": "_images",
+            "model": "File"
           }
         ]
       }
@@ -101,7 +102,7 @@
   {
     "endpoint": "shipments?",
     "model": "shipment",
-    "routers": ["util", "populate", "common"],
+    "routers": ["shipment", "util", "populate", "common"],
     "params": {
       "populate": {
         "references": ["_order"]
@@ -121,11 +122,11 @@
       "populate": {
         "references": [
           {
-            "path": "_product", 
+            "path": "_product",
             "populate": { "path": "_brand _categories" }
-          }, 
+          },
           {
-            "path": "_product_unit", 
+            "path": "_product_unit",
             "populate": { "path": "_unit" }
           }
         ]

@@ -8,11 +8,12 @@ const importOrder = require('./import');
 const importDetail = require('./import_detail');
 const recycle = require('./recycle');
 const util = require('./util');
-const image = require('./image');
+const file = require('./file');
 const oauth = require('./oauth');
 const product = require('./product');
 const brand = require('./brand');
 const category = require('./category');
+const shipment = require('./shipment');
 
 module.exports = {
   common,
@@ -25,9 +26,10 @@ module.exports = {
   importDetail,
   recycle,
   util,
-  image,
+  file,
   oauth,
   product,
   brand,
   category,
+  shipment,
 };

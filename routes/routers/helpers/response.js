@@ -1,6 +1,7 @@
 module.exports = {
-  200: (message = 'Success', payload = true) => ({
+  200: (message = 'Success', payload = true, errors = undefined) => ({
     message,
+    errors,
     payload,
   }),
   400: (error = 'Bad request') => ({
