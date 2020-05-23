@@ -7,7 +7,7 @@
     "last_name": "Test",
     "username": "admin",
     "email": "admin@store.com",
-    "password": "$2a$10$GcyXwjVdWiDK5drQkzj5veGXU6URuLEedifAjfYmvVkzV50jJMKAi"
+    "password": "admin123"
   },
   "user": {
     "_id": "5e7db683335ee422d93e64db",
@@ -18,7 +18,7 @@
     "last_name": "Kok",
     "username": "samkok",
     "email": "samkok@store.com",
-    "password": "$2a$10$7RExOfcmu6Mt8zodeiyeKuK572eD15geYHb8S7rIGKWnQ2oUMDnoW"
+    "password": "user123"
   },
   "role": [
     {

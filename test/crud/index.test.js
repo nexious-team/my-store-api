@@ -1,9 +1,9 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const server = require('../../server.test');
-const Models = require('../../models');
 const config = require('../config.json');
-const should = chai.should();
+const data = require('../data.json');
+chai.should();
 
 chai.use(chaiHttp);
 
@@ -58,6 +58,17 @@ describe('CRUD', () => {
               ID = res.body.payload._id;
               done();
             });
+        });
+
+        it(`it should not found`, (done) => {
+          chai.request(server)
+            .get(`/api/${item.endpoint}/${data.admin._id}`)
+            .set('x-store', TOKEN)
+            .end((err, res) => {
+              res.should.have.status(404);
+              console.log(res.body);
+              done();
+            })
         });
       });
 

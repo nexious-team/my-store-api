@@ -74,9 +74,9 @@
   {
     "attributes": "*",
     "create_date": "2019-10-10T14:30:58.537Z",
-    "_id": "5d9f40abd4d443149d501241",
+    "_id": "5ea44b581511c6221c07b9e3",
     "role": "admin",
-    "resource": "image",
+    "resource": "file",
     "action": "create:any",
     "__v": 0
   },
@@ -123,15 +123,6 @@
     "role": "admin",
     "resource": "product_unit",
     "action": "read:any",
-    "__v": 0
-  },
-  {
-    "attributes": "*",
-    "create_date": "2019-10-10T14:30:58.537Z",
-    "_id": "5d9f40abd4d443149d501273",
-    "role": "admin",
-    "resource": "unit",
-    "action": "update:any",
     "__v": 0
   },
   {
@@ -191,9 +182,9 @@
   {
     "attributes": "*",
     "create_date": "2019-10-10T14:30:58.537Z",
-    "_id": "5d9f40abd4d443149d501242",
+    "_id": "5ea44f1b6cfbeec5b65492ed",
     "role": "admin",
-    "resource": "image",
+    "resource": "file",
     "action": "read:any",
     "__v": 0
   },
@@ -308,9 +299,9 @@
   {
     "attributes": "*",
     "create_date": "2019-10-10T14:30:58.537Z",
-    "_id": "5d9f40abd4d443149d501243",
+    "_id": "5ea450ad6cfbeec5b65492ee",
     "role": "admin",
-    "resource": "image",
+    "resource": "file",
     "action": "update:any",
     "__v": 0
   },
@@ -389,18 +380,9 @@
   {
     "attributes": "*",
     "create_date": "2019-10-10T14:30:58.537Z",
-    "_id": "5d9f40abd4d443149d501272",
+    "_id": "5ea450e96cfbeec5b65492ef",
     "role": "admin",
-    "resource": "unit",
-    "action": "read:any",
-    "__v": 0
-  },
-  {
-    "attributes": "*",
-    "create_date": "2019-10-10T14:30:58.537Z",
-    "_id": "5d9f40abd4d443149d501244",
-    "role": "admin",
-    "resource": "image",
+    "resource": "file",
     "action": "delete:any",
     "__v": 0
   },
@@ -510,15 +492,6 @@
     "role": "admin",
     "resource": "payment",
     "action": "read:any",
-    "__v": 0
-  },
-  {
-    "attributes": "*",
-    "create_date": "2019-10-10T14:30:58.537Z",
-    "_id": "5d9f40abd4d443149d501274",
-    "role": "admin",
-    "resource": "unit",
-    "action": "delete:any",
     "__v": 0
   },
   {
@@ -717,15 +690,6 @@
     "role": "admin",
     "resource": "call",
     "action": "read:any",
-    "__v": 0
-  },
-  {
-    "attributes": "*",
-    "create_date": "2019-10-10T14:30:58.537Z",
-    "_id": "5d9f40abd4d443149d501271",
-    "role": "admin",
-    "resource": "unit",
-    "action": "create:any",
     "__v": 0
   },
   {

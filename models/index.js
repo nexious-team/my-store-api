@@ -4,7 +4,7 @@ const { Schema, model } = mongoose;
 
 const brand = require('./brand');
 const category = require('./category');
-const image = require('./image');
+const file = require('./file');
 const importDetail = require('./import_detail');
 const importDefinition = require('./import');
 const orderDetail = require('./order_detail');
@@ -35,7 +35,7 @@ function create({ definition, decorate }) {
 module.exports = {
   brand: model('Brand', new Schema(brand)),
   category: model('Category', new Schema(category)),
-  image: model('Image', new Schema(image)),
+  file: model('File', new Schema(file)),
   import_detail: model('ImportDetail', new Schema(importDetail)),
   import: model('Import', new Schema(importDefinition)),
   order_detail: model('OrderDetail', new Schema(orderDetail)),

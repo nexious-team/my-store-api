@@ -16,7 +16,7 @@ const state = {
   },
   token: '',
   id: '',
-  createBody: data.order_detail[0],
+  createBody: data.order_detail,
   updateBody: {
     quantity: 3,
     price: 7,
@@ -27,7 +27,7 @@ const state = {
 
 chai.use(chaiHttp);
 
-const models = ['brand', 'category', 'product', 'unit', 'product_unit', 'supplier', 'import', 'import_detail', 'stock', 'order'];
+const models = ['brand', 'category', 'product', 'product_unit', 'supplier', 'import', 'import_detail', 'stock', 'order'];
 
 describe(state.model.toUpperCase(), () => {
   before(async (done) => {
@@ -70,7 +70,7 @@ describe(state.model.toUpperCase(), () => {
   describe(`POST ${state.model}`, () => {
     before(async (done) => {
       try {
-        state.filter = { _product: data.order_detail[0]._product };
+        state.filter = { _product: data.order_detail._product };
         state.stock = await Models.stock.findOne(state.filter);
         done();
       } catch (err) {
@@ -92,6 +92,22 @@ describe(state.model.toUpperCase(), () => {
             res.body.payload.should.have.property('_id');
             state.id = res.body.payload._id;
             state.payload = res.body.payload;
+            done();
+          }
+        });
+    });
+
+    it(`it should create many ${state.model}s`, (done) => {
+      chai.request(server)
+        .post(`/api/${state.endpoint}`)
+        .set('x-store', state.token)
+        .send(data.order_details)
+        .end((err, res) => {
+          if (err) done(err);
+          else {
+            res.should.have.status(200);
+            res.body.should.be.a('object');
+            res.body.payload.should.be.a('array');
             done();
           }
         });
@@ -123,6 +139,17 @@ describe(state.model.toUpperCase(), () => {
             done();
           }
         });
+    });
+
+    it(`it should not found`, (done) => {
+      chai.request(server)
+        .get(`/api/${state.endpoint}/${data.brand._id}`)
+        .set('x-store', state.token)
+        .end((err, res) => {
+          res.should.have.status(404);
+          console.log(res.body);
+          done();
+        })
     });
   });
 

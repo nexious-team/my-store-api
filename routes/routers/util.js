@@ -25,5 +25,6 @@ module.exports = (model) => {
 
     res.json(response[200](undefined, schema));
   });
+
   return router;
 };

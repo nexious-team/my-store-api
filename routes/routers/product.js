@@ -1,7 +1,9 @@
 const express = require('express');
 const { Types: { ObjectId } } = require('mongoose');
+const createError = require('http-errors');
+
 const Models = require('../../models');
-const { response, queryParser } = require('./helpers');
+const { response, queryParser, isNotNullObjectHasProperties } = require('./helpers');
 
 const lookups = [
   {
@@ -28,7 +30,7 @@ const lookups = [
   },
   {
     $lookup: {
-      from: 'images',
+      from: 'files',
       localField: '_images',
       foreignField: '_id',
       as: 'images',
@@ -52,10 +54,6 @@ const lookups = [
     },
   },
 ];
-
-const isNotNullObjectHasProperties = (obj) => (
-  obj !== null && typeof obj === 'object' && Object.keys(obj).length > 0
-);
 
 module.exports = (model = 'product') => {
   const router = express.Router();
@@ -110,7 +108,7 @@ module.exports = (model = 'product') => {
       if (req.headers.admin) next();
       else {
         const product = await Models[model].findById(req.params.id);
-        if (!product) next();
+        if (!product) throw createError(404, `Not found ${model} of ${req.params.id}`);
         else {
           const docs = await Models[model].aggregate([
             { $match: { _id: product._id } },

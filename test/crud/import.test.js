@@ -24,7 +24,7 @@ const state = {
 
 chai.use(chaiHttp);
 
-const models = ['brand', 'category', 'product', 'unit', 'product_unit', 'supplier'];
+const models = ['brand', 'category', 'product', 'product_unit', 'supplier', 'stock'];
 
 describe(state.model.toUpperCase(), () => {
   before(async (done) => {
@@ -65,6 +65,7 @@ describe(state.model.toUpperCase(), () => {
         .set('x-store', state.token)
         .send(state.createBody)
         .end((err, res) => {
+          console.log(res.body);
           res.should.have.status(200);
           res.body.should.be.a('object');
           res.body.payload.should.be.a('object');
@@ -86,6 +87,17 @@ describe(state.model.toUpperCase(), () => {
           res.body.payload.should.be.a('object').have.property('_id').eql(state.id);
           done();
         });
+    });
+
+    it(`it should not found`, (done) => {
+      chai.request(server)
+        .get(`/api/${state.endpoint}/${data.brand._id}`)
+        .set('x-store', state.token)
+        .end((err, res) => {
+          res.should.have.status(404);
+          console.log(res.body);
+          done();
+        })
     });
   });
 
