@@ -1,4 +1,5 @@
 const express = require('express');
+const createError = require('http-errors');
 const { Types: { ObjectId } } = require('mongoose');
 const Models = require('../../models');
 const passport = require('../../plugins/passport');
@@ -53,10 +54,10 @@ module.exports = (model = 'order') => {
 
   router.route('/')
     .all(auth)
-    .get(canUser('read', model), async (req, res, next) => {
-      try {
-        if (req.headers.admin) next();
-        else {
+    .get(
+      canUser('read', model),
+      async (req, res, next) => {
+        try {
           const { filters, select, options } = queryParser.parse(req.query);
           const { skip, limit, sort } = options;
 
@@ -69,7 +70,6 @@ module.exports = (model = 'order') => {
           }
 
           const pipeline = [
-            { $match: { _user: req.user._identity._id } },
             ...lookups,
             { $match: filters },
             { $skip: skip },
@@ -89,14 +89,34 @@ module.exports = (model = 'order') => {
             pipeline.push({ $sort: sort });
           }
 
+          res.locals.pipeline = pipeline;
+          next();
+        } catch (error) {
+          next(error);
+        }
+      },
+      async (req, res, next) => {
+        try {
+          if (req.user.role !== 'user') next();
+          else {
+            res.locals.pipeline.unshift({ $match: { _user: req.user._identity._id } });
+            next();
+          }
+        } catch (error) {
+          next(error);
+        }
+      },
+      async (req, res, next) => {
+        try {
+          const { pipeline, permission } = res.locals;
           const docs = await Models[model].aggregate(pipeline);
 
-          res.json(response[200](undefined, docs));
+          res.json(response[200](undefined, filter(permission, docs)));
+        } catch (error) {
+          next(error);
         }
-      } catch (error) {
-        next(error);
-      }
-    })
+      },
+    )
     .post(canUser('create', model), async (req, res, next) => {
       try {
         req.body._user = req.user._identity._id;
@@ -115,25 +135,36 @@ module.exports = (model = 'order') => {
 
   router.route('/:id')
     .all(auth)
-    .get(async (req, res, next) => {
-      try {
-        if (req.headers.admin) next();
-        else {
+    .get(
+      canUser('read', model),
+      async (req, res, next) => {
+        try {
           const order = await Models[model].findById(req.params.id);
-          if (!order) next();
+          if (!order) throw createError(404, `Not found: ${model} of id ${req.params.id}`);
+          const pipeline = [...lookups];
+          if (req.user.role === 'user') {
+            pipeline.unshift({ $match: { _id: order._id, _user: req.user._identity._id } });
+          }
+          res.locals.pipeline = pipeline;
+          next();
+        } catch (error) {
+          next(error);
+        }
+      },
+      async (req, res, next) => {
+        try {
+          if (req.headers.admin) next();
           else {
-            const docs = await Models[model].aggregate([
-              { $match: { _id: order._id, _user: req.user._identity._id } },
-              ...lookups,
-            ]);
+            const { pipeline } = res.locals;
+            const docs = await Models[model].aggregate(pipeline);
 
             res.json(response[200](undefined, docs[0]));
           }
+        } catch (err) {
+          next(err);
         }
-      } catch (err) {
-        next(err);
-      }
-    });
+      },
+    );
 
   router.route('/:id/order-details')
     .all(auth)
