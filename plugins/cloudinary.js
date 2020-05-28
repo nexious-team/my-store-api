@@ -13,7 +13,7 @@ exports.uploads = (file) => new Promise((resolve, reject) => {
       logger.log('error', `Error upload to cloudinary: ${err}`);
       reject(err);
     } else {
-      resolve({ url: result.url, id: result.public_id });
+      resolve({ url: result.secure_url, id: result.public_id });
     }
   });
 });
